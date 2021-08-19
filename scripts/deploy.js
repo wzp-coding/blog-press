@@ -9,7 +9,7 @@ const {exec} = require('child_process')
         exec('git init',()=>{
             exec('git add -A',()=>{
                 exec("git commit -m 'deploy'",()=>{
-                    exec('git push -f git@github.com:wzp-coding/wzp-coding.github.io.git master',(err,stdout,stderr)=>{
+                    exec('git push -f git@github.com:wzp-coding/wzp-coding.github.com.git master',(err,stdout,stderr)=>{
                         console.log('err: ', err);
                         console.log('stdout: ', stdout);
                         console.log('deploy success');
