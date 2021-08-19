@@ -6,8 +6,8 @@ const { exec } = require("child_process");
 //   }
 //   console.log(stdout);
 // });
-exec("cd D:\\study-file\\blog-press\\docs\\.vuepress\\dist", (err, stdout) => {
-  exec("git init", (err, stdout) => {
+// exec("cd ", (err, stdout) => {
+  exec("git init",{cwd:'D:\\study-file\\blog-press\\docs\\.vuepress\\dist'}, (err, stdout) => {
     if (err) {
       console.log("err: ", err);
       return;
@@ -18,7 +18,7 @@ exec("cd D:\\study-file\\blog-press\\docs\\.vuepress\\dist", (err, stdout) => {
         exec(
           "git remote add origin https://github.com/wzp-coding/wzp-coding.github.com.git",
           (err, stdout, stderr) => {
-            exec("git push", (err, stdout) => {
+            exec("git push --set-upstream origin master", (err, stdout) => {
               if (err) {
                 console.log(err);
                 return;
@@ -31,4 +31,4 @@ exec("cd D:\\study-file\\blog-press\\docs\\.vuepress\\dist", (err, stdout) => {
       });
     });
   });
-});
+// });
