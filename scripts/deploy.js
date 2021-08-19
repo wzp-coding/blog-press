@@ -6,14 +6,19 @@ const { exec } = require("child_process");
 //   }
 //   console.log(stdout);
 // });
-exec("cd ../docs/.vuepress/dist", () => {
-  exec("git init", () => {
+exec("cd D:\\study-file\\blog-press\\docs\\.vuepress\\dist", (err, stdout) => {
+  exec("git init", (err, stdout) => {
+    if (err) {
+      console.log("err: ", err);
+      return;
+    }
+    console.log("stdout: ", stdout);
     exec("git add -A", () => {
       exec("git commit -m 'deploy'", () => {
         exec(
           "git remote add origin https://github.com/wzp-coding/wzp-coding.github.com.git",
           (err, stdout, stderr) => {
-            exec("git push --set-upstream origin master", (err, stdout) => {
+            exec("git push", (err, stdout) => {
               if (err) {
                 console.log(err);
                 return;
