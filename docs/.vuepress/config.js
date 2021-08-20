@@ -30,6 +30,10 @@ module.exports = {
                         link: "/technology/javascript/"
                     },
                     {
+                        text: "Webpack",
+                        link: "/technology/webpack/"
+                    },
+                    {
                         text: "计算机网络",
                         link: "/technology/computer-network/"
                     },
@@ -48,8 +52,9 @@ module.exports = {
         sidebar: {
             "/technology/html-css/":['','one','two','three'],
             "/technology/javascript/":['','one','two'],
+            "/technology/webpack/":['','one'],
             "/technology/computer-network/":['','one'],
-            "/technology/bug/":['','vuepress踩坑'],
+            "/technology/bug/":['','vuepress踩坑','git踩坑'],
             "/life/": ["", "one"],
             "/": [""]
         }

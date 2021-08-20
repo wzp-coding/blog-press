@@ -1,6 +1,11 @@
 const { exec } = require("child_process");
-const cwd = "D:\\study-file\\blog-press\\docs\\.vuepress\\dist";
 
+let cwd = "E:\\blog-press\\docs\\.vuepress\\dist";// 执行文件目录(默认为公司电脑)
+const env = global.process.argv.slice(2)[0].slice(2);
+if (env === 'home') {
+  cwd = "D:\\study-file\\blog-press\\docs\\.vuepress\\dist";// 切换为自己电脑里的文件目录
+}
+console.log('当前环境：', env);
 exec("git init", { cwd }, gitAdd);
 function gitAdd(err, stdout) {
   if (err) {

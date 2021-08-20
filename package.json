@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vuepress dev docs",
-    "build": "vuepress build docs && node ./scripts/deploy.js"
+    "home": "vuepress build docs && node ./scripts/deploy.js --home",
+    "company": "vuepress build docs && node ./scripts/deploy.js --company"
   },
   "author": "",
   "license": "ISC",
