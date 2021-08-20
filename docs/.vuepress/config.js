@@ -1,6 +1,6 @@
 module.exports = {
     lang: "zh-CN",
-    title: "Rush B",
+    title: "打工人上人",
     description: "这是我的第一个 VuePress 站点",
     base: "/",
 
