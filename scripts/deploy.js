@@ -47,8 +47,8 @@ asyncExec("git init")
   })
   .then(() => {
     const commitInfo = `deploy_at_${getNowTime()}`;
-    // return asyncExec(`git commit -m '${commitInfo}'`);
-    return asyncExec(`git commit -m 'deploy'`);
+    return asyncExec(`git commit -m '${commitInfo}'`);
+    // return asyncExec(`git commit -m 'deploy'`);
   })
   .then(() => {
     pushRemote(github, "github").then(() =>
