@@ -10,16 +10,6 @@ console.log("当前环境：", env);
 const github = "https://github.com/wzp-coding/wzp-coding.github.com.git";
 const gitee = "https://gitee.com/wu_monkey/wzp-coding.github.com.git";
 
-function getNowTime() {
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const hour = date.getHours();
-  const minutes = date.getMinutes();
-  return `${year}-${month}-${day} ${hour}:${minutes}`;
-}
-
 function asyncExec(cmd) {
   return new Promise((resolve, reject) => {
     exec(cmd, { cwd }, function(err, stdout) {
@@ -46,9 +36,7 @@ asyncExec("git init")
     return asyncExec("git add .");
   })
   .then(() => {
-    const commitInfo = `deploy_at_${getNowTime()}`;
-    return asyncExec(`git commit -m '${commitInfo}'`);
-    // return asyncExec(`git commit -m 'deploy'`);
+    return asyncExec(`git commit -m 'deploy'`);
   })
   .then(() => {
     pushRemote(github, "github").then(() =>
@@ -60,63 +48,3 @@ asyncExec("git init")
   })
   .catch((err) => console.log(err));
   
-// asyncExec("git remote add ${name} ${remote}");
-// exec("git init", { cwd }, gitAdd);
-// function gitAdd(err, stdout) {
-//   if (err) {
-//     console.error(err);
-//     return;
-//   }
-//   console.log(stdout);
-//   exec("git add -A", { cwd }, gitCommit);
-// }
-// function gitCommit(err, stdout) {
-//   if (err) {
-//     console.error(err);
-//     return;
-//   }
-//   console.log(stdout);
-//   exec("git commit -m 'deploy'", { cwd }, gitPushRemote);
-// }
-
-// function gitPushRemote(err, stdout) {
-//   if (err) {
-//     console.log(err);
-//     return;
-//   }
-//   console.log(stdout);
-//   createGitRemote(github, "github");
-//   createGitRemote(gitee, "gitee");
-// }
-
-// function createGitRemote(remote, name) {
-//   return function(err, stdout) {
-//     if (err) {
-//       console.error(err);
-//       return;
-//     }
-//     console.log(stdout);
-//     exec(`git remote add ${name} ${remote}`, { cwd }, createGitPush(name));
-//   };
-// }
-
-// function createGitPush(originName) {
-//   return function(err, stdout) {
-//     if (err) {
-//       console.error(err);
-//       return;
-//     }
-//     console.log(stdout);
-
-//     exec(`git push --set-upstream ${originName} master -f`, { cwd }, finish);
-//   };
-// }
-
-// function finish(err, stdout) {
-//   if (err) {
-//     console.log(err);
-//     return;
-//   }
-//   console.log(stdout);
-//   console.log("deploy success");
-// }
