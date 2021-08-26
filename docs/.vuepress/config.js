@@ -8,20 +8,23 @@ module.exports = {
       { rel: "icon", href: "/images/logo.jpg" },
     ],
   ],
+
   lang: "zh-CN",
   title: "钱端客栈",
   description: "钱端客栈",
   base: "/",
 
   themeConfig: {
-    displayAllHeaders: true,
+    displayAllHeaders: false,
     logo: "/images/logo.jpg",
+    sidebarDepth: 2,
     nav,
     sidebar: genSidebar(nav),
   },
 
   markdown: {
     lineNumbers: true,
+    
   },
 
   plugins: ["@vuepress/blog", "@vuepress/back-to-top"],
