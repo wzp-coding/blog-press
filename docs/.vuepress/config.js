@@ -27,5 +27,5 @@ module.exports = {
     
   },
 
-  plugins: ["@vuepress/blog", "@vuepress/back-to-top"],
+  plugins: ["@vuepress/blog", "@vuepress/back-to-top",'@vuepress/blog'],
 };

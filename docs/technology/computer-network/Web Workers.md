@@ -6,15 +6,13 @@ title: Web Worker
 [[toc]]
 ## Web Worker 是什么？
 
-> [你不知道的 Web Workers （上）[7.8K 字 | 多图预警]](https://juejin.cn/post/6844904198639714311#heading-10)
-
 Web Worker 是 HTML5 标准的一部分，这一规范定义了一套 API，它允许一段 JavaScript 程序运行在主线程之外的另外一个线程中。Web Worker 的作用，就是为 JavaScript 创造多线程环境，允许主线程创建 Worker 线程，将一些任务分配给后者运行。
 
 在主线程运行的同时，Worker 线程在后台运行，两者互不干扰。等到 Worker 线程完成计算任务，再把结果返回给主线程。这样的好处是，可以在独立线程中处理一些计算密集型或高延迟的任务，从而允许主线程（通常是 UI 线程）不会因此被阻塞或拖慢。
 
-![img](https://user-gold-cdn.xitu.io/2020/6/24/172e3d666afce753?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+![image-20210902202946704](../../.vuepress/public/images/image-20210902202946704.png)
 
-## Web Workers 的限制与能力
+ ## Web Workers 的限制与能力
 
 通常情况下，你可以在 Worker 线程中运行任意的代码，但注意存在一些例外情况，比如：**「直接在 worker 线程中操纵 DOM 元素，或使用 window 对象中的某些方法和属性。」** 大部分 window 对象的方法和属性是可以使用的，包括 WebSockets，以及诸如 IndexedDB 和 FireFox OS 中独有的 Data Store API 这一类数据存储机制。
 
@@ -479,3 +477,6 @@ worker-demo.html:20 Main: Message from worker {"id":666, "msg":"Hi from task.js"
 ![img](/images/172e3d6704c1c8b5)
 
 取样完成后，可以看到当前渲染进程中完整的线程信息，红框中标出的就是我们想要找的 **「Dedicated Worker」**。
+
+## 参考
+> [你不知道的 Web Workers （上）[7.8K 字 | 多图预警]](https://juejin.cn/post/6844904198639714311#heading-10)
