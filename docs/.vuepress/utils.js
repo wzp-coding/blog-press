@@ -44,7 +44,7 @@ const nav = [
         // link: "/technology/",
         items: [
             {
-                text: "HTML-CSS",
+                text: "HTMLCSS",
                 link: "/technology/html-css/",
             },
             {
@@ -54,6 +54,10 @@ const nav = [
             {
                 text: "Webpack",
                 link: "/technology/webpack/",
+            },
+            {
+                text: "Vue",
+                link: "/technology/vue/",
             },
             {
                 text: "计算机网络",
@@ -68,6 +72,11 @@ const nav = [
     {
         text: "Github",
         link: "https://github.com/wzp-coding/blog-press",
+        target: "_blank",
+    },
+    {
+        text: "掘金",
+        link: "https://juejin.cn/user/1521379825951864",
         target: "_blank",
     },
 ]
