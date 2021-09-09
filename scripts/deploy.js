@@ -42,9 +42,9 @@ asyncExec("git init")
     pushRemote(github, "github").then(() =>
       console.log("push github successfully")
     );
-    pushRemote(gitee, "gitee").then(() =>
-      console.log("push gitee successfully")
-    );
+    // pushRemote(gitee, "gitee").then(() =>
+    //   console.log("push gitee successfully")
+    // );
   })
   .catch((err) => console.log(err));
   
