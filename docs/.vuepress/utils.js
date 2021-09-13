@@ -60,6 +60,10 @@ const nav = [
                 link: "/technology/vue/",
             },
             {
+                text: "Node",
+                link: "/technology/node/",
+            },
+            {
                 text: "计算机网络",
                 link: "/technology/computer-network/",
             },
