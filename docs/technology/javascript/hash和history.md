@@ -4,6 +4,8 @@ title: hash和history
 
 # 两种路由模式你了解吗
 
+[[toc]]
+
 路由模式有两种，一种是hash，另一种是history
 
 hash的优势就是兼容性更好,在老版IE中都有运行,问题在于url中一直存在#不够美观,而且hash路由更像是Hack而非标准,相信随着发展更加标准化的History API会逐步蚕食掉hash路由的市场。

@@ -15,7 +15,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/images/16029efa6af2ea6c)
+![图片摘取自HTTP图解](../../.vuepress/public/images/16029efa6af2ea6c)
 
 
 
@@ -27,7 +27,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/images/16029efa697ec682)
+![图片摘取自HTTP图解](../../.vuepress/public/images/16029efa697ec682)
 
 
 
@@ -39,7 +39,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/images/16029efb76d2b65f)
+![图片摘取自HTTP图解](../../.vuepress/public/images/16029efb76d2b65f)
 
 
 
@@ -54,7 +54,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/images/16029efa6a4ba749)
+![图片摘取自HTTP图解](../../.vuepress/public/images/16029efa6a4ba749)
 
 
 
@@ -66,7 +66,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/images/16029efba78b2b7e)
+![图片摘取自HTTP图解](../../.vuepress/public/images/16029efba78b2b7e)
 
 
 
@@ -78,7 +78,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/images/16029efbc1b5cfce)
+![图片摘取自HTTP图解](../../.vuepress/public/images/16029efbc1b5cfce)
 
 
 
@@ -93,7 +93,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/images/16029efaa07f726e)
+![图片摘取自HTTP图解](../../.vuepress/public/images/16029efaa07f726e)
 
 
 
@@ -115,7 +115,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/images/16029efaa064bdb6)
+![图片摘取自HTTP图解](../../.vuepress/public/images/16029efaa064bdb6)
 
 
 
@@ -125,7 +125,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/images/16029efacc2e6a4c)
+![图片摘取自HTTP图解](../../.vuepress/public/images/16029efacc2e6a4c)
 
 
 
@@ -137,7 +137,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/images/16029efaa0cce655)
+![图片摘取自HTTP图解](../../.vuepress/public/images/16029efaa0cce655)
 
 
 
@@ -149,7 +149,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/images/16029efac97cd782)
+![图片摘取自HTTP图解](../../.vuepress/public/images/16029efac97cd782)
 
 
 
@@ -175,7 +175,7 @@ Access-Control-Allow-Methods →GET,HEAD,PUT,PATCH,POST,DELETE
 
 
 
-![图片摘取自HTTP图解](/images/16029efae2420839)
+![图片摘取自HTTP图解](../../.vuepress/public/images/16029efae2420839)
 
 
 
@@ -191,7 +191,7 @@ Access-Control-Allow-Methods →GET,HEAD,PUT,PATCH,POST,DELETE
 
 
 
-![图片摘取自HTTP图解](/images/16029efaf01b284a)
+![图片摘取自HTTP图解](../../.vuepress/public/images/16029efaf01b284a)
 
 
 

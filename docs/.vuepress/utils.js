@@ -3,7 +3,7 @@ const fs = require('fs')
 function readDirectory(relative) {
     const absolutePath = path.resolve(__dirname, relative);
     const files = fs.readdirSync(absolutePath);
-    return files.filter(name => !/(^\.)|(README\.md)/.test(name));
+    return files.filter(name => !/(^\.)|(README\.md)|(template\.md)/.test(name));
 }
 
 function genSidebar(nav, root = "../../docs") {
