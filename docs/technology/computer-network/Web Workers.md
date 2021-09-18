@@ -51,7 +51,7 @@ Web Worker 是 HTML5 标准的一部分，这一规范定义了一套 API，它�
 
 需要注意的是，由于 Web Worker 有同源限制，所以在进行本地调试或运行以下示例的时候，需要先启动本地服务器，直接使用 `file://` 协议打开页面的时候，会抛出以下异常：
 
-```js
+```shell
 Uncaught DOMException: Failed to construct 'Worker': 
 Script at 'file:///**/*.js' cannot be accessed from origin 'null'.
 ```
