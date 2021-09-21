@@ -10,7 +10,7 @@ Web Worker 是 HTML5 标准的一部分，这一规范定义了一套 API，它�
 
 在主线程运行的同时，Worker 线程在后台运行，两者互不干扰。等到 Worker 线程完成计算任务，再把结果返回给主线程。这样的好处是，可以在独立线程中处理一些计算密集型或高延迟的任务，从而允许主线程（通常是 UI 线程）不会因此被阻塞或拖慢。
 
-![image-20210902202946704](../../.vuepress/public/images/image-20210902202946704.png)
+![image-20210902202946704](/images/image-20210902202946704.png)
 
  ## Web Workers 的限制与能力
 
@@ -33,7 +33,7 @@ Web Worker 是 HTML5 标准的一部分，这一规范定义了一套 API，它�
 
 主线程和 Worker 线程相互之间使用 postMessage() 方法来发送信息，并且通过 onmessage 这个事件处理器来接收信息。数据的交互方式为传递副本，而不是直接共享数据。主线程与 Worker 线程的交互方式如下图所示：
 
-![img](../../.vuepress/public/images/172e3d668fdcf7ef)
+![img](/images/172e3d668fdcf7ef)
 
 除此之外，Worker 还可以通过 XMLHttpRequest 来访问网络，只不过 XMLHttpRequest 对象的 `responseXML` 和 `channel` 这两个属性的值将总是 `null`。
 
@@ -45,7 +45,7 @@ Web Worker 是 HTML5 标准的一部分，这一规范定义了一套 API，它�
 
 一个专用 Worker 仅仅能被生成它的脚本所使用，其浏览器支持情况如下：
 
-![img](../../.vuepress/public/images/172e3d6698f89ac8)
+![img](/images/172e3d6698f89ac8)
 
 （图片来源：[https://caniuse.com/#search=Web%20Workers](https://caniuse.com/#search=Web Workers)）
 
@@ -58,7 +58,7 @@ Script at 'file:///**/*.js' cannot be accessed from origin 'null'.
 
 #### 专用线程 Dedicated Worker：Ping/Pong
 
-![img](../../.vuepress/public/images/172e3d66a03f865a)
+![img](/images/172e3d66a03f865a)
 
 **「index.html」**
 
@@ -106,7 +106,7 @@ Main: Received message - PONG
 
 #### 专用线程 Dedicated Sub Worker：Ping/Pong
 
-![img](../../.vuepress/public/images/172e3d66a2cfe1c2)
+![img](/images/172e3d66a2cfe1c2)
 
 **「index.html」**
 
@@ -277,7 +277,7 @@ worker.onmessage = (e) =>
 
 一个共享 Worker 是一种特殊类型的 Worker，可以被多个浏览上下文访问，比如多个 windows，iframes 和 workers，但这些浏览上下文必须同源。相比 dedicated workers，它们拥有不同的作用域。其浏览器支持情况如下：
 
-![img](../../.vuepress/public/images/172e3d66c8d018df)
+![img](/images/172e3d66c8d018df)
 
 与常规的 Worker 不同，首先我们需要使用 `onconnect` 方法等待连接，然后我们获得一个端口，该端口是我们与窗口之间的连接。
 
@@ -334,25 +334,25 @@ onconnect = function (e) {
 
 在 Shared Worker 的示例页面上有一个 **「点赞」** 按钮，每次点击时点赞数会加 1。首先你新开一个窗口，然后点击几次。然后新开另一个窗口继续点击，这时你会发现当前页面显示的点赞数是基于前一个页面的点赞数继续累加。
 
-![img](../../.vuepress/public/images/172e3d66d049fccd)
+![img](/images/172e3d66d049fccd)
 
 #### 调试 Shared Workers
 
 在实际项目开发过程中，若需要调试 Shared Workers 中的脚本，可以通过 `chrome://inspect` 来进行调试，具体步骤如下图所示：
 
-![img](../../.vuepress/public/images/172e3d66dc3fffb8)
+![img](/images/172e3d66dc3fffb8)
 
 ### Service Workers
 
 Service workers 本质上充当 Web 应用程序与浏览器之间的代理服务器，也可以在网络可用时作为浏览器和网络间的代理。它们旨在（除其他之外）使得能够创建有效的离线体验，拦截网络请求并基于网络是否可用以及更新的资源是否驻留在服务器上来采取适当的动作。
 
-![img](../../.vuepress/public/images/172e3d66dc411bbe)
+![img](/images/172e3d66dc411bbe)
 
 
 
 Service workers 的浏览器支持情况如下：
 
-![img](../../.vuepress/public/images/172e3d66f4635ec4)
+![img](/images/172e3d66f4635ec4)
 
 由于 Service workers 不是本文的重点，这里阿宝哥就不展开介绍了，感兴趣的小伙伴请自行了解一下。下面我们开始介绍 Web Workers API。
 
@@ -456,7 +456,7 @@ worker-demo.html:20 Main: Message from worker {"id":666, "msg":"Hi from task.js"
 
 为了让大家更好的理解 Web Worker 的工作流程，我们来了解一下 WebKit 加载并执行 Worker 线程的流程：
 
-![img](../../.vuepress/public/images/172e3d66f4a54a3c)
+![img](/images/172e3d66f4a54a3c)
 
 ### 观察 Dedicated Worker
 
@@ -466,17 +466,22 @@ worker-demo.html:20 Main: Message from worker {"id":666, "msg":"Hi from task.js"
 
 这里阿宝哥以 Chrome 浏览器为例，首先打开 Chrome 开发者工具，然后选择 **「Sources -> Page」**：
 
-![img](../../.vuepress/public/images/172e3d67011c3f7e)
+![img](/images/172e3d67011c3f7e)
 
 #### Chrome 任务管理器 & 活动监视器
 
-![img](../../.vuepress/public/images/172e3d66f6273745)
+![img](/images/172e3d66f6273745)
 
 打开 Chrome 任务管理器之后，我们可以找到当前 Tab 页对应的进程 ID，即为 **「5194」**，接着我们打开 macOS 下的活动监视器，然后选中 **「5194」** 进程，然后对该进程进行取样操作：
 
-![img](../../.vuepress/public/images/172e3d6704c1c8b5)
+![img](/images/172e3d6704c1c8b5)
 
 取样完成后，可以看到当前渲染进程中完整的线程信息，红框中标出的就是我们想要找的 **「Dedicated Worker」**。
 
 ## 参考
 > [你不知道的 Web Workers （上）[7.8K 字 | 多图预警]](https://juejin.cn/post/6844904198639714311#heading-10)
+
+
+## 疑问
+
+艾滋病毒会攻击免疫系统，红斑狼疮是免疫过强，如果都得了是不是就没事了？

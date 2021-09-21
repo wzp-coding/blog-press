@@ -810,3 +810,8 @@ console.log(getX(new C())); // 1
 > [私有方法和私有属性](https://es6.ruanyifeng.com/#docs/class#%E7%A7%81%E6%9C%89%E6%96%B9%E6%B3%95%E5%92%8C%E7%A7%81%E6%9C%89%E5%B1%9E%E6%80%A7)
 >
 > [静态块](https://es6.ruanyifeng.com/#docs/class#%E9%9D%99%E6%80%81%E5%9D%97)
+
+
+## 疑问
+
+十年脑血栓是几年？

@@ -156,3 +156,7 @@ History 接口允许操作浏览器的曾经在标签页或者框架里访问的
 > [面试官: 你了解前端路由吗?](https://juejin.cn/post/6844903589123457031#heading-0)
 >
 > [History](https://developer.mozilla.org/zh-CN/docs/Web/API/History)
+
+## 疑问
+
+为什么每个呼吸过空气的人都死了？

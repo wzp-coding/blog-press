@@ -206,3 +206,6 @@ for (let num of range) {
 
 > [symbol](https://xiaohesong.gitbook.io/today-i-learn/front-end/es6/understanding-es6/symbol)
 
+## 疑问
+
+都说近亲结婚不好，为什么爸爸妈妈可以结婚？

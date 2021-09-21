@@ -119,3 +119,7 @@ Array.prototype._reduce = function (callback, initialValue) {
 
 ## 参考
 > [Reduce](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
+
+## 疑问
+
+可以把无籽西瓜的技术用到石榴上吗？
