@@ -2003,10 +2003,10 @@ function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
 ### 总结
 
 那么到此，一个组件的 VNode 是如何创建、初始化、渲染的过程也就介绍完毕了。
-## vue中的工具函数
 
-[[toc]]
-### Vue中判断浏览器环境的代码
+## vue2.x中的工具函数
+
+### 判断浏览器环境的代码
 
 > ./src/core/util/env.js
 
@@ -2041,6 +2041,7 @@ export function proxy (target: Object, sourceKey: string, key: string) {
   Object.defineProperty(target, key, sharedPropertyDefinition)
 }
 ```
+
 ## API理解
 
 ### $set
@@ -2080,6 +2081,7 @@ function set (target: Array<any> | Object, key: any, val: any): any {
   return val
 }
 ```
+
 ### $delete
 
 > ./src/core/observer/index.js
@@ -2111,6 +2113,7 @@ del (target: Array<any> | Object, key: any) {
   ob.dep.notify()
 }
 ```
+
 ### $nextTick
 
 > ./src/core/util/env.js
@@ -2241,6 +2244,7 @@ const nextTick = (function () {
   }
 })()
 ```
+
 ### $watch
 
 > ./src/core/instance/state.js
@@ -2828,9 +2832,8 @@ function copyAugment (target: Object, src: Object, keys: Array<string>) {
   }
 }
 ```
+
 ## 参考
-> [初学者也能看懂的 Vue3 源码中那些实用的基础工具函数](https://lxchuan12.gitee.io/vue-next-utils/)
->
 > [vue技术揭秘-组件化](https://ustbhuangyi.github.io/vue-analysis/v2/components/create-component.html#%E6%9E%84%E9%80%A0%E5%AD%90%E7%B1%BB%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0)
 
 ## 疑问
