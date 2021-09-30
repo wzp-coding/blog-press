@@ -6,6 +6,10 @@ title: vue3.x源码
 
 [[toc]]
 
+## vue-devtools打开editor原理
+
+利用`nodejs`中的`child_process`，执行了类似`code path/to/file`命令，于是对应编辑器就打开了相应的文件，而对应的编辑器则是通过在进程中执行`ps x`（`Window`则用`Get-Process`）命令来查找的，当然也可以自己指定编辑器
+
 ## vue3.x中的工具函数
 
 
@@ -329,6 +333,8 @@ const getGlobalThis = () => {
 
 ## 参考
 > [初学者也能看懂的 Vue3 源码中那些实用的基础工具函数](https://lxchuan12.gitee.io/vue-next-utils/)
+>
+> [据说 99% 的人不知道 vue-devtools 还能直接打开对应组件文件？本文原理揭秘](https://juejin.cn/post/6959348263547830280#heading-15)
 
 
 ## 疑问
