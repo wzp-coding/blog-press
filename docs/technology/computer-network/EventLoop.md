@@ -12,7 +12,46 @@ title: EventLoop
 - 常见的macro-task比如：setTimout，setInterval，setImmediate，script（整体代码），I/O操作，UI渲染等
 - 常见的micro-task比如：process.nextTick，new Promise().then(callback)，MutationObserver(html5新特性)等
 
+每个“线程”都有自己的事件循环，因此每个 Web Worker 都有自己的事件循环，因此它可以独立执行，而同一源上的所有窗口都共享一个事件循环，因为它们可以同步通信。
 
+事件循环持续运行，执行任何排队的任务。 
+
+一个事件循环有多个任务源来保证该源中的执行顺序（[IndexedDB 等](https://w3c.github.io/IndexedDB/#database-access-task-source)规范定义了它们自己的），但是浏览器可以在循环的每一轮中选择从哪个源中获取任务。 这允许浏览器优先处理性能敏感的任务，例如用户输入。
+
+任务是经过调度的，因此浏览器可以从其内部进入 JavaScript/DOM 领域，并确保这些操作按顺序发生。 在任务之间，浏览器可能会呈现更新。 从鼠标点击到事件回调需要安排一个任务，解析 HTML 也是如此
+
+来看一个例子
+
+```js
+console.log('script start');
+
+setTimeout(function () {
+  console.log('setTimeout');
+}, 0);
+
+Promise.resolve()
+  .then(function () {
+    console.log('promise1');
+  })
+  .then(function () {
+    console.log('promise2');
+  });
+
+console.log('script end');
+//script start
+//script end
+//promise1
+//promise2
+//setTimeout
+```
+
+`setTimeout` 等待给定的延迟，然后为其回调安排一个新任务。 这就是为什么在`script end`后输出 `setTimeout` 的原因，因为输出`script end`是第一个任务的一部分，而 `setTimeout` 输出在一个单独的任务中。 
+
+微任务通常被安排在当前执行的脚本之后应该立即发生的事情上，例如对一批操作做出反应，或者在不承担全新任务损失的情况下使某些事情异步。 **只要没有其他 JavaScript 在执行中，并且在每个任务结束时**，微任务队列就会在回调之后处理。 在微任务期间排队的任何其他微任务都会添加到队列的末尾并进行处理。 微任务包括变异观察者回调，如上例所示，Promise回调。
+
+一旦 promise 成立，或者如果它已经成立，它就会将一个微任务排队等待它的反馈回调。 这确保了`promise`回调是异步的，即使`promise`已经完成。 因此，针对已完成的`promise`调用 `.then(yey, nay)` 会立即将微任务排入队列。 这就是为什么在`script end`后输出 `promise1` 和 `promise2` 的原因，因为当前运行的脚本必须在处理微任务之前完成。 `promise1` 和 `promise2` 在 `setTimeout` 之前输出，因为微任务总是在下一个任务之前发生
+
+一些浏览器打印`script start`, `script end`, `setTimeout`, `promise1`, `promise2`.这可能是因为浏览器在执行promise回调的时候将其作为一项新任务的一部分，而不是一项微任务
 
 ### EventLoop过程解析
 
@@ -270,6 +309,8 @@ Node 端的处理过程如下：
 > [浏览器与Node的事件循环(Event Loop)有何区别?](https://zhuanlan.zhihu.com/p/54882306)
 >
 > [从Chrome源码看事件循环](https://juejin.cn/post/6844903704156438536#heading-0)
+>
+> [Tasks, microtasks, queues and schedules](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/?utm_source=html5weekly)
 
 ## 疑问
 

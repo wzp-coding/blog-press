@@ -1,50 +1,39 @@
-const { exec } = require("child_process");
-
-let cwd = "E:\\blog-press\\docs\\.vuepress\\dist"; // 执行文件目录(默认为公司电脑)
-const env = global.process.argv.slice(2)[0].slice(2);
-if (env === "home") {
-  cwd = "D:\\study-file\\blog-press\\docs\\.vuepress\\dist"; // 切换为自己电脑里的文件目录
-}
-console.log("当前环境：", env);
+const path = require('path')
+const execa = require('execa')
+const chalk = require('chalk')
+const moment = require('moment')
+moment.locale('zh-cn')
+const run = (bin, args, opts = {}) => execa(bin, args, { stdio: 'inherit', ...opts })
+const step = msg => console.log(chalk.cyan(msg))
+const bin = (name) => path.resolve(__dirname, '../node_modules/.bin/' + name)
+const execPath = path.resolve(__dirname, '../docs/.vuepress/dist')
+const opts = { execPath, cwd: execPath, preferLocal: true }
 
 const github = "https://github.com/wzp-coding/wzp-coding.github.com.git";
-const gitee = "https://gitee.com/wu_monkey/wzp-coding.github.com.git";
+async function deploy() {
+  step('\n\"vuepress build docs\" starting...')
+  await run(bin('vuepress'), ['build', 'docs'])
 
-function asyncExec(cmd) {
-  return new Promise((resolve, reject) => {
-    exec(cmd, { cwd }, function(err, stdout) {
-      if (err) {
-        reject(err);
-        return;
-      }
-      console.log(stdout);
-      resolve();
-    });
-  });
+  step('\ninit repository starting')
+
+  step('\n\"git init\" running')
+  await run('git', ['init'], opts)
+
+  step('\n\"git add .\" running')
+  await run('git', ['add', '.'], opts)
+
+  const commitInfo = moment().format('LLLL');
+  step(`\n\"git commit -m \'${commitInfo}\' \" running`)
+  await run('git', ['commit', '-m', commitInfo], opts)
+
+  step(`\n\"git remote add origin ${github}\"`)
+  await run('git', ['remote', 'add', 'origin', github], opts)
+
+  step(`\n\"git push --set-upstream origin master -f\"`)
+  await run('git', ['push', '--set-upstream', 'origin', 'master', '-f'], opts)
+
+  step(`\n\"git push --set-upstream origin master -f\"`)
+  console.log(chalk.green(commitInfo + '部署成功'))
 }
+deploy().catch(err => console.error(err))
 
-function pushRemote(remote, name) {
-  return asyncExec(`git remote add ${name} ${remote}`)
-    .then(() => {
-      return asyncExec(`git push --set-upstream ${name} master -f`);
-    })
-    .catch((err) => console.log(err));
-}
-
-asyncExec("git init")
-  .then(() => {
-    return asyncExec("git add .");
-  })
-  .then(() => {
-    return asyncExec(`git commit -m 'deploy'`);
-  })
-  .then(() => {
-    pushRemote(github, "github").then(() =>
-      console.log("push github successfully")
-    );
-    // pushRemote(gitee, "gitee").then(() =>
-    //   console.log("push gitee successfully")
-    // );
-  })
-  .catch((err) => console.log(err));
-  

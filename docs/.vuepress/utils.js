@@ -1,5 +1,6 @@
 const path = require('path')
 const fs = require('fs')
+// 读取除了README.md 和 tempalte.md的md文件
 function readDirectory(relative) {
     const absolutePath = path.resolve(__dirname, relative);
     const files = fs.readdirSync(absolutePath);

@@ -7,8 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vuepress dev docs",
     "build": "vuepress build docs",
-    "home": "vuepress build docs && node ./scripts/deploy.js --home",
-    "company": "vuepress build docs && node ./scripts/deploy.js --company"
+    "deploy": "node ./scripts/deploy.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,10 +18,13 @@
     "@vuepress/plugin-google-analytics": "^1.8.2",
     "@vuepress/plugin-nprogress": "^1.8.2",
     "@vuepress/plugin-pwa": "^1.8.2",
+    "chalk": "^4.1.0",
+    "execa": "^4.0.2",
     "vuepress": "^1.8.2",
     "vuepress-plugin-copyright": "^1.0.2"
   },
   "dependencies": {
+    "moment": "^2.29.1",
     "vuepress-plugin-code-copy": "^1.0.6"
   }
 }
