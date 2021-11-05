@@ -69,6 +69,10 @@ const nav = [
                 link: "/technology/computer-network/",
             },
             {
+                text: "拓展知识",
+                link: "/technology/extension/",
+            },
+            {
                 text: "踩坑日记",
                 link: "/technology/bug/",
             },

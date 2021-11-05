@@ -2,7 +2,7 @@
 title: 项目难点
 ---
 
-# vue项目
+# vue项目难点
 
 [[toc]]
 
@@ -12,11 +12,12 @@ title: 项目难点
 
 拿到图之后，经各方查找，最终决定用[gojs](https://gojs.net.cn/learn/index.html)来做
 
-注意：学习gojs是有成本的，需要一定时间，我写了一篇简单gojs入门教程
-
+注意：学习gojs是有成本的，需要一定时间，我根据官方文档写了一篇简单的[gojs入门教程](/technology/extension/gojs入门.md )
 
 
 ![image-20211010221722952](../../.vuepress/public/images/image-20211010221722952.png)
+
+
 
 ## 获取异步挂载的DOM元素
 
