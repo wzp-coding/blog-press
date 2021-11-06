@@ -24,6 +24,9 @@ async function deploy() {
 
   step('\n"git add ." running')
   await run('git', ['add', '.'], opts)
+  
+  await run('git', ['config', '--global', 'user.email','2236277721@qq.com'], opts)
+  await run('git', ['config', '--global', 'user.name','wzp-coding'], opts)
 
   const commitInfo = moment().format('LLLL')
   step(`\n\"git commit -m \'${commitInfo}\' \" running`)
