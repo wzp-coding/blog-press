@@ -1,8 +1,8 @@
 ---
 home: true
 heroImage: /images/logo.jpg
-heroText: 钱端
-tagline: 飞升天梯
+heroText: 吳澤鵬
+tagline: 芜湖起飞
 actionText: 学习技术 →
 actionLink: /technology/
 features:

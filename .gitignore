@@ -5,3 +5,4 @@ dist/*
 dist
 .vscode/*
 .package-lock.json
+template.md
