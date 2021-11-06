@@ -11,7 +11,7 @@ if [ -z "$GITHUB_TOKEN" ]; then
   githubUrl=git@github.com:wzp-coding/blog-press.git
 else
   msg='来自github action的自动部署'
-  githubUrl=https://wzp-coding:${GITHUB_TOKEN}@github.com/wzp-coding/blog-.git
+  githubUrl=https://wzp-coding:${GITHUB_TOKEN}@github.com/wzp-coding/blog-press.git
   git config --global user.name "wzp-coding"
   git config --global user.email "2236277721@qq.com"
 fi
