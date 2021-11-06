@@ -33,7 +33,6 @@ module.exports = {
     "@vuepress/back-to-top",
     "@vuepress/last-updated",
     "@vuepress/active-header-links",
-    "@vuepress/last-updated",
     "@vuepress/nprogress",
     "@vuepress/pwa",
     [
