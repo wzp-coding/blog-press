@@ -11,7 +11,7 @@ module.exports = {
   lang: "zh-CN",
   title: "钱端客栈",
   description: "钱端客栈",
-  base: "/",
+  base: "/blog-press",
   extraWatchFiles: ["./config.js"],
 
   themeConfig: {
