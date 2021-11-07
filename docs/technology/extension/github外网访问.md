@@ -231,6 +231,14 @@ hosts 文件在每个系统的位置不一，详情如下：
 
      此时，点击菜单栏 ”开发“ --> ”清空缓存“ 即可。
 
+## git push出现timeout或者reset error？
+
+一般我们是通过https的方式去跟远程仓库进行交互，但是涉及到HTTPS协议就会涉及到网络问题，如果有时候网络不好就会出现timeout或者reset error问题是网络问题，通常来说如果有好的VPN就会很顺利，但是如果是免费VPN，偶尔还是会出现错误，通常博客会建议你多试几次就能成功，虽然确实如此，但你总不想每次都这样解决吧，这样随机性太大了
+
+既然如此我们就换另外一种方式ssh
+
+![image-20211108000153286](../../.vuepress/public/images/image-20211108000153286.png)
+
 ## 参考
 
 [如何清除浏览器的 DNS 缓存：Chrome、Edge、Firefox、Safari](https://zhuanlan.zhihu.com/p/386294623)
