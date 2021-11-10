@@ -53,5 +53,3 @@ title: npm install
 ## 参考
 > [npm install原理分析](https://cloud.tencent.com/developer/article/1555982)
 
-## 疑问
-电鳗电电鳗电鳗会不会被电鳗电死还是电电鳗的电鳗会被挨电鳗的电把电电鳗的电鳗电死呢？

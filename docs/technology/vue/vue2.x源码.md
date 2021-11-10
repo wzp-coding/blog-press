@@ -2836,6 +2836,3 @@ function copyAugment (target: Object, src: Object, keys: Array<string>) {
 ## 参考
 > [vue技术揭秘-组件化](https://ustbhuangyi.github.io/vue-analysis/v2/components/create-component.html#%E6%9E%84%E9%80%A0%E5%AD%90%E7%B1%BB%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0)
 
-## 疑问
-
-皮卡丘的电是直流电还是交流电？

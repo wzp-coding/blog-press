@@ -120,5 +120,3 @@ Cmder.exe /REGISTER ALL
 
 安装docker插件、dockerCompose插件
 
-## 疑问
-世界上有没有奥特曼，如果没有那怪兽是怎么消失的呢？

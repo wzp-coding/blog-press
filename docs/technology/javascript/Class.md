@@ -812,6 +812,3 @@ console.log(getX(new C())); // 1
 > [静态块](https://es6.ruanyifeng.com/#docs/class#%E9%9D%99%E6%80%81%E5%9D%97)
 
 
-## 疑问
-
-十年脑血栓是几年？

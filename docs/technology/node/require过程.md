@@ -343,6 +343,3 @@ let internalBinding;
 
 ![image-20210508235114456](../../.vuepress/public/images/image-20210508235114456.png)
 
-## 疑问
-
-用毒蛇的毒毒毒蛇毒蛇会被毒蛇的毒毒死吗？

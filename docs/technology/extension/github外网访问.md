@@ -247,6 +247,3 @@ hosts 文件在每个系统的位置不一，详情如下：
 
 [Github520](https://github.com/521xueweihan/GitHub520)
 
-## 疑问
-
-人看不见空气，那鱼看得见水吗？

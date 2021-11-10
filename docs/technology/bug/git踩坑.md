@@ -105,6 +105,3 @@ git push origin tmp:dev -f
 
 bug场景：你在开发一个需求时，组长突然让你改某一个bug，此时你master分支是旧项目的代码，而且不包含新需求的代码，你额外需要**建立一个bug分支**，在该分支上进行bug的修复，然后可能是push到远程的bug分支，提个mr,再经过组长查看无误后再合并到远程master分支(线上环境)，也可能是你自己直接merge到master分支，在push到远程的master
 
-## 疑问
-
-医生，不孕不育会遗传吗？

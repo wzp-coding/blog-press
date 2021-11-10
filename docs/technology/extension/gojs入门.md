@@ -395,4 +395,3 @@ myDiagram.model = model;
 
 > [快速上手 GoJS](https://gojs.net.cn/learn/index.html)
 
-## 疑问

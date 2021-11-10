@@ -324,5 +324,3 @@ Node.js 还提供 `setImmediate()`（相当于使用 `setTimeout(() => {}, 0)`�
 >
 > [JS定时器](http://nodejs.cn/learn/discover-javascript-timers)
 
-## 疑问
-蛆死了会生蛆嘛？

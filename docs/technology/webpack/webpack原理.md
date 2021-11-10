@@ -966,6 +966,3 @@ Webstorm 集成了 Node.js 的调试工具，因此使用 Webstorm 调试 Webpac
 > [webpack深入浅出](https://webpack.wuhaolin.cn/)
 
 
-## 疑问
-
-为什么吃完饭要拉屎呢？那为什么不直接吃屎？

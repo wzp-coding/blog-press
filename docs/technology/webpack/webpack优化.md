@@ -2376,6 +2376,3 @@ module.exports = {
 ## 参考
 > [webpack深入浅出](https://webpack.wuhaolin.cn/)
 
-## 疑问
-
-为什么自来水洗过的东西可以吃但是自来水却不能喝？

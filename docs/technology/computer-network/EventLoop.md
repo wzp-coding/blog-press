@@ -312,6 +312,3 @@ Node 端的处理过程如下：
 >
 > [Tasks, microtasks, queues and schedules](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/?utm_source=html5weekly)
 
-## 疑问
-
-笑一笑，十年少，抽烟减少寿命。我边抽边笑可以吗？

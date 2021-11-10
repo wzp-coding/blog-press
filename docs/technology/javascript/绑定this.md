@@ -212,6 +212,3 @@ fun();
 >
 > [JavaScript深入之bind的模拟实现](https://github.com/mqyqingfeng/Blog/issues/12)
 
-## 疑问
-
-如果猪肾虚的话，它的腰子还能补吗？

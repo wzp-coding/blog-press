@@ -205,6 +205,3 @@ Access-Control-Allow-Methods →GET,HEAD,PUT,PATCH,POST,DELETE
 > [具有代表性的 HTTP 状态码](https://juejin.cn/post/6844903519447678990#heading-20)
 
 
-## 疑问
-
-战国七雄，为什么秦国只灭了六国呢？

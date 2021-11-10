@@ -96,6 +96,3 @@ Connection:Keep-Alive
 >
 > [浏览器的工作原理：现代网络浏览器幕后揭秘](https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/#The_browsers_we_will_talk_about)
 
-## 疑问
-
-孕妇打人算群殴吗？

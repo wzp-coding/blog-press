@@ -175,6 +175,3 @@ DDOS 攻击通过使用攻击者控制的几十台或几百台计算机攻击一
 > [CDN与DNS知识汇总](http://hpoenixf.com/DNS%E4%B8%8ECDN%E7%9F%A5%E8%AF%86%E6%B1%87%E6%80%BB.html#comments)
 
 
-## 疑问
-
-为什么电视里割腕会死而断臂却不会？

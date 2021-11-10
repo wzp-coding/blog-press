@@ -482,6 +482,3 @@ worker-demo.html:20 Main: Message from worker {"id":666, "msg":"Hi from task.js"
 > [你不知道的 Web Workers （上）[7.8K 字 | 多图预警]](https://juejin.cn/post/6844904198639714311#heading-10)
 
 
-## 疑问
-
-艾滋病毒会攻击免疫系统，红斑狼疮是免疫过强，如果都得了是不是就没事了？

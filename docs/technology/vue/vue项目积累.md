@@ -82,4 +82,3 @@ title: 项目难点
 
 [gojs中文文档](https://gojs.net.cn/api/index.html)
 
-## 疑问
