@@ -16,7 +16,7 @@ Docker 实质上是在已经运行的 Linux 下制造了一个隔离的文件环
 
 因此，Docker 必须部署在 Linux 内核的系统上。如果其他系统想部署 Docker 就必须安装一个虚拟 Linux 环境。
 
-<img src="../../.vuepress/public../.vuepress/public/images/CV09QJMI2fb7L2k0.png" alt="img" style="zoom:50%;" />
+<img src="../../.vuepress/public/images/CV09QJMI2fb7L2k0.png" alt="img" style="zoom:50%;" />
 
 在 Windows 上部署 Docker 的方法都是先安装一个虚拟机，并在安装 Linux 系统的的虚拟机中运行 Docker。
 
@@ -62,7 +62,7 @@ docker --version
 
 打开docker desktop,找到设置，在==registry-mirrors选项==输入==https://docker.mirrors.ustc.edu.cn/==之后点击 Apply 保存后 Docker 就会重启并应用配置的镜像地址了。
 
-![image-20210725212548242](../../.vuepress/public../.vuepress/public/images/image-20210725212548242.png)
+![image-20210725212548242](../../.vuepress/public/images/image-20210725212548242.png)
 
 ## Docker 安装 Nginx
 
@@ -110,7 +110,7 @@ Cmder.exe /REGISTER ALL
 
 设置语言
 
-<img src="../../.vuepress/public../.vuepress/public/images/image-20210725220426354.png" alt="image-20210725220426354" style="zoom:67%;" />
+<img src="../../.vuepress/public/images/image-20210725220426354.png" alt="image-20210725220426354" style="zoom:67%;" />
 
 ## VScode使用docker
 

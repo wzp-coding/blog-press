@@ -15,7 +15,7 @@ title: 项目难点
 注意：学习gojs是有成本的，需要一定时间，我根据官方文档写了一篇简单的[gojs入门教程](/technology/extension/gojs入门.md )
 
 
-![image-20211010221722952](../../.vuepress/public../.vuepress/public/images/image-20211010221722952.png)
+![image-20211010221722952](../../.vuepress/public/images/image-20211010221722952.png)
 
 
 
@@ -29,7 +29,7 @@ title: 项目难点
 2. 点击`更多`按钮展示所有的`radio`，并显示`收缩`按钮，按钮的位置始终在右侧
 3. 每个`radio`从左到右顺序排列，长度不唯一，可长可短
 
-![image-20211010223724510](../../.vuepress/public../.vuepress/public/images/image-20211010223724510.png)
+![image-20211010223724510](../../.vuepress/public/images/image-20211010223724510.png)
 
 很容易想到，做一个通用组件，传入`label`和`options`，因为`options`是异步请求回来的数据，所以一开始`options`是为空的，当`options`为空数组的时候不显示该组件，通过`v-if`去控制显示整个组件，这样子该组件就变成一个异步组件了，如果你尝试在组件内部`mounted`生命周期函数中，通过`ref`或者其他获取`dom`元素的方式去获取是无法获取到的，因为**组件渲染挂载是异步的，而`mounted`等生命周期钩子执行是同步的**,所以问题就变成**如何获取异步挂载组件的dom元素**
 
