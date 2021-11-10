@@ -1,5 +1,6 @@
 ---
 title: 前端历史
+sidebar: false
 ---
 
 # 前端技术发展史
