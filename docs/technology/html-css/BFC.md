@@ -83,7 +83,7 @@ title: BFC
 
 效果图如下：
 
-<img src="../../.vuepress/public/images/image-20210901182429846.png" alt="image-20210901182429846" style="zoom:50%;" />
+<img src="../../.vuepress/public../.vuepress/public/images/image-20210901182429846.png" alt="image-20210901182429846" style="zoom:50%;" />
 
 ### 解决外边距合并问题
 
@@ -120,7 +120,7 @@ title: BFC
 
 效果图如下：
 
-<img src="../../.vuepress/public/images/image-20210901182802108.png" alt="image-20210901182802108" style="zoom:50%;" />
+<img src="../../.vuepress/public../.vuepress/public/images/image-20210901182802108.png" alt="image-20210901182802108" style="zoom:50%;" />
 
 ### 浮动排列问题
 
@@ -156,7 +156,7 @@ title: BFC
 
 效果图如下：
 
-<img src="../../.vuepress/public/images/image-20210901183517205.png" alt="image-20210901183517205" style="zoom:50%;" />
+<img src="../../.vuepress/public../.vuepress/public/images/image-20210901183517205.png" alt="image-20210901183517205" style="zoom:50%;" />
 
 
 

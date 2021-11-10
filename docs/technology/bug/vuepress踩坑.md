@@ -14,9 +14,9 @@ title: vuepress踩坑
 
 这个是我用到的一些图片，格式各种各样，如何正确都渲染出来呢？
 
-![image-20210919012015024](../../.vuepress/public/images/image-20210919012015024.png)
+![image-20210919012015024](../../.vuepress/public../.vuepress/public/images/image-20210919012015024.png)
 
-引用图片的时候，我们可以直接`/images/`去引用图片，这样`npm run dev`和`npm run build`的时候都可以正常运行
+引用图片的时候，我们可以直接`../.vuepress/public/images/`去引用图片，这样`npm run dev`和`npm run build`的时候都可以正常运行
 
 但是上面这样引用的话，如果我们是在typora上编辑文章的话，是看不到图片的，怎么办呢，改成相对路径？
 

@@ -46,7 +46,7 @@ title: 某些CSS属性
 
 效果如图：
 
-![image-20210902185451865](../../.vuepress/public/images/image-20210902185451865.png)
+![image-20210902185451865](../../.vuepress/public../.vuepress/public/images/image-20210902185451865.png)
 
 结论：经测试，无论**前后顺序**，**盒子模型**，同时出现margin-left和margin-right，**margin-right无效**
 
@@ -106,5 +106,5 @@ title: 某些CSS属性
 
 效果如图：
 
-![image-20210902190306600](../../.vuepress/public/images/image-20210902190306600.png)
+![image-20210902190306600](../../.vuepress/public../.vuepress/public/images/image-20210902190306600.png)
 

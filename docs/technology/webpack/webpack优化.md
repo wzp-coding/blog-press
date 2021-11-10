@@ -1232,7 +1232,7 @@ module.exports = {
 
 CDN 又叫内容分发网络，通过把资源部署到世界各地，用户在访问时按照就近原则从离用户最近的服务器获取资源，从而加速资源的获取速度。 CDN 其实是通过优化物理链路层传输过程中的网速有限、丢包等问题来提升网速的，其大致原理可以如下：
 
-![图4-9-1 CDN 原理](/images/4-9cdn-arch.png)
+![图4-9-1 CDN 原理](../.vuepress/public/images/4-9cdn-arch.png)
 
 在本节中你不必理解 CDN 的具体运行流程和实现原理，你可以简单的把 CDN 服务看作成速度更快的 HTTP 服务。 并且目前很多大公司都会建立自己的 CDN 服务，就算你自己没有资源去搭建一套 CDN 服务，各大云服务提供商都提供了按量收费的 CDN 服务。
 
@@ -1419,7 +1419,7 @@ module.exports = {
 
 文件之间的结构图如下：
 
-![图4-11 提取公共代码文件结构图](/images/4-11%E6%8F%90%E5%8F%96%E5%85%AC%E5%85%B1%E4%BB%A3%E7%A0%81.png)
+![图4-11 提取公共代码文件结构图](../.vuepress/public/images/4-11%E6%8F%90%E5%8F%96%E5%85%AC%E5%85%B1%E4%BB%A3%E7%A0%81.png)
 
 读到这里你可以会有疑问：既然能找出所有页面都依赖的公共代码，并提取出来放到 `common.js` 中去，为什么还需要再把网站所有页面都需要用到的基础库提取到 `base.js` 去呢？ 原因是为了长期的缓存 `base.js` 这个文件。
 
@@ -1532,11 +1532,11 @@ Webpack 官方提供了一个可视化分析工具 [Webpack Analyse](http://webp
 
 打开 Webpack Analyse 链接的网页后，你就会看到一个弹窗提示你上传 JSON 文件，也就是需要上传上面讲到的 `stats.json` 文件，如图：
 
-![图 4-15-1 Webpack Analyse 上传文件弹窗](/images/4-15webpack-analyse-dialog.png)
+![图 4-15-1 Webpack Analyse 上传文件弹窗](../.vuepress/public/images/4-15webpack-analyse-dialog.png)
 
 Webpack Analyse 不会把你选择的 `stats.json` 文件发达到服务器，而是在浏览器本地解析，你不用担心自己的代码为此而泄露。 选择文件后，你马上就能如下的效果图：
 
-![图 4-15-1 Webpack Analyse 主页](/images/4-15webpack-analyse-home.png)
+![图 4-15-1 Webpack Analyse 主页](../.vuepress/public/images/4-15webpack-analyse-home.png)
 
 它分为了六大板块，分别是：
 
@@ -1551,23 +1551,23 @@ Webpack Analyse 不会把你选择的 `stats.json` 文件发达到服务器，�
 
 点击 **Modules**，查看模块信息，效果图如下：
 
-![图 4-15-1 Webpack Analyse Modules](/images/4-15webpack-analyse-modules.png)
+![图 4-15-1 Webpack Analyse Modules](../.vuepress/public/images/4-15webpack-analyse-modules.png)
 
 > 由于依赖了大量第三方模块，文件数量大，导致模块之间的依赖关系图太密集而无法看清，但你可以进一步放大查看。
 
 点击 **Chunks**，查看代码块信息，效果图如下：
 
-![图 4-15-2 Webpack Analyse Chunks](/images/4-15webpack-analyse-chunks.png)
+![图 4-15-2 Webpack Analyse Chunks](../.vuepress/public/images/4-15webpack-analyse-chunks.png)
 
 > 由代码块之间的依赖关系图可以看出两个页面级的代码块 `login` 和 `index` 依赖提取出来的公共代码块 `common`。
 
 点击 **Assets**，查看输出的文件资源，效果图如下：
 
-![图 4-15-3 Webpack Analyse Assets](/images/4-15webpack-analyse-assets.png)
+![图 4-15-3 Webpack Analyse Assets](../.vuepress/public/images/4-15webpack-analyse-assets.png)
 
 点击 **Hints**，查看输出过程中的耗时分布，效果图如下：
 
-![图 4-15-3 Webpack Analyse Hints](/images/4-15webpack-analyse-hints.png)
+![图 4-15-3 Webpack Analyse Hints](../.vuepress/public/images/4-15webpack-analyse-hints.png)
 
 > 从 Hints 可以看出每个文件在处理过程的开始时间和结束时间，从而可以找出是哪个文件导致构建缓慢。
 
@@ -1577,7 +1577,7 @@ Webpack Analyse 不会把你选择的 `stats.json` 文件发达到服务器，�
 
 先来看下它的效果图：
 
-![图 4-15-4 Webpack Analyse Assets](/images/4-15webpack-bundle-analyzer.png)
+![图 4-15-4 Webpack Analyse Assets](../.vuepress/public/images/4-15webpack-bundle-analyzer.png)
 
 它能方便的让你知道：
 
@@ -1726,7 +1726,7 @@ bundle.js.map  1.27 MB       0  [emitted]         main
 
 在浏览器中打开网址 `http://localhost:8080/` 后， 在浏览器的开发者工具中你会发现由代理客户端向 DevServer 发起的 WebSocket 连接：
 
-![图4.5.1 代理客户端发起 WebSocket 连接](/images/4-5inline-client-websocket.png)
+![图4.5.1 代理客户端发起 WebSocket 连接](../.vuepress/public/images/4-5inline-client-websocket.png)
 
 #### 优化自动刷新的性能
 
@@ -1756,7 +1756,7 @@ bundle.js.map  897 kB       0  [emitted]         main
 
 在浏览器中打开网址 `http://localhost:8080/webpack-dev-server/` 后，你会看到如下效果：
 
-![图4.5.2 通过 iframe 自动刷新](/images/4-5iframe-reload.png)
+![图4.5.2 通过 iframe 自动刷新](../.vuepress/public/images/4-5iframe-reload.png)
 
 要开发的网页被放进了一个 iframe 中，编辑源码后，iframe 会被自动刷新。 同时你会发现构建时间从 1566ms 减少到了 1130ms，说明优化生效了。构建性能提升的效果在要输出的 Chunk 数量越多时会显得越突出。
 
@@ -1878,7 +1878,7 @@ webpack: Compiled successfully.
 
 DevServer 新生成了一个用于替换老模块的补丁文件 `0.ea11a51f97f2b52bca7d.hot-update.js`，同时在浏览器开发工具中也能看到请求这个补丁的抓包：
 
-![图4.5.3 模块热替换模式下的补丁](/images/4-6hot-patch.png)
+![图4.5.3 模块热替换模式下的补丁](../.vuepress/public/images/4-6hot-patch.png)
 
 可见补丁中包含了 `main.css` 文件新编译出来 CSS 代码，网页中的样式也立刻变成了源码中描述的那样。
 
@@ -1923,7 +1923,7 @@ if (module.hot) {
 
 在发生模块热替换时，你会在浏览器的控制台中看到类似这样的日志：
 
-![图4.5.4 模块热替换浏览器日志](/images/4-6hmr-log.png)
+![图4.5.4 模块热替换浏览器日志](../.vuepress/public/images/4-6hmr-log.png)
 
 其中的 `Updated modules: 68` 是指 ID 为68的模块被替换了，这对开发者来说很不友好，因为开发者不知道 ID 和模块之间的对应关系，最好是把替换了的模块的名称输出出来。 Webpack 内置的 NamedModulesPlugin 插件可以解决该问题，修改 Webpack 配置文件接入该插件：
 
@@ -1940,7 +1940,7 @@ module.exports = {
 
 重启构建后你会发现浏览器中的日志更加友好了：
 
-![图4.5.4 现实出被替换模块的浏览器日志](/images/4-6hmr-log-named.png)
+![图4.5.4 现实出被替换模块的浏览器日志](../.vuepress/public/images/4-6hmr-log-named.png)
 
 除此之外，模块热替换还面临着和自动刷新一样的性能问题，因为它们都需要监听文件变化和注入客户端。 要优化模块热替换的构建性能，思路和在[4-5 使用自动刷新](https://webpack.wuhaolin.cn/4优化/4-5使用自动刷新.html)中提到的很类似：监听更少的文件，忽略掉 `node_modules` 目录下的文件。 但是其中提到的关闭默认的 inline 模式手动注入代理客户端的优化方法不能用于在使用模块热替换的情况下， 原因在于模块热替换的运行依赖在每个 Chunk 中都包含代理客户端的代码。
 

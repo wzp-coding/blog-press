@@ -10,7 +10,7 @@ title: DNS解析原理
 
 DNS( Domain Name System)是“域名系统”的英文缩写，是一种组织成域层次结构的计算机和网络服务命名系统，它用于TCP/IP网络，它所提供的服务是用来将主机名和域名转换为IP地址的工作。DNS就是这样的一位“翻译官”，它的基本工作原理可用下图来表示
 
-![img](/images/e5143bc08d4ec9d7f210522c7e540f4d_hd.jpg)
+![img](../.vuepress/public/images/e5143bc08d4ec9d7f210522c7e540f4d_hd.jpg)
 
 
 
@@ -26,7 +26,7 @@ DNS是一种由分层的DNS服务器实现的分布式数据库，DNS运行在UD
 
 ## DNS的解析过程
 
-![img](/images/17377538bfdf73f7)
+![img](../.vuepress/public/images/17377538bfdf73f7)
 
 - DNS查询是操作系统自己做的
 - 浏览器输入`www.qq.com`域名，操作系统会先检查自己本地的hosts文件是否有这个网址映射关系，如果有，就先调用这个IP地址映射，完成域名解析
@@ -42,7 +42,7 @@ DNS是一种由分层的DNS服务器实现的分布式数据库，DNS运行在UD
   
   - 迭代查询是由系统配置的DNS服务器做请求，得到结果后将数据返回给客户端
   
-    ![img](/images/7fcd81756bdc8b52ade0531402c43e43_hd.jpg)
+    ![img](../.vuepress/public/images/7fcd81756bdc8b52ade0531402c43e43_hd.jpg)
 
 ## URL的解析顺序
 
@@ -90,7 +90,7 @@ DNS是一种由分层的DNS服务器实现的分布式数据库，DNS运行在UD
 
 - 这样DNSConfig里面就有两个配置了，一个是hosts，另一个是nameservers，DNSConfig是组合到DNSSession，它们的组合关系如下图所示
 
-  <img src="/images/160b1c7ba75fa41a" alt="img" style="zoom: 50%;" />
+  <img src="../.vuepress/public/images/160b1c7ba75fa41a" alt="img" style="zoom: 50%;" />
 
 - resolver是负责解析的驱动类，它组合了一个client，client创建一个session，session层有一个很大的作用是用来管理server_index和socket pool如分配socket等，session初始化config，config用来读取本地绑的hosts和nameservers两个配置
 

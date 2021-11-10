@@ -49,7 +49,7 @@ git reset [--soft | --mixed | --hard] [HEAD]
 >
 > `--hard` 参数撤销工作区中所有未提交的修改内容，将暂存区与工作区都回到上一次版本，并删除之前的所有信息提交：
 
-![img](/images/webp)
+![img](/blog-press/images/webp)
 
 结合图片我们可以直观的看到，我们需要的是不删除文件的前提下，撤销commit，也就是`--mixed`模式，也就是默认模式
 
@@ -69,15 +69,15 @@ git reflog --pretty=oneline
 git reset 哈希值
 ```
 
-![image-20210820144024359](/images/image-20210820144024359.png)
+![image-20210820144024359](../.vuepress/public/images/image-20210820144024359.png)
 
 此时我们可以在工作区看到有很多已修改未提交的文件，此时我们**只选择需要提交的文件**提交到暂存区，再进行commit既可
 
-![image-20210820144154178](/images/image-20210820144154178.png)
+![image-20210820144154178](../.vuepress/public/images/image-20210820144154178.png)
 
 此时`git log --pretty=oneline`查看一下commit记录
 
-![image-20210820144742723](/images/image-20210820144742723.png)
+![image-20210820144742723](../.vuepress/public/images/image-20210820144742723.png)
 
 成功了，此时本地版本库已经回退到我们想要的结果了，下一步就是同步远程分支dev了
 
