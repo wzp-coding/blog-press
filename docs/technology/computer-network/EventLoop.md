@@ -55,7 +55,7 @@ console.log('script end');
 
 ### EventLoop过程解析
 
-![image-20201209223625343](../.vuepress/public/images/image-20201209223625343.png)
+![image-20201209223625343](../../.vuepress/public/images/image-20201209223625343.png)
 
 - 一开始执行栈空,我们可以把**执行栈认为是一个存储函数调用的栈结构，遵循先进后出的原则**。micro 队列空，macro 队列里有且只有一个 script 脚本（整体代码）。
 - 全局上下文（script 标签）被推入执行栈，同步代码执行。在执行的过程中，会判断是同步任务还是异步任务，通过对一些接口的调用，可以产生新的 macro-task 与 micro-task，它们会分别被推入各自的任务队列里。同步代码执行完了，script 脚本会被移出 macro 队列，这个过程本质上是队列的 macro-task 的执行和出队的过程。
@@ -66,7 +66,7 @@ console.log('script end');
 
 我们总结一下，每一次循环都是一个这样的过程：
 
-![image-20201209223940269](../.vuepress/public/images/image-20201209223940269.png)
+![image-20201209223940269](../../.vuepress/public/images/image-20201209223940269.png)
 
 **当某个宏任务执行完后,会查看是否有微任务队列。如果有，先执行微任务队列中的所有任务，如果没有，会读取宏任务队列中排在最前的任务，执行宏任务的过程中，遇到微任务，依次加入微任务队列。栈空后，再次读取微任务队列里的任务，依次类推。**
 
@@ -100,7 +100,7 @@ setTimeout(()=>{
 
 Node 中的 Event Loop 和浏览器中的是完全不相同的东西。Node.js 采用 V8 作为 js 的解析引擎，而 I/O 处理方面使用了自己设计的 libuv，libuv 是一个基于事件驱动的跨平台抽象层，封装了不同操作系统一些底层特性，对外提供统一的 API，事件循环机制也是它里面的实现（下文会详细介绍）。
 
-![image-20201209224059627](../.vuepress/public/images/image-20201209224059627.png)
+![image-20201209224059627](../../.vuepress/public/images/image-20201209224059627.png)
 
 Node.js 的运行机制如下:
 
@@ -113,7 +113,7 @@ Node.js 的运行机制如下:
 
 其中 libuv 引擎中的事件循环分为 6 个阶段，它们会按照顺序反复运行。每当进入某一个阶段的时候，都会从对应的回调队列中取出函数去执行。当队列为空或者执行的回调函数数量到达系统设定的阈值，就会进入下一阶段。
 
-![image-20201209224130806](../.vuepress/public/images/image-20201209224130806.png)
+![image-20201209224130806](../../.vuepress/public/images/image-20201209224130806.png)
 
 从上图中，大致看出 node 中的事件循环的顺序：
 
@@ -255,7 +255,7 @@ process.nextTick(() => {
 
 **浏览器环境下，microtask 的任务队列是每个 macrotask 执行完之后执行。而在 Node.js 中，microtask 会在事件循环的各个阶段之间执行，也就是一个阶段执行完毕，就会去执行 microtask 队列的任务**。
 
-![image-20201209224841173](../.vuepress/public/images/image-20201209224841173.png)
+![image-20201209224841173](../../.vuepress/public/images/image-20201209224841173.png)
 
 
 
@@ -280,7 +280,7 @@ setTimeout(()=>{
 
 浏览器端的处理过程如下：
 
-![img](../.vuepress/public/images/v2-d1ca0d6b13501044a5f74c99becbcd3d_b.webp)
+![img](../../.vuepress/public/images/v2-d1ca0d6b13501044a5f74c99becbcd3d_b.webp)
 
 
 
@@ -292,7 +292,7 @@ Node 端运行结果：`timer1=>timer2=>promise1=>promise2`
 
 Node 端的处理过程如下：
 
-![img](../.vuepress/public/images/v2-963090bd3b681de3313b4466b234f4f0_b.webp)
+![img](../../.vuepress/public/images/v2-963090bd3b681de3313b4466b234f4f0_b.webp)
 
 
 

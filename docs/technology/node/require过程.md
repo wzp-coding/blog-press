@@ -10,11 +10,11 @@ title: require
 
 在node环境中，每个单独的js文件都自带了module变量，require函数等等
 
-![image-20210507235439691](../../.vuepress/public/images/image-20210507235439691.png)
+![image-20210507235439691](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210507235439691.png)
 
 module它是Module类的实例，展开后是这样的，有个空的children数组等其它属性
 
-![image-20210507235455489](../../.vuepress/public/images/image-20210507235455489.png)
+![image-20210507235455489](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210507235455489.png)
 
 导入当前目录的a.js文件
 
@@ -26,13 +26,13 @@ console.log("🚀 ~ file: module.js ~ line 45 ~ a", a)
 
 Local多了a属性和path属性，path是我们定义的'./a'，a是加载进来的模块内容
 
-![image-20210508000133146](../../.vuepress/public/images/image-20210508000133146.png)
+![image-20210508000133146](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210508000133146.png)
 
 此时我们展开module，发现module中的children数组有东西了，仔细一看，原来也是Module类的实例，里面存放的加载进来的a.js文件的相关信息，同样该实例也有一个空的children数组
 
 原来：**模块化是树形结构那样存储的，每个js文件都是一个Module类，children数组存储了子模块，parent属性指向了当前模块的父模块**
 
-![image-20210508000409320](../../.vuepress/public/images/image-20210508000409320.png)
+![image-20210508000409320](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210508000409320.png)
 
 ## 第一次require发生了什么
 
@@ -341,5 +341,5 @@ let internalBinding;
 
 看一下截图，原来是一些原生的模块
 
-![image-20210508235114456](../../.vuepress/public/images/image-20210508235114456.png)
+![image-20210508235114456](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210508235114456.png)
 

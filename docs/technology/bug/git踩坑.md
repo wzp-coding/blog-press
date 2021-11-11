@@ -69,15 +69,21 @@ git reflog --pretty=oneline
 git reset 哈希值
 ```
 
-![image-20210820144024359](../.vuepress/public/images/image-20210820144024359.png)
+![image-20210820144024359](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210820144024359.png)
+
+
 
 此时我们可以在工作区看到有很多已修改未提交的文件，此时我们**只选择需要提交的文件**提交到暂存区，再进行commit既可
 
-![image-20210820144154178](../.vuepress/public/images/image-20210820144154178.png)
+![image-20210820144154178](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210820144154178.png)
+
+
 
 此时`git log --pretty=oneline`查看一下commit记录
 
-![image-20210820144742723](../.vuepress/public/images/image-20210820144742723.png)
+![image-20210820144742723](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210820144742723.png)
+
+
 
 成功了，此时本地版本库已经回退到我们想要的结果了，下一步就是同步远程分支dev了
 

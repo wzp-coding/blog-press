@@ -45,7 +45,7 @@ var myDiagram = $(go.Diagram, "myDiagramDiv");
 
 以上的代码最终结果是创建了一个空的图形，效果如下：
 
-![image-20211018150749834](../../.vuepress/public/images/image-20211018150749834.png)
+![image-20211018150749834](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211018150749834.png)
 
 请注意，go 是所有 GoJS 类型所在的“命名空间”。 所有使用 GoJS 类的代码，例如 **Diagram 或 Node 或 Panel 或 Shape 或 TextBlock 都将以“go.”为前缀**。
 
@@ -77,7 +77,7 @@ myModel.nodeDataArray = [
 myDiagram.model = myModel;
 ```
 
-![image-20211018151855508](../../.vuepress/public/images/image-20211018151855508.png)
+![image-20211018151855508](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211018151855508.png)
 
 该图显示了模型中的三个节点。 一些交互已经是可能的：
 
@@ -195,7 +195,7 @@ myDiagram.model = model;
 
 该代码生成了这个图
 
-![image-20211018152706346](../../.vuepress/public/images/image-20211018152706346.png)
+![image-20211018152706346](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211018152706346.png)
 
 当不显示所有信息时，我们可能想显示一些“默认”状态，例如当图像未加载或名称未知时。本例中的“空”节点数据用于说明节点模板在没有绑定数据上的任何属性的情况下也可以很好地工作。
 
@@ -274,7 +274,7 @@ model.nodeDataArray =
 myDiagram.model = model;
 ```
 
-![image-20211018161041239](../../.vuepress/public/images/image-20211018161041239.png)
+![image-20211018161041239](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211018161041239.png)
 
 ### 图形布局
 
@@ -328,7 +328,7 @@ model.nodeDataArray =
 myDiagram.model = model;
 ```
 
-![image-20211018161127896](../../.vuepress/public/images/image-20211018161127896.png)
+![image-20211018161127896](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211018161127896.png)
 
 我们的图表开始看起来像一个合适的组织结构图，但我们可以通过链接做得更好。
 
@@ -389,7 +389,7 @@ model.nodeDataArray =
 myDiagram.model = model;
 ```
 
-![image-20211018161620975](../../.vuepress/public/images/image-20211018161620975.png)
+![image-20211018161620975](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211018161620975.png)
 
 ## 参考
 

@@ -17,7 +17,7 @@ title: node-eventloop
 
 你知道在调试器或浏览器控制台中可能熟悉的错误堆栈跟踪吗？ 浏览器在调用堆栈中查找函数名称，以告知你是哪个函数发起了当前的调用：
 
-![img](../../.vuepress/public/images/exception-call-stack.png)
+![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/exception-call-stack.png)
 
 ## 一个简单的事件循环的阐释
 
@@ -49,11 +49,11 @@ baz
 
 此时，调用堆栈如下所示：
 
-![img](../../.vuepress/public/images/call-stack-first-example.png)
+![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/call-stack-first-example.png)
 
 每次迭代中的事件循环都会查看调用堆栈中是否有东西并执行它直到调用堆栈为空：
 
-![img](../../.vuepress/public/images/execution-order-first-example.png)
+![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/execution-order-first-example.png)
 
 ## 入队函数执行
 
@@ -91,11 +91,11 @@ bar
 
 此时，调用堆栈如下所示：
 
-![img](../../.vuepress/public/images/call-stack-second-example.png)
+![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/call-stack-second-example.png)
 
 这是程序中所有函数的执行顺序：
 
-![img](../../.vuepress/public/images/execution-order-second-example.png)
+![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/execution-order-second-example.png)
 
 为什么会这样呢？
 
@@ -285,15 +285,15 @@ const interval = setInterval(() => {
 
 如果一个函数总是花费相同的时间，那就没问题了：
 
-[![img](../../.vuepress/public/images/setinterval-ok.png)](http://nodejs.cn/static/fa9e9fec1aea517d98b47b11c5fec296/4d383/setinterval-ok.png)
+[![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/setinterval-ok.png)](http://nodejs.cn/static/fa9e9fec1aea517d98b47b11c5fec296/4d383/setinterval-ok.png)
 
 函数可能需要不同的执行时间，这具体取决于网络条件，例如：
 
-![img](../../.vuepress/public/images/setinterval-varying-duration.png)
+![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/setinterval-varying-duration.png)
 
 也许一个较长时间的执行会与下一次执行重叠：
 
-![img](../../.vuepress/public/images/setinterval-overlapping.png)
+![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/setinterval-overlapping.png)
 
 为了避免这种情况，可以在回调函数完成时安排要被调用的递归的 setTimeout：
 
@@ -309,7 +309,7 @@ setTimeout(myFunction, 1000)
 
 实现此方案：
 
-![img](../../.vuepress/public/images/recursive-settimeout.png)](http://nodejs.cn/static/4bde07363650160e953f899734adc29e/1790f/recursive-settimeout.png)
+![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/recursive-settimeout.png)](http://nodejs.cn/static/4bde07363650160e953f899734adc29e/1790f/recursive-settimeout.png)
 
 `setTimeout` 和 `setInterval` 可通过[定时器模块](http://nodejs.cn/api/timers.html)在 Node.js 中使用。
 
