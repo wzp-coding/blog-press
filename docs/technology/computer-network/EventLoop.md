@@ -280,7 +280,7 @@ setTimeout(()=>{
 
 浏览器端的处理过程如下：
 
-![img](../../.vuepress/public/images/v2-d1ca0d6b13501044a5f74c99becbcd3d_b.webp)
+![img](../../.vuepress/public/images/v2-d1ca0d6b13501044a5f74c99becbcd3d_b.jpg)
 
 
 
@@ -292,7 +292,7 @@ Node 端运行结果：`timer1=>timer2=>promise1=>promise2`
 
 Node 端的处理过程如下：
 
-![img](../../.vuepress/public/images/v2-963090bd3b681de3313b4466b234f4f0_b.webp)
+![img](../../.vuepress/public/images/v2-963090bd3b681de3313b4466b234f4f0_b.jpg)
 
 
 
