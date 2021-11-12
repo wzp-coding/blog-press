@@ -45,7 +45,7 @@ const nav = [
         // link: "/technology/",
         items: [
             {
-                text: "HTMLCSS",
+                text: "HtmlCss",
                 link: "/technology/html-css/",
             },
             {
