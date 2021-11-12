@@ -7,10 +7,10 @@ cd docs/.vuepress/dist # 进入生成的文件夹
 # deploy to github
 # echo 'blog.xugaoyi.com' > CNAME
 if [ -z "$GITHUB_TOKEN" ]; then
-  msg= $(date "+%Y-%m-%d %H:%M:%S")
+  msg=$(date "+%Y-%m-%d %H:%M:%S")
   githubUrl=git@github.com:wzp-coding/blog-press.git
 else
-  msg= $(date "+%Y-%m-%d %H:%M:%S")
+  msg=$(date "+%Y-%m-%d %H:%M:%S")
   githubUrl=https://wzp-coding:${GITHUB_TOKEN}@github.com/wzp-coding/blog-press.git
   git config --global user.name "wzp-coding"
   git config --global user.email "2236277721@qq.com"
