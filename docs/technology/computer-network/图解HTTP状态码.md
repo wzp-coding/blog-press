@@ -15,7 +15,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/blog-press/images/16029efa6af2ea6c)
+![image-20211112105816799](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112105816799.png)
 
 
 
@@ -27,7 +27,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/blog-press/images/16029efa697ec682)
+![image-20211112105821470](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112105821470.png)
 
 
 
@@ -39,7 +39,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/blog-press/images/16029efb76d2b65f)
+![image-20211112105825236](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112105825236.png)
 
 
 
@@ -54,7 +54,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/blog-press/images/16029efa6a4ba749)
+![image-20211112105831340](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112105831340.png)
 
 
 
@@ -66,7 +66,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/blog-press/images/16029efba78b2b7e)
+![image-20211112105942201](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112105942201.png)
 
 
 
@@ -78,7 +78,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/blog-press/images/16029efbc1b5cfce)
+![image-20211112140517079](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112140517079.png)
 
 
 
@@ -93,7 +93,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/blog-press/images/16029efaa07f726e)
+![image-20211112140525404](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112140525404.png)
 
 
 
@@ -115,7 +115,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/blog-press/images/16029efaa064bdb6)
+![image-20211112140532629](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112140532629.png)
 
 
 
@@ -125,7 +125,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/blog-press/images/16029efacc2e6a4c)
+![image-20211112140543679](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112140543679.png)
 
 
 
@@ -137,7 +137,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/blog-press/images/16029efaa0cce655)
+![图片摘取自HTTP图解](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112140552722.png)
 
 
 
@@ -149,7 +149,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](/blog-press/images/16029efac97cd782)
+![image-20211112140603667](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112140603667.png)
 
 
 
@@ -175,7 +175,7 @@ Access-Control-Allow-Methods →GET,HEAD,PUT,PATCH,POST,DELETE
 
 
 
-![图片摘取自HTTP图解](/blog-press/images/16029efae2420839)
+![image-20211112142058412](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142058412.png)
 
 
 
@@ -191,7 +191,7 @@ Access-Control-Allow-Methods →GET,HEAD,PUT,PATCH,POST,DELETE
 
 
 
-![图片摘取自HTTP图解](/blog-press/images/16029efaf01b284a)
+![image-20211112142105645](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142105645.png)
 
 
 
@@ -203,5 +203,4 @@ Access-Control-Allow-Methods →GET,HEAD,PUT,PATCH,POST,DELETE
 ## 参考
 
 > [具有代表性的 HTTP 状态码](https://juejin.cn/post/6844903519447678990#heading-20)
-
 

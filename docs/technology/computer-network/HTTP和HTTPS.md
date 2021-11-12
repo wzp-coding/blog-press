@@ -10,7 +10,7 @@ title: HTTP和HTTPS
 
 超文本传输协议可以进行文字分割：**超文本（Hypertext）、传输（Transfer）、协议（Protocol）**，它们之间的关系如下：
 
-<img src="/blog-press/images/16f8f77381d78ded" alt="img" style="zoom:50%;" />
+![image-20211112142427775](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142427775.png)
 
 
 
@@ -28,7 +28,7 @@ title: HTTP和HTTPS
 
 
 
-<img src="/blog-press/images/16f8f7738365c270" alt="img" style="zoom:50%;" />
+![image-20211112142433398](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142433398.png)
 
 
 
@@ -78,14 +78,14 @@ UDP 协议向它的应用程序提供了无连接服务。它不具备可靠性�
 
 五层网络协议的示意图如下
 
-<img src="/blog-press/images/16f8f773aa80e2bf" alt="img" style="zoom:50%;" />
+![image-20211112142439179](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142439179.png)
 
 
 ### OSI 模型
 
 我们上面讨论的计算网络协议模型不是唯一的 `协议栈`，ISO（国际标准化组织）提出来计算机网络应该按照7层来组织，那么7层网络协议栈与5层的区别在哪里？
 
-<img src="/blog-press/images/16f8f773848b82b0" alt="img" style="zoom: 50%;" />
+![image-20211112142443470](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142443470.png)
 
 
 
@@ -97,7 +97,7 @@ UDP 协议向它的应用程序提供了无连接服务。它不具备可靠性�
 
 
 
-<img src="/blog-press/images/16f8f773841fb034" alt="img" style="zoom:25%;" />
+![image-20211112142447508](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142447508.png)
 
 
 
@@ -165,7 +165,7 @@ DNS 的全称是`域名系统（Domain Name System，缩写：DNS）`，它作�
 
 URI 不仅包括 URL，还包括 URN（统一资源名称），它们之间的关系如下
 
-<img src="/blog-press/images/16f8f7738224494f" alt="img" style="zoom:33%;" />
+![image-20211112142453198](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142453198.png)
 
 ## 什么是HTTPS？
 
@@ -204,13 +204,13 @@ HTTP 协议主要由三大部分组成：
 
 其中起始行和头部字段并成为 `请求头` 或者 `响应头`，统称为 `Header`；消息正文也叫做实体，称为 `body`。HTTP 协议规定每次发送的报文必须要有 Header，但是可以没有 body，也就是说头信息是必须的，实体信息可以没有。而且在 header 和 body 之间必须要有一个空行（CRLF），如果用一幅图来表示一下的话，我觉得应该是下面这样
 
-<img src="/blog-press/images/16f8f77382f2e9cc" alt="img" style="zoom:33%;" />
+![image-20211112142458092](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142458092.png)
 
 
 
 我们使用上面的那个例子来看一下 http 的请求报文
 
-<img src="/blog-press/images/16f8f773ad4160ae" alt="img" style="zoom:55%;" />
+![image-20211112142501843](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142501843.png)
 
 
 
@@ -218,7 +218,7 @@ HTTP 协议主要由三大部分组成：
 
 每个报文的起始行都是由三个字段组成：**方法、URL 字段和 HTTP 版本字段**。
 
-<img src="/blog-press/images/16f8f773ac6b9fdc" alt="img" style="zoom:50%;" />
+![image-20211112142505513](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142505513.png)
 
 
 
@@ -246,7 +246,7 @@ HTTP 请求方法一般分为 8 种，它们分别是
 
 我们一般最常用的方法也就是 GET 方法和 POST 方法，其他方法暂时了解即可。下面是 HTTP1.0 和 HTTP1.1 支持的方法清单
 
-<img src="/blog-press/images/16f8f773d14157ce" alt="img" style="zoom: 67%;" />
+![image-20211112142508986](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142508986.png)
 
 
 
@@ -260,7 +260,7 @@ HTTP 协议使用 URI 定位互联网上的资源。正是因为 URI 的特定�
 
 首先出场的是 `http`
 
-<img src="/blog-press/images/16f8f773aee975ef" alt="img" style="zoom:50%;" />
+![image-20211112142512503](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142512503.png)
 
 
 
@@ -268,7 +268,7 @@ HTTP 协议使用 URI 定位互联网上的资源。正是因为 URI 的特定�
 
 第二个出场的是 `主机`
 
-<img src="/blog-press/images/16f8f773da79f9da" alt="img" style="zoom:50%;" />
+![image-20211112142516399](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142516399.png)
 
 
 
@@ -276,7 +276,7 @@ HTTP 协议使用 URI 定位互联网上的资源。正是因为 URI 的特定�
 
 第三个出场的是 `端口`
 
-<img src="/blog-press/images/16f8f773d35c1097" alt="img" style="zoom:50%;" />
+![image-20211112142519977](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142519977.png)
 
 
 
@@ -286,7 +286,7 @@ HTTP 协议使用 URI 定位互联网上的资源。正是因为 URI 的特定�
 
 第四个出场的是 `路径`
 
-<img src="/blog-press/images/16f8f773d0294a55" alt="img" style="zoom:50%;" />
+![image-20211112142525758](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142525758.png)
 
 
 
@@ -294,7 +294,7 @@ HTTP 协议使用 URI 定位互联网上的资源。正是因为 URI 的特定�
 
 紧跟着路径后面的是 `查询参数`
 
-<img src="/blog-press/images/16f8f773d4374cfe" alt="img" style="zoom:50%;" />
+![image-20211112142529610](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142529610.png)
 
 
 
@@ -302,7 +302,7 @@ HTTP 协议使用 URI 定位互联网上的资源。正是因为 URI 的特定�
 
 紧跟着参数的是`锚点`
 
-<img src="/blog-press/images/16f8f773d53cf690" alt="img" style="zoom:50%;" />
+![image-20211112142532899](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142532899.png)
 
 
 
@@ -349,7 +349,7 @@ Date: Wed, 21 Oct 2015 07:28:00 GMT
 
 
 
-<img src="/blog-press/images/16f8f773ffc984bc" alt="img" style="zoom:50%;" />
+![image-20211112142538113](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142538113.png)
 
 
 
@@ -382,7 +382,7 @@ Connection: close
 
 HTTP1.1 其他通用标头如下
 
-<img src="/blog-press/images/16f8f7740712b503" alt="img" style="zoom: 67%;" />
+![image-20211112142548160](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142548160.png)
 
 
 
@@ -410,7 +410,7 @@ Content-Encoding: gzip  //响应头
 
 下面是一些实体标头字段
 
-<img src="/blog-press/images/16f8f774025490ef" alt="img" style="zoom: 67%;" />
+![image-20211112142553183](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142553183.png)
 
 
 
@@ -488,7 +488,7 @@ ETag 属于响应标头，后面进行介绍。
 
 内容协商机制是指客户端和服务器端就响应的资源内容进行交涉，然后提供给客户端最为适合的资源。内容协商会以响应资源的语言、字符集、编码方式等作为判断的标准。
 
-<img src="/blog-press/images/16f8f7740ad04855" alt="img" style="zoom:50%;" />
+![image-20211112142558985](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142558985.png)
 
 
 
@@ -569,7 +569,7 @@ Accept-Language: en-US,en;q=0.5
 
 
 
-<img src="/blog-press/images/16f8f77424b4fd0b" alt="img" style="zoom: 67%;" />
+![image-20211112142604459](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142604459.png)
 
 
 
@@ -696,7 +696,7 @@ HTTP 首部字段是可以自行扩展的。所以在 Web 服务器和浏览器�
 
 下面是一个响应头的汇总，基于 HTTP 1.1
 
-<img src="/blog-press/images/16f8f773ffb5140f" alt="img" style="zoom:67%;" />
+![image-20211112142609829](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142609829.png)
 
 
 
@@ -778,7 +778,7 @@ HTTPS 的全称是 `Hypertext Transfer Protocol Secure`，从名称我们可以�
 
 
 
-![img](/blog-press/images/17194b59c7e0e02b)
+![image-20211112142616806](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142616806.png)
 
 
 
@@ -795,7 +795,7 @@ https://www.cxuanblog.com/
 
 
 
-<img src="/blog-press/images/17194b59c7d40a8a" alt="img" style="zoom:50%;" />
+![image-20211112142622933](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142622933.png)
 
 
 
@@ -839,7 +839,7 @@ HTTP 2.0 是 2015 年开发出来的标准，它主要做的改变如下
 
 - `多路复用`，即每一个请求都是是用作连接共享。一个请求对应一个id，这样一个连接上可以有多个请求。
 
-<img src="/blog-press/images/17194b5a30d0cbfc" alt="img" style="zoom: 67%;" />
+![image-20211112142627242](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142627242.png)
 
 ### HTTPS的工作原理(TLS握手，RSA非对称加密)
 
@@ -847,7 +847,7 @@ HTTPS 不是一种新出现的协议，而是HTTP+SSL = HTTPS
 
 
 
-<img src="/blog-press/images/17194b5a59afb4dc" alt="img" style="zoom:50%;" />
+![image-20211112142632640](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142632640.png)
 
 
 
@@ -861,7 +861,7 @@ TLS 具体的握手过程会根据所使用的`密钥交换算法的类型`和�
 
 
 
-<img src="/blog-press/images/17194b5a5a1b5f82" alt="img" style="zoom:33%;" />
+![image-20211112142635829](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142635829.png)
 
 
 

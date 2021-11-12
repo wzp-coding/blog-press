@@ -6,7 +6,7 @@ title: url输入后发生什么
 
 [[toc]]
 
-![从输入 URL 到页面展示完整流程示意图](/blog-press/images/1731a0a7812b8fca)
+![image-20211112103143396](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112103143396.png)
 
 
 
@@ -68,9 +68,9 @@ Connection:Keep-Alive
 
 
 
-![含有 stream 格式的 Content-Type](/blog-press/images/1731a0b4260ae3e8)
+![image-20211112103153704](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112103153704.png)
 
-![含有 HTML 格式的 Content-Type](/blog-press/images/1731a0ae56e769ed)
+![image-20211112103158988](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112103158988.png)
 
 
 
@@ -82,7 +82,7 @@ Connection:Keep-Alive
 
 - 浏览器收到“确认提交”的消息后，会更新浏览器的页面状态，包括了安全状态、地址栏的 URL、前进后退的历史状态，并更新web页面，此时的web页面是空白页。这也解释了为什么在浏览器的地址栏里面输入了一个地址后，之前的页面没有立马消失，而是要加载一会儿才会更新页面。
 
-![导航完成状态](/blog-press/images/1731a0c76972b13d)
+![image-20211112103204834](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112103204834.png)
 
 - 渲染进程对文档进行页面解析和子资源加载，HTML 通过HTML 解析器转成DOM Tree（二叉树类似结构的东西），CSS按照CSS 规则和CSS解释器转成CSSOM TREE，两个tree结合，形成render tree（不包含HTML的具体元素和元素要画的具体位置），通过Layout可以计算出每个元素具体的宽高颜色位置，结合起来，开始绘制，最后显示在屏幕中新页面显示出来。（具体看浏览器渲染原理）
 

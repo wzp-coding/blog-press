@@ -151,7 +151,7 @@ hosts 文件在每个系统的位置不一，详情如下：
 
 如图：
 
-![![](https://gitee.com/wu_monkey/blog-images/raw/master/images/AdGuard-rules.png)](../../.vuepress/public/images/AdGuard-rules.png)
+![](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112143300372.png)
 
 更新间隔在 **设置>常规设置>过滤器更新间隔（设置一小时一次即可）**，记得勾选上 **使用过滤器和 Hosts 文件以拦截指定域名**
 
