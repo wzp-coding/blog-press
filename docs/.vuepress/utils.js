@@ -36,10 +36,10 @@ const nav = [
         text: "首页",
         link: "/",
     },
-    // {
-    //     text: "生活",
-    //     link: "/life/",
-    // },
+    {
+        text: "生活",
+        link: "/life/",
+    },
     {
         text: "技术",
         // link: "/technology/",
