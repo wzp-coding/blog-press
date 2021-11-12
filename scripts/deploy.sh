@@ -7,7 +7,7 @@ cd docs/.vuepress/dist # 进入生成的文件夹
 # deploy to github
 # echo 'blog.xugaoyi.com' > CNAME
 if [ -z "$GITHUB_TOKEN" ]; then
-  msg='deploy'
+  msg= $(date "+%Y-%m-%d %H:%M:%S")
   githubUrl=git@github.com:wzp-coding/blog-press.git
 else
   msg='来自github action的自动部署'
