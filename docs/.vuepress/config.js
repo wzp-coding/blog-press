@@ -76,6 +76,7 @@ module.exports = {
         repo: 'blog-press', // 存储 Issue 和评论的仓库的名称
         clientId: '3a9127eee150c7ae4a1c', // 刚保存下来的  Client ID
         clientSecret: 'f65d2fbc8758baeaa485c8cbfb1162f25af62b49', //  刚才保存下来的 Client secrets
+        autoCreateIssue: true,//自动创建评论
       }
     ],
   ]

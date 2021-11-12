@@ -12,8 +12,3 @@ features:
   details: 分享技术思考
 footer: MIT Licensed | Copyright © 2021-8-21 wzp-coding
 ---
-
-
-# Vssue Demo
-
-<Vssue/>
