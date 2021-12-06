@@ -2,7 +2,7 @@
 title: Symbol
 ---
 
-# 你了解Symbol吗
+# 了解一下Symbol
 
 [[toc]]
 

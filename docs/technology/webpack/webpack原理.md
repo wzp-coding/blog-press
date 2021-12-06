@@ -2,7 +2,7 @@
 title: webpack原理
 ---
 
-# 你知道webpack的这些原理吗
+# 了解一下webpack的工作原理
 [[toc]]
 
 ## 工作原理概括

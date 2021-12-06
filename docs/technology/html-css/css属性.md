@@ -16,39 +16,7 @@ title: 某些CSS属性
 - 指定**三个**值时，第一个值应用于**上边**，第二个值应用于**右边和左边**，第三个则应用于**下边**的外边距。
 - 指定**四个**值时，依次（顺时针方向）作为**上边**，**右边**，**下边**，和**左边**的外边距。
 
-### margin-left和margin-right同时出现
-
-```html
-<style>
-    .parent{
-        width: 200px;
-        height: 200px;
-        border: 1px solid #000;
-    }
-    .child{
-        height: 20px;
-        width: 20px;
-        box-sizing: border-box;/* 分别测试不同的值*/
-        /* margin-left,margin-right同时出现,前后顺序？ */
-        margin-right: 220px;
-        margin-left: 200px;
-        /* 无论前后顺序，盒子模型，同时出现margin-left和margin-right，margin-right无效 */
-        background-color: aqua;
-    }
-</style>
-
-<body>
-    <div class="parent">
-        <div class="child"></div>
-    </div>
-</body>
-```
-
-效果如图：
-
-![image-20210902185451865](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210902185451865.png)
-
-结论：经测试，无论**前后顺序**，**盒子模型**，同时出现margin-left和margin-right，**margin-right无效**
+注意：指定三个值的时候分别表示上-左右-下，可能很多人(我是其中一个)常用到一，二，四个值，从而忽略了传三个值的用法
 
 ## box-sizing
 

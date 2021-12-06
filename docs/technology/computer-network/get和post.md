@@ -2,7 +2,7 @@
 title: get和post
 ---
 
-# 你知道get和post有啥区别吗？
+# 了解一下get和post的区别
 
 [[toc]]
 

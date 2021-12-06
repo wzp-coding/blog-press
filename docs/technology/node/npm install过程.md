@@ -2,7 +2,7 @@
 title: npm install
 ---
 
-# 你真的懂npm install?
+# 了解一下npm install的执行流程?
 
 [[toc]]
 

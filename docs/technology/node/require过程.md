@@ -2,7 +2,7 @@
 title: require
 ---
 
-# node中的require会发生什么？
+# 了解一下node中的require发生了什么？
 
 [[toc]]
 

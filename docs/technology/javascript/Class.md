@@ -2,7 +2,7 @@
 title: ES6 class
 ---
 
-# 你了解class原理吗？
+# 了解一下class原理？
 
 [[toc]]
 

@@ -1,7 +1,7 @@
 ---
 title: EventLoop
 ---
-# 不至于连EventLoop都不知道吧！
+# 了解一下EventLoop
 [[toc]]
 ## 浏览器中的EventLoop
 

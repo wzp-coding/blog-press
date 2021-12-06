@@ -2,7 +2,7 @@
 title: Web Worker
 ---
 
-# 你连Web Worker都不知道吗？
+# 了解一下Web Worker？
 [[toc]]
 ## Web Worker 是什么？
 

@@ -2,7 +2,7 @@
 title: bind实现
 ---
 
-# 你知道bind，apply，call原理吗
+# 了解一下bind，apply，call原理
 
 [[toc]]
 

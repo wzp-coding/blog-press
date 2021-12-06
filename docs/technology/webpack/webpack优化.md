@@ -1,7 +1,7 @@
 ---
 title: webpack优化
 ---
-# 你知道webpack这些优化措施吗
+# 了解一下webpack的优化措施
 [[toc]]
 
 ## 如何减少打包时间

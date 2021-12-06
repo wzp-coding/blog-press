@@ -4,7 +4,7 @@ title: HTTP和HTTPS
 
 
 
-# HTTP天天用，应该要懂
+# 了解一下HTTP以及HTTPS
 [[toc]]
 首先， HTTP 是一种 `超文本传输协议(Hypertext Transfer Protocol)`，那么什么是超文本传输协议？
 

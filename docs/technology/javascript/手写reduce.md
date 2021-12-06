@@ -2,7 +2,7 @@
 title: reduce
 ---
 
-# 你知道reduce吗？
+# 了解一下reduce？
 
 [[toc]]
 
