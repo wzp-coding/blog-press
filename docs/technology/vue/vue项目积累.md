@@ -58,10 +58,15 @@ title: 项目难点
    ```js
    directives: {
        realMounted: {
+           <!-- vue2.x写法 -->
+           inserted(el, binding, vnode, prevVnode) {
+               binding.value()
+           },
+
+           <!-- vue3.x写法 -->
            mounted(el, binding, vnode, prevVnode) {
                binding.value()
            },
-   
        }
    },
    ```
@@ -76,7 +81,28 @@ title: 项目难点
    </div>
    ```
 
-   这样真正挂载的时候就会调用绑定的`realMounted`函数
+   这样绑定**指令**的元素真正挂载的时候就会调用绑定的`realMounted`函数
+
+3. vue2.x通过hook:mounted,vue3.x通过vnode-mounted事件监听VNode挂载时机
+
+- vue2.x写法
+   ```vue
+   <div v-if="options.length!=0" @hook:mounted="realMounted">
+       <div v-for="i in options" :key="i">{{i}}</div>
+       <div ref="child1"></div>
+       <div ref="child2"></div>
+   </div>
+   ```
+- vue3.x写法
+   ```vue
+   <div v-if="options.length!=0" @vnode-mounted="realMounted">
+       <div v-for="i in options" :key="i">{{i}}</div>
+       <div ref="child1"></div>
+       <div ref="child2"></div>
+   </div>
+   ```
+
+   这样绑定**事件**的元素真正挂载的时候就会调用绑定的`realMounted`函数
 
 ## 参考
 
