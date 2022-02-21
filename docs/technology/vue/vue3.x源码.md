@@ -16,7 +16,7 @@ title: vue3.x源码
 
 整个过程的思维导图（超级详细包含代码）
 
-[在线查看-processon思维导图](https://www.processon.com/view/link/61ba397907912930a06e876e#map)
+[在线查看-processon思维导图](https://www.processon.com/embed/61bafee8e0b34d6b524a594e)
 
 ### 为什么绕一大圈用ensureRenderer() 来生成renderer
 
