@@ -65,6 +65,10 @@ const nav = [
                 link: "/technology/node/",
             },
             {
+                text: "Database",
+                link: "/technology/data-base/",
+            },
+            {
                 text: "计算机网络",
                 link: "/technology/computer-network/",
             },
