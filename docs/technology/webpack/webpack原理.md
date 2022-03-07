@@ -686,10 +686,10 @@ Webpack 启动后，在读取配置的过程中会先执行 `new BasicPlugin(opt
 
 在开发 Plugin 时最常用的两个对象就是 Compiler 和 Compilation，它们是 Plugin 和 Webpack 之间的桥梁。 Compiler 和 Compilation 的含义如下：
 
-- Compiler 对象包含了 Webpack 环境所有的的配置信息，包含 options，loaders，plugins 这些信息，这个对象在 Webpack 启动时候被实例化，它是全局唯一的，可以简单地把它理解为 Webpack 实例；
+- Compiler 对象包含了 Webpack 环境所有的的配置信息，包含 options，loaders，plugins 这些信息，这个对象在 Webpack 启动时候被实例化，它是**全局唯一**的，可以简单地把它理解为 Webpack 实例；
 - Compilation 对象包含了当前的模块资源、编译生成资源、变化的文件等。当 Webpack 以开发模式运行时，每当检测到一个文件变化，一次新的 Compilation 将被创建。Compilation 对象也提供了很多事件回调供插件做扩展。通过 Compilation 也能读取到 Compiler 对象。
 
-Compiler 和 Compilation 的区别在于：Compiler 代表了整个 Webpack 从启动到关闭的生命周期，而 Compilation 只是代表了一次新的编译。
+Compiler 和 Compilation 的区别在于：**Compiler 代表了整个 Webpack 从启动到关闭的生命周期，而 Compilation 只是代表了一次新的编译。**
 
 ### 事件流
 
@@ -793,7 +793,7 @@ compiler.plugin('watch-run', (watching, callback) => {
     // 获取发生变化的文件列表
     const changedFiles = watching.compiler.watchFileSystem.watcher.mtimes;
     // changedFiles 格式为键值对，键为发生变化的文件路径。
-    if (changedFiles[filePath] ! undefined) {
+    if (changedFiles[filePath] !== undefined) {
       // filePath 对应的文件发生了变化
     }
     callback();
