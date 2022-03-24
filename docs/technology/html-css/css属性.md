@@ -18,6 +18,52 @@ title: 某些CSS属性
 
 注意：指定三个值的时候分别表示上-左右-下，可能很多人(我是其中一个)常用到一，二，四个值，从而忽略了传三个值的用法
 
+### 冷知识
+
+`margin-left:100px;`和`margin-right:-100px;`有啥区别？
+
+`margin-left:100px;`它会将**左边的元素**(或边界)推开，如果**左边的元素**还有**向左移动的空间**，它也会一起移动，最终两个元素距离为`100px`
+
+`margin-right:-100px;`它会将**自己**往右移动`100px`，**无视边界和其它元素**，
+
+个人理解：正值相当于两个元素之间相互推开，力的作用是相互的，如果另一方是元素，且该元素另一边有可移动的空间，则这两个元素会**同时移动`50px`**，如果是边界，边界不会移动，则自己移动`100px`；负值相当于两个元素之间相互拥抱，同样，如果另一方是元素，也会**同时移动一半距离**，如果是边界，则自己移动所有距离
+
+例如：下面代码的表现形式
+
+```html
+<style>
+    body{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+    .right{
+        height: 200px;
+        width: 200px;
+        background-color: aquamarine;
+    }
+    .left{
+        height: 200px;
+        width: 200px;
+        margin-right: 0px;
+        background-color: bisque;
+    }
+</style>
+<body>
+    <div class="left">left</div>
+    <div class="right">right</div>
+</body>
+```
+
+
+
+
+
+![margin](https://gitee.com/wu_monkey/blog-images/raw/master/images/margin.gif)
+
+> 注意：padding没有负值！！！
+
 ## box-sizing
 
 ### 基本知识
@@ -75,4 +121,44 @@ title: 某些CSS属性
 效果如图：
 
 ![image-20210902190306600](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210902190306600.png)
+
+## CSS度量单位
+
+度量单位分**相对长度单位**、**绝对长度单位**、**百分比单位**
+
+- 相对单位：px，em，rem，ch，ex
+- 绝对单位：cm，mm，pt，in，pc，Q
+  - in > cm > pc > mm > pt > Q
+- 百分比单位：%，vmin，vmax，vh，vw，
+
+- px：像素（Pixel）
+  - 像素是相对于**显示器屏幕分辨率**而言的。
+  - 例如，windows的用户所使用的分辨率一般是96像素/英寸。而Mac的用户所使用的分辨率一般是72像素/英寸。
+- em：相对于父元素的`font-size`
+- rem：相对于根元素（html）的`font-size`
+- %：宽高随着浏览器的大小相应变化
+  - 子元素的`height`或`width`中使用百分比, 是相对于子元素的直接父元素, `width`相对于父元素的`width`, `height`相对于父元素的`height`
+  - 子元素的`top`和`bottom`如果设置百分比, 则相对于直接非`static`定位的父元素的高度, 同样子元素的`left`和`right`如果设置百分比, 则相对于直接非`static`定位父元素的宽度
+  - 子元素的`padding`如果设置百分比, 不论是垂直方向或者是水平方向, 都相对于直接父亲元素的`width`, 而与父元素的`height`无关
+  - 子元素的`margin`如果设置成百分比, 不论是垂直方向还是水平方向, 都相对于直接父元素的`width`
+  - 设置`border-radius`为百分比, 则是相对于自身的宽度, 还有`translate`, `background-size`等都是相对于自身的
+- vw：相对于视窗的宽度, `1vw`等于视窗宽度的`1%`
+- vh：相对于视窗的高度, `1vh`等于视窗高度的`1%`
+- vmin：`vw`和`vh`中的较小值
+- vmax：`vw`和`vh`中的较大值
+  - 例如，视窗高度900px，视窗宽度600px，`1vmin = 600px * 1% = 6px`，`1vmax = 900px * 1% = 9px`
+- ex：`ex`是指所用字体中小写`x`的高度, 但不同字体`x`的高度可能不同, 对于很多字体来说`1ex = 0.5em`, 所以很多浏览器在实际应用中取`em`值一半作为`ex`值, `ex`单位在实际中常用于微调
+- ch：`ch`与`ex`类似, 这一单位代表元素所用字体中`0`这一字形的宽度, 更准确地说是`0`这一字形的预测尺寸, 如果无法确定`0`字形的大小, 则必须假定其宽为`0.5em`高为`1em`, 也就是取`em`值的一半作为`ch` 值
+- cm：厘米（centimeters）， `1cm = 10mm = 96px/2.54 = 37.8px`
+- mm：毫米（millimeters），`1mm = 0.1cm = 3.78px`
+- Q：四分之一毫米（quarter-millimeters），`1Q = 1/40cm = 0.945px`
+- pt：点（points），`1pt = 1/72in = 0.0139in = 1/722.54cm = 1/7296px = 1.33px`
+- in：英寸（inches），`1in = 2.54cm = 96px`
+- pc：派卡（picas）， `1pc = 1/6in = 12pt = 1/6 * 96px = 16px`
+
+> https://drafts.csswg.org/css-values-3/#em
+
+
+
+
 

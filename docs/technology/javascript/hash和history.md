@@ -8,10 +8,10 @@ title: hash和history
 
 路由模式有两种，一种是hash，另一种是history
 
-hash的优势就是兼容性更好,在老版IE中都有运行,问题在于url中一直存在#不够美观,而且hash路由更像是Hack而非标准,相信随着发展更加标准化的History API会逐步蚕食掉hash路由的市场。
+hash的优势就是兼容性更好,在老版IE中都有运行,问题在于url中一直存在`#`不够美观,而且hash路由更像是Hack而非标准,相信随着发展更加标准化的History API会逐步蚕食掉hash路由的市场。
 
 ## hash原理
-hash路由一个明显的标志是带有#,我们主要是通过监听url中的hash变化来进行路由跳转。
+hash路由一个明显的标志是带有`#`,我们主要是通过监听url中的hash变化来进行路由跳转。
 
 hash值变化的时候，会触发hashchange事件，事件对象event中有newURL和oldURL
 
