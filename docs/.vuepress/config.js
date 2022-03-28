@@ -10,7 +10,7 @@ module.exports = {
   ],
 
   lang: 'zh-CN',
-  title: '吳澤鵬',
+  title: '吴泽鹏',
   // description: "钱端客栈",
   base: '/blog-press/',
   extraWatchFiles: ['./config.js'],

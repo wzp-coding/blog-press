@@ -6,7 +6,7 @@ title: url输入后发生什么
 
 [[toc]]
 
-![image-20211112103143396](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112103143396.png)
+![image-20211112103143396](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112103143396.png)
 
 
 
@@ -71,9 +71,9 @@ GET /index.html HTTP1.1
 
 
 
-![image-20211112103153704](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112103153704.png)
+![image-20211112103153704](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112103153704.png)
 
-![image-20211112103158988](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112103158988.png)
+![image-20211112103158988](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112103158988.png)
 
 
 
@@ -85,7 +85,7 @@ GET /index.html HTTP1.1
 
 - 浏览器<u>收到“确认提交”的消息</u>后，会<u>更新浏览器的页面状态</u>，包括了安全状态、地址栏的 URL、前进后退的历史状态，并更新web页面，此时的web页面是空白页。这也解释了为什么在浏览器的地址栏里面输入了一个地址后，之前的页面没有立马消失，而是要加载一会儿才会更新页面。
 
-![image-20211112103204834](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112103204834.png)
+![image-20211112103204834](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112103204834.png)
 
 - 渲染进程<u>对文档进行页面解析和子资源加载</u>，HTML 通过HTML 解析器转成<u>DOM Tree</u>（二叉树类似结构的东西），CSS按照CSS 规则和CSS解释器转成<u>CSSOM Tree</u>，两个tree结合，形成<u>render tree</u>（不包含HTML的具体元素和元素要画的具体位置），通过Layout可以<u>计算</u>出每个元素具体的宽高颜色位置，结合起来，开始<u>绘制</u>，最后显示在屏幕中新页面显示出来。（具体看[浏览器渲染原理](./浏览器渲染原理.md)）
 

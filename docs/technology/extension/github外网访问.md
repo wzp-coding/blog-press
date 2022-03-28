@@ -138,7 +138,7 @@ hosts 文件在每个系统的位置不一，详情如下：
 
 如图：
 
-![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/switch-hosts.png)
+![img](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/switch-hosts.png)
 
 这样每次 hosts 有更新都能及时进行更新，免去手动更新。
 
@@ -151,11 +151,11 @@ hosts 文件在每个系统的位置不一，详情如下：
 
 如图：
 
-![](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112143300372.png)
+![](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112143300372.png)
 
 更新间隔在 **设置>常规设置>过滤器更新间隔（设置一小时一次即可）**，记得勾选上 **使用过滤器和 Hosts 文件以拦截指定域名**
 
-![](https://gitee.com/wu_monkey/blog-images/raw/master/images/AdGuard-rules2.png)
+![](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/AdGuard-rules2.png)
 
 **Tip**：不要添加在 **DNS 允许清单** 内，只能添加在 **DNS 封锁清单** 才管用。另外，AdGuard for Mac、AdGuard for Windows、AdGuard for Android、AdGuard for IOS 等等 **AdGuard 家族软件** 添加方法均类似。
 
@@ -191,7 +191,7 @@ hosts 文件在每个系统的位置不一，详情如下：
 
      建议再将Proxy和Sockets一起清除一下
 
-     ![image-20211107223143109](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211107223143109.png)
+     ![image-20211107223143109](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211107223143109.png)
 
      
 
@@ -237,7 +237,7 @@ hosts 文件在每个系统的位置不一，详情如下：
 
 既然如此我们就换另外一种方式ssh
 
-![image-20211108000153286](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211108000153286.png)
+![image-20211108000153286](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211108000153286.png)
 
 ## 参考
 

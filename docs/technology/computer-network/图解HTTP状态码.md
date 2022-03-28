@@ -15,7 +15,7 @@ title: HTTP状态码
 
 
 
-![image-20211112105816799](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112105816799.png)
+![image-20211112105816799](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112105816799.png)
 
 
 
@@ -27,7 +27,7 @@ title: HTTP状态码
 
 
 
-![image-20211112105821470](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112105821470.png)
+![image-20211112105821470](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112105821470.png)
 
 
 
@@ -39,7 +39,7 @@ title: HTTP状态码
 
 
 
-![image-20211112105825236](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112105825236.png)
+![image-20211112105825236](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112105825236.png)
 
 
 
@@ -54,7 +54,7 @@ title: HTTP状态码
 
 
 
-![image-20211112105831340](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112105831340.png)
+![image-20211112105831340](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112105831340.png)
 
 
 
@@ -66,7 +66,7 @@ title: HTTP状态码
 
 
 
-![image-20211112105942201](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112105942201.png)
+![image-20211112105942201](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112105942201.png)
 
 
 
@@ -78,7 +78,7 @@ title: HTTP状态码
 
 
 
-![image-20211112140517079](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112140517079.png)
+![image-20211112140517079](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112140517079.png)
 
 
 
@@ -93,7 +93,7 @@ title: HTTP状态码
 
 
 
-![image-20211112140525404](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112140525404.png)
+![image-20211112140525404](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112140525404.png)
 
 
 
@@ -115,7 +115,7 @@ title: HTTP状态码
 
 
 
-![image-20211112140532629](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112140532629.png)
+![image-20211112140532629](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112140532629.png)
 
 
 
@@ -125,7 +125,7 @@ title: HTTP状态码
 
 
 
-![image-20211112140543679](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112140543679.png)
+![image-20211112140543679](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112140543679.png)
 
 
 
@@ -137,7 +137,7 @@ title: HTTP状态码
 
 
 
-![图片摘取自HTTP图解](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112140552722.png)
+![图片摘取自HTTP图解](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112140552722.png)
 
 
 
@@ -149,7 +149,7 @@ title: HTTP状态码
 
 
 
-![image-20211112140603667](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112140603667.png)
+![image-20211112140603667](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112140603667.png)
 
 
 
@@ -175,7 +175,7 @@ Access-Control-Allow-Methods →GET,HEAD,PUT,PATCH,POST,DELETE
 
 
 
-![image-20211112142058412](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142058412.png)
+![image-20211112142058412](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112142058412.png)
 
 
 
@@ -191,7 +191,7 @@ Access-Control-Allow-Methods →GET,HEAD,PUT,PATCH,POST,DELETE
 
 
 
-![image-20211112142105645](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142105645.png)
+![image-20211112142105645](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112142105645.png)
 
 
 

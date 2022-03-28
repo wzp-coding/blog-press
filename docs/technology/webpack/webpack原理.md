@@ -43,7 +43,7 @@ Webpack 的构建流程可以分为以下三大阶段：
 
 如果只执行一次构建，以上阶段将会按照顺序各执行一次。但在开启监听模式下，流程将变为如下：
 
-![图5-1-1 监听模式的构建流程](https://gitee.com/wu_monkey/blog-images/raw/master/images/5-1monitor.png)
+![图5-1-1 监听模式的构建流程](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/5-1monitor.png)
 
 在每个大阶段中又会发生很多事件，Webpack 会把这些事件广播出来供给 Plugin 使用，下面来一一介绍。
 
@@ -932,13 +932,13 @@ Webstorm 集成了 Node.js 的调试工具，因此使用 Webstorm 调试 Webpac
 
 在你认为可能出现问题的地方设下断点，点击编辑区代码左侧出现红点表示设置了断点，如图：
 
-![图5-5-1 设置断点](https://gitee.com/wu_monkey/blog-images/raw/master/images/5-5breakpoint.png)
+![图5-5-1 设置断点](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/5-5breakpoint.png)
 
 #### 2. 配置执行入口
 
 告诉 Webstorm 如何启动 Webpack，由于 Webpack 实际上就是一个 Node.js 应用，因此需要新建一个 Node.js 类型的执行入口。
 
-![图5-5-2 配置执行入口](https://gitee.com/wu_monkey/blog-images/raw/master/images/5-5optionsentry.png)
+![图5-5-2 配置执行入口](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/5-5optionsentry.png)
 
 以上配置中有三点需要注意：
 
@@ -950,13 +950,13 @@ Webstorm 集成了 Node.js 的调试工具，因此使用 Webstorm 调试 Webpac
 
 经过以上两步，准备工作已经完成，下面启动调试，启动时选中前面设置的 `debug webpack`，方法如图
 
-![图5-5-3 启动 Webpack](https://gitee.com/wu_monkey/blog-images/raw/master/images/5-5qidongwebpack.png)
+![图5-5-3 启动 Webpack](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/5-5qidongwebpack.png)
 
 #### 4. 执行到断点
 
 启动后程序就会停在断点所在的位置，在这里你可以方便的查看变量当前的状态，找出问题，如图：
 
-![图5-5-4 执行到断点](https://gitee.com/wu_monkey/blog-images/raw/master/images/5-5execbreakpoint.png)
+![图5-5-4 执行到断点](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/5-5execbreakpoint.png)
 
 
 

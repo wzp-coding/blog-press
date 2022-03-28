@@ -102,7 +102,7 @@ sessionId不加密发送给客户端，容易被伪造，如何解决呢？可�
 
 你知道在调试器或浏览器控制台中可能熟悉的错误堆栈跟踪吗？ 浏览器在调用堆栈中查找函数名称，以告知你是哪个函数发起了当前的调用：
 
-![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/exception-call-stack.png)
+![img](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/exception-call-stack.png)
 
 ## 消息队列
 
@@ -152,15 +152,15 @@ process.nextTick(() => {
 
 如果一个函数总是花费相同的时间，那就没问题了：
 
-[![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/setinterval-ok.png)](http://nodejs.cn/static/fa9e9fec1aea517d98b47b11c5fec296/4d383/setinterval-ok.png)
+[![img](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/setinterval-ok.png)](http://nodejs.cn/static/fa9e9fec1aea517d98b47b11c5fec296/4d383/setinterval-ok.png)
 
 函数可能需要不同的执行时间，这具体取决于网络条件，例如：
 
-![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/setinterval-varying-duration.png)
+![img](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/setinterval-varying-duration.png)
 
 也许一个较长时间的执行会与下一次执行重叠：
 
-![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/setinterval-overlapping.png)
+![img](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/setinterval-overlapping.png)
 
 为了避免这种情况，可以在回调函数完成时安排要被调用的递归的 setTimeout：
 
@@ -176,7 +176,7 @@ setTimeout(myFunction, 1000)
 
 实现此方案：
 
-![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/recursive-settimeout.png)](http://nodejs.cn/static/4bde07363650160e953f899734adc29e/1790f/recursive-settimeout.png)
+![img](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/recursive-settimeout.png)](http://nodejs.cn/static/4bde07363650160e953f899734adc29e/1790f/recursive-settimeout.png)
 
 `setTimeout` 和 `setInterval` 可通过[定时器模块](http://nodejs.cn/api/timers.html)在 Node.js 中使用。
 

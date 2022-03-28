@@ -44,3 +44,5 @@ console.log()
 //   console.log(chalk.green(commitInfo + '部署成功'))
 // }
 // deploy().catch((err) => console.error(err))
+// blog-images-1302031947.cos.ap-guangzhou.myqcloud.com
+
