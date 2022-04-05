@@ -67,19 +67,19 @@ git reflog --pretty=oneline
 git reset 哈希值
 ```
 
-![image-20210820144024359](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210820144024359.png)
+![image-20210820144024359](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20210820144024359.png)
 
 
 
 此时我们可以在工作区看到有很多已修改未提交的文件，此时我们**只选择需要提交的文件**提交到暂存区，再进行commit既可
 
-![image-20210820144154178](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210820144154178.png)
+![image-20210820144154178](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20210820144154178.png)
 
 
 
 此时`git log --pretty=oneline`查看一下commit记录
 
-![image-20210820144742723](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210820144742723.png)
+![image-20210820144742723](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20210820144742723.png)
 
 
 

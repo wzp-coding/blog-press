@@ -10,7 +10,7 @@ title: DNS解析原理
 
 DNS( Domain Name System)是“域名系统”的英文缩写，是一种组织成域层次结构的计算机和网络服务命名系统，它用于TCP/IP网络，它所提供的服务是用来将<u>主机名和域名转换为IP地址</u>的工作。DNS就是这样的一位“翻译官”，它的基本工作原理可用下图来表示
 
-![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/e5143bc08d4ec9d7f210522c7e540f4d_hd.jpg)
+![img](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/e5143bc08d4ec9d7f210522c7e540f4d_hd.jpg)
 
 
 
@@ -26,7 +26,7 @@ DNS( Domain Name System)是“域名系统”的英文缩写，是一种组织�
 
 ## DNS的解析过程
 
-![image-20211112142137604](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142137604.png)
+![image-20211112142137604](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112142137604.png)
 
 - DNS查询是<u>**操作系统**</u>自己做的
 - 浏览器输入`www.qq.com`域名，操作系统会先检查自己本地的<u>**hosts**文件</u>是否有这个网址映射关系，如果有，就先调用这个IP地址映射，完成域名解析
@@ -42,7 +42,7 @@ DNS( Domain Name System)是“域名系统”的英文缩写，是一种组织�
   
   - 迭代查询是由系统配置的DNS服务器做请求，得到结果后将数据返回给客户端
   
-    ![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/7fcd81756bdc8b52ade0531402c43e43_hd.jpg)
+    ![img](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/7fcd81756bdc8b52ade0531402c43e43_hd.jpg)
 
 ## URL的解析顺序
 
@@ -97,7 +97,7 @@ DNS( Domain Name System)是“域名系统”的英文缩写，是一种组织�
 - 全局负载均衡设备把服务器的IP地址返回给用户。
 - 用户向缓存服务器发起请求，缓存服务器响应用户请求，将用户所需内容传送到用户终端。如果这台缓存服务器上并没有用户想要的内容，而区域均衡设备依然将它分配给了用户，那么这台服务器就要向它的上一级缓存服务器请求内容，直至追溯到网站的源服务器将内容拉到本地。
 
-![img](https://gitee.com/wu_monkey/blog-images/raw/master/images/16c5f7c73af1a83f~tplv-t2oaga2asx-zoom-in-crop-mark:1304:0:0:0.awebp)
+![img](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/16c5f7c73af1a83f~tplv-t2oaga2asx-zoom-in-crop-mark:1304:0:0:0.awebp)
 
 ## CDN组成和相关技术
 
@@ -143,7 +143,7 @@ EdgeRoutine(ER)其实也是支持Serverless或者再重新发起一个fetch请�
 
 除此之外还有网站托管、小程序等
 
-![屏幕快照 2020-04-27 下午10.51.59.png](https://gitee.com/wu_monkey/blog-images/raw/master/images/1298749a8e75407b98f1b6671b69070b.png)
+![屏幕快照 2020-04-27 下午10.51.59.png](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/1298749a8e75407b98f1b6671b69070b.png)
 
 ## Chrome如何获取DNS服务器(linux系统)
 
@@ -157,7 +157,7 @@ EdgeRoutine(ER)其实也是支持Serverless或者再重新发起一个fetch请�
 
 - 这样DNSConfig里面就有两个配置了，一个是hosts，另一个是nameservers，DNSConfig是组合到DNSSession，它们的组合关系如下图所示
 
-  ![image-20211112142146194](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142146194.png)
+  ![image-20211112142146194](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112142146194.png)
 
 - resolver是负责解析的驱动类，它组合了一个client，client创建一个session，session层有一个很大的作用是用来管理server_index和socket pool如分配socket等，session初始化config，config用来读取本地绑的hosts和nameservers两个配置
 

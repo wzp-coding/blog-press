@@ -88,7 +88,7 @@ post是根据报文主体来对指定资源做出处理，**post不安全，不�
 
 ## W3C官网的比较
 
-![image-20211112142245238](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20211112142245238.png)
+![image-20211112142245238](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112142245238.png)
 
 ## 浏览器对URL长度限制
 
@@ -137,7 +137,7 @@ post是根据报文主体来对指定资源做出处理，**post不安全，不�
 
 ## HTTP请求方法
 
-![image-20201210141846106](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20201210141846106.png)
+![image-20201210141846106](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20201210141846106.png)
 
 ## 参考
 > [get和post的区别？](https://juejin.im/post/6844903824738500615)

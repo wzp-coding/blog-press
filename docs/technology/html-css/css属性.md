@@ -60,7 +60,7 @@ title: 某些CSS属性
 
 
 
-![margin](https://gitee.com/wu_monkey/blog-images/raw/master/images/margin.gif)
+![margin](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/margin.gif)
 
 > 注意：padding没有负值！！！
 
@@ -120,7 +120,7 @@ title: 某些CSS属性
 
 效果如图：
 
-![image-20210902190306600](https://gitee.com/wu_monkey/blog-images/raw/master/images/image-20210902190306600.png)
+![image-20210902190306600](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20210902190306600.png)
 
 ## CSS度量单位
 
