@@ -295,13 +295,21 @@ Node 端的处理过程如下：
 ![img](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/v2-963090bd3b681de3313b4466b234f4f0_b.jpg)
 
 
-
 ## 总结
 
 浏览器和 Node 环境下，microtask 任务队列的执行时机不同
 
 - Node 端，microtask 在事件循环的各个阶段之间执行
 - 浏览器端，microtask 在事件循环的 macrotask 执行完之后执行
+
+微任务和宏任务在Node的执行顺序
+
+- Node 10以前：
+  1. 执行完一个阶段的所有任务
+  2. 执行完nextTick队列里面的内容
+  3. 然后执行完微任务队列的内容
+
+- Node 11以后： 和浏览器的行为统一了，都是每执行一个宏任务就执行完微任务队列。
 
 ## 参考
 > [详解JavaScript中的Event Loop（事件循环）机制](https://zhuanlan.zhihu.com/p/33058983)
