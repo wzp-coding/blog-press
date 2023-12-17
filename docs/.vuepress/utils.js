@@ -53,8 +53,8 @@ const nav = [
                 link: "/technology/javascript/",
             },
             {
-                text: "Webpack",
-                link: "/technology/webpack/",
+                text: "构建工具",
+                link: "/technology/cli-tools/",
             },
             {
                 text: "Vue",
