@@ -1,8 +1,9 @@
 ---
-title: BFC 
+title: BFC
 ---
 
-# 了解一下BFC？
+# 了解一下 BFC？
+
 [[toc]]
 
 ## 常见定位方案
@@ -28,7 +29,8 @@ title: BFC
 ## FC、BFC 概念
 
 - Formatting context(**格式化上下文**) 是 W3C CSS2.1 规范中的一个概念。
-  - FC是页面中的一块**渲染区域**，并且有一套**渲染规则**，**FC决定了其子元素将如何定位，以及和其他元素的关系和相互作用**。
+
+  - FC 是页面中的一块**渲染区域**，并且有一套**渲染规则**，**FC 决定了其子元素将如何定位，以及和其他元素的关系和相互作用**。
 
 - BFC 即 Block Formatting Contexts (**块级格式化上下文**)，它属于上述定位方案的**普通流**。
   - 具有 BFC 特性的元素可以看作是隔离了的**独立容器**，容器里面的元素**不会在布局上影响到外面的元素**，并且 BFC 具有普通容器所没有的一些**特性**。
@@ -48,36 +50,35 @@ title: BFC
 
 ### 自动计算浮动元素
 
-特性：如果一个元素是BFC，则元素内部会自动计算浮动元素
+特性：如果一个元素是 BFC，则元素内部会自动计算浮动元素
 
-应用：默认普通元素不会计算浮动元素的高度，可以将该普通元素变为BFC，达到清除浮动的作用
+应用：默认普通元素不会计算浮动元素的高度，可以将该普通元素变为 BFC，达到清除浮动的作用
 
 ```html
 <style>
-    .parent {
-        border: 1px solid #000;
-        overflow: hidden;// parent变为BFC
-    }
+  .parent {
+    border: 1px solid #000;
+    overflow: hidden; // parent变为BFC
+  }
 
-    .child {
-        width: 200px;
-        height: 200px;
-        float: left;
-    }
+  .child {
+    width: 200px;
+    height: 200px;
+    float: left;
+  }
 
-    .child1 {
-        background-color: red;
-    }
+  .child1 {
+    background-color: red;
+  }
 
-    .child2 {
-        background-color: greenyellow;
-    }
+  .child2 {
+    background-color: greenyellow;
+  }
 </style>
 
-
 <div class="parent">
-    <div class="child child1">child1</div>
-    <div class="child child2">child2</div>
+  <div class="child child1">child1</div>
+  <div class="child child2">child2</div>
 </div>
 ```
 
@@ -87,34 +88,34 @@ title: BFC
 
 ### 解决外边距合并问题
 
-特性：如果两个元素都是BFC元素，则这两元素的外边距不会合并
+特性：如果两个元素都是 BFC 元素，则这两元素的外边距不会合并
 
-应用：两个普通元素同时设置margin时会合并，如果将普通元素变为BFC，则可以实现不合并的效果
+应用：两个普通元素同时设置 margin 时会合并，如果将普通元素变为 BFC，则可以实现不合并的效果
 
 ```html
 <style>
-    .parent {
-        overflow: hidden;
-    }
+  .parent {
+    overflow: hidden;
+  }
 
-    .child {
-        width: 200px;
-        height: 200px;
-        margin: 100px;
-    }
+  .child {
+    width: 200px;
+    height: 200px;
+    margin: 100px;
+  }
 
-    .child1 {
-        background-color: red;
-    }
+  .child1 {
+    background-color: red;
+  }
 
-    .child2 {
-        background-color: greenyellow;
-    }
+  .child2 {
+    background-color: greenyellow;
+  }
 </style>
 
 <div class="child child1"></div>
 <div class="parent">
-    <div class="child child2"></div>
+  <div class="child child2"></div>
 </div>
 ```
 
@@ -124,9 +125,9 @@ title: BFC
 
 ### 浮动排列问题
 
-特性：BFC元素之间排列是按**普通流**来排列的
+特性：BFC 元素之间排列是按**普通流**来排列的
 
-应用：正常来说，普通流中**后面的元素**排列的时候会**看不到(忽略)**浮动元素，排列的时候会重叠，如果将**后面的元素**变成BFC，则可以正常排列
+应用：正常来说，普通流中**后面的元素**排列的时候会**看不到(忽略)**浮动元素，排列的时候会重叠，如果将**后面的元素**变成 BFC，则可以正常排列
 
 注意：重叠排列时，下方元素的**字体**不会上面的浮动元素覆盖
 
@@ -134,20 +135,20 @@ title: BFC
 
 ```html
 <style>
-    .child {
-        width: 200px;
-        height: 200px;
-    }
+  .child {
+    width: 200px;
+    height: 200px;
+  }
 
-    .child1 {
-        float: left;// 红色方块实际也是BFC
-        background-color: red;
-    }
+  .child1 {
+    float: left; // 红色方块实际也是BFC
+    background-color: red;
+  }
 
-    .child2 {
-        overflow: hidden;// 绿黄方块变为BFC
-        background-color: greenyellow;
-    }
+  .child2 {
+    overflow: hidden; // 绿黄方块变为BFC
+    background-color: greenyellow;
+  }
 </style>
 
 <div class="child child1"></div>
@@ -158,9 +159,6 @@ title: BFC
 
 <img src="https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20210901183517205.png" alt="image-20210901183517205" style="zoom:50%;" />
 
-
-
 ## 参考
 
 > [10 分钟理解 BFC 原理](https://zhuanlan.zhihu.com/p/25321647)
-

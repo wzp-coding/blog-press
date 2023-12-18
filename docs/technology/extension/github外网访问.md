@@ -2,22 +2,23 @@
 title: 解决GitHub访问慢
 ---
 
-# 如果正确访问GitHub？
+# 如果正确访问 GitHub？
 
 [[toc]]
 
-## 了解CDN
-CDN(Content Distribute Network)，可以直译成内容分发网络，CDN解决的是如何将数据快速可靠从源站传递到用户的问题。用户获取数据时，不需要直接从源站获取，通过CDN对于数据的分发，用户可以从一个较优的服务器获取数据，从而达到快速访问，并减少源站负载压力的目的。
+## 了解 CDN
+
+CDN(Content Distribute Network)，可以直译成内容分发网络，CDN 解决的是如何将数据快速可靠从源站传递到用户的问题。用户获取数据时，不需要直接从源站获取，通过 CDN 对于数据的分发，用户可以从一个较优的服务器获取数据，从而达到快速访问，并减少源站负载压力的目的。
 
 ## 为什么访问速度慢、下载慢？
 
-github的CDN被某墙屏了，由于网络代理商的原因，所以访问下载很慢。
+github 的 CDN 被某墙屏了，由于网络代理商的原因，所以访问下载很慢。
 
-ping github.com 时，经常会ping不通。
+ping github.com 时，经常会 ping 不通。
 
 ## 解决思路？
 
-绕过dns解析，在本地直接绑定host，该方法也可加速其他因为CDN被屏蔽导致访问慢的网站。
+绕过 dns 解析，在本地直接绑定 host，该方法也可加速其他因为 CDN 被屏蔽导致访问慢的网站。
 
 ## 解决工具
 
@@ -25,17 +26,17 @@ SwitchHosts，一个主机管理和切换的应用程序。这是一个免费的
 
 下载地址：https://swh.app/download/
 
-使用说明(GitHub地址)：https://github.com/521xueweihan/GitHub520
+使用说明(GitHub 地址)：https://github.com/521xueweihan/GitHub520
 
-考虑到GitHub访问慢的原因，我直接复制粘贴教程了
+考虑到 GitHub 访问慢的原因，我直接复制粘贴教程了
 
 ### 一、介绍
 
 对 GitHub 说"爱"太难了：访问慢、图片加载不出来。
 
-*注：* 本项目还处于测试阶段，仅在本机测试通过，如有问题欢迎提 [issues](https://github.com/521xueweihan/GitHub520/issues/new)
+_注：_ 本项目还处于测试阶段，仅在本机测试通过，如有问题欢迎提 [issues](https://github.com/521xueweihan/GitHub520/issues/new)
 
-------
+---
 
 本项目无需安装任何程序，通过修改本地 hosts 文件，试图解决：
 
@@ -169,13 +170,13 @@ hosts 文件在每个系统的位置不一，详情如下：
 > 4. 选择「加载已解压的扩展程序」，然后定位到刚才解压的文件夹里面的 `extension` 目录，确定
 > 5. 这就安装好了，关闭「开发者模式」
 
-## 清除DNS缓存
+## 清除 DNS 缓存
 
-第一步按照上面的教程安装完SwitchHosts，并且正确配置之后，如果还没生效，则清除一下DNS缓存
+第一步按照上面的教程安装完 SwitchHosts，并且正确配置之后，如果还没生效，则清除一下 DNS 缓存
 
-## 如何DNS缓存
+## 如何 DNS 缓存
 
-1. 清除本机的DNS缓存
+1. 清除本机的 DNS 缓存
 
    ```bash
    # 打开cmd
@@ -183,59 +184,57 @@ hosts 文件在每个系统的位置不一，详情如下：
    ipconfig /flushdns
    ```
 
-2. 清除浏览器的DNS缓存
+2. 清除浏览器的 DNS 缓存
 
    - Google Chrome
 
      在地址栏输入`chrome://net-internals/#dns`回车，点击 `Clear host cache` 即可：
 
-     建议再将Proxy和Sockets一起清除一下
+     建议再将 Proxy 和 Sockets 一起清除一下
 
      ![image-20211107223143109](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211107223143109.png)
 
-     
+- Microsoft Edge
 
-   - Microsoft Edge
+  Edge 源于 Chrome，类似，地址为：`edge://net-internals/#dns`
 
-     Edge 源于 Chrome，类似，地址为：`edge://net-internals/#dns`
+- Mozilla Firefox
 
-   - Mozilla Firefox
+  Firefox 之前有几个扩展非常方便，可惜都已经下线了：
 
-     Firefox 之前有几个扩展非常方便，可惜都已经下线了：
+  [dns-flusher](https://link.zhihu.com/?target=https%3A//addons.mozilla.org/en-US/firefox/addon/dns-flusher/)
 
-     [dns-flusher](https://link.zhihu.com/?target=https%3A//addons.mozilla.org/en-US/firefox/addon/dns-flusher/)
+  [clear-dns-cache](https://link.zhihu.com/?target=https%3A//addons.mozilla.org/en-us/firefox/addon/clear-dns-cache/)
 
-     [clear-dns-cache](https://link.zhihu.com/?target=https%3A//addons.mozilla.org/en-us/firefox/addon/clear-dns-cache/)
+  现在[实现方法如下](https://link.zhihu.com/?target=https%3A//stackoverflow.com/questions/13063496/firefox-invalidate-dns-cache)：
 
-     现在[实现方法如下](https://link.zhihu.com/?target=https%3A//stackoverflow.com/questions/13063496/firefox-invalidate-dns-cache)：
+  在地址栏输入：`about:config`，回车，“接受风险并继续”，然后搜索 `network.dnsCache`，出现如下 3 项：
 
-     在地址栏输入：`about:config`，回车，“接受风险并继续”，然后搜索 `network.dnsCache`，出现如下 3 项：
+  ```BASH
+  network.dnsCacheEntries    400
+  network.dnsCacheExpiration    60
+  network.dnsCacheExpirationGracePeriod    60
+  ```
 
-     ```BASH
-     network.dnsCacheEntries    400
-     network.dnsCacheExpiration    60
-     network.dnsCacheExpirationGracePeriod    60
-     ```
+  将数值都修改为 0 即可。
 
-     将数值都修改为 0 即可。
+  注意：
 
-     注意：
+  - 修改后为禁用 DNS 缓存。
+  - 该操作对网络浏览体验可能有一定影响，仅用于调试。
+  - 如果有新的扩展出现，使用扩展更佳。
 
-     - 修改后为禁用 DNS 缓存。
-     - 该操作对网络浏览体验可能有一定影响，仅用于调试。
-     - 如果有新的扩展出现，使用扩展更佳。
+- Apple Safari
 
-   - Apple Safari
+  菜单栏 “Safari 浏览器” --> “偏好设置...” --> "高级"，“在菜单栏中显示 “开发” 菜单。
 
-     菜单栏 “Safari 浏览器” --> “偏好设置...” --> "高级"，“在菜单栏中显示 “开发” 菜单。
+  此时，点击菜单栏 ”开发“ --> ”清空缓存“ 即可。
 
-     此时，点击菜单栏 ”开发“ --> ”清空缓存“ 即可。
+## git push 出现 timeout 或者 reset error？
 
-## git push出现timeout或者reset error？
+一般我们是通过 https 的方式去跟远程仓库进行交互，但是涉及到 HTTPS 协议就会涉及到网络问题，如果有时候网络不好就会出现 timeout 或者 reset error 问题是网络问题，通常来说如果有好的 VPN 就会很顺利，但是如果是免费 VPN，偶尔还是会出现错误，通常博客会建议你多试几次就能成功，虽然确实如此，但你总不想每次都这样解决吧，这样随机性太大了
 
-一般我们是通过https的方式去跟远程仓库进行交互，但是涉及到HTTPS协议就会涉及到网络问题，如果有时候网络不好就会出现timeout或者reset error问题是网络问题，通常来说如果有好的VPN就会很顺利，但是如果是免费VPN，偶尔还是会出现错误，通常博客会建议你多试几次就能成功，虽然确实如此，但你总不想每次都这样解决吧，这样随机性太大了
-
-既然如此我们就换另外一种方式ssh
+既然如此我们就换另外一种方式 ssh
 
 ![image-20211108000153286](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211108000153286.png)
 
@@ -243,7 +242,6 @@ hosts 文件在每个系统的位置不一，详情如下：
 
 [如何清除浏览器的 DNS 缓存：Chrome、Edge、Firefox、Safari](https://zhuanlan.zhihu.com/p/386294623)
 
-[Github访问速度很慢的原因，以及解决方法](https://blog.csdn.net/u013517229/article/details/81351885)
+[Github 访问速度很慢的原因，以及解决方法](https://blog.csdn.net/u013517229/article/details/81351885)
 
 [Github520](https://github.com/521xueweihan/GitHub520)
-

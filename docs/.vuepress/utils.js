@@ -57,6 +57,10 @@ const nav = [
                 link: "/technology/cli-tools/",
             },
             {
+                text: "React",
+                link: "/technology/react/",
+            },
+            {
                 text: "Vue",
                 link: "/technology/vue/",
             },

@@ -2,7 +2,8 @@
 title: webpack原理
 ---
 
-# 了解一下webpack的工作原理
+# 了解一下 webpack 的工作原理
+
 [[toc]]
 
 ## 工作原理概括
@@ -27,7 +28,7 @@ Webpack 的运行流程是一个串行的过程，从启动到结束会依次执
 2. 开始编译：用上一步得到的参数初始化 Compiler 对象，加载所有配置的插件，执行对象的 run 方法开始执行编译；
 3. 确定入口：根据配置中的 entry 找出所有的入口文件；
 4. 编译模块：从入口文件出发，调用所有配置的 Loader 对模块进行翻译，再找出该模块依赖的模块，再递归本步骤直到所有入口依赖的文件都经过了本步骤的处理；
-5. 完成模块编译：在经过第4步使用 Loader 翻译完所有模块后，得到了每个模块被翻译后的最终内容以及它们之间的依赖关系；
+5. 完成模块编译：在经过第 4 步使用 Loader 翻译完所有模块后，得到了每个模块被翻译后的最终内容以及它们之间的依赖关系；
 6. 输出资源：根据入口和模块之间的依赖关系，组装成一个个包含多个模块的 Chunk，再把每个 Chunk 转换成一个单独的文件加入到输出列表，这步是可以修改输出内容的最后机会；
 7. 输出完成：在确定好输出内容后，根据配置确定输出的路径和文件名，把文件内容写入到文件系统。
 
@@ -49,137 +50,138 @@ Webpack 的构建流程可以分为以下三大阶段：
 
 #### 初始化阶段
 
-| 事件名          | 解释                                                         |
-| --------------- | ------------------------------------------------------------ |
-| 初始化参数      | 从配置文件和 Shell 语句中读取与合并参数，得出最终的参数。 这个过程中还会执行配置文件中的插件实例化语句 `new Plugin()`。 |
+| 事件名 | 解释 |
+| --- | --- |
+| 初始化参数 | 从配置文件和 Shell 语句中读取与合并参数，得出最终的参数。 这个过程中还会执行配置文件中的插件实例化语句 `new Plugin()`。 |
 | 实例化 Compiler | 用上一步得到的参数初始化 Compiler 实例，Compiler 负责文件监听和启动编译。Compiler 实例中包含了完整的 Webpack 配置，全局只有一个 Compiler 实例。 |
-| 加载插件        | 依次调用插件的 apply 方法，让插件可以监听后续的所有事件节点。同时给插件传入 compiler 实例的引用，以方便插件通过 compiler 调用 Webpack 提供的 API。 |
-| environment     | 开始应用 Node.js 风格的文件系统到 compiler 对象，以方便后续的文件寻找和读取。 |
-| entry-option    | 读取配置的 Entrys，为每个 Entry 实例化一个对应的 EntryPlugin，为后面该 Entry 的递归解析工作做准备。 |
-| after-plugins   | 调用完所有内置的和配置的插件的 apply 方法。                  |
+| 加载插件 | 依次调用插件的 apply 方法，让插件可以监听后续的所有事件节点。同时给插件传入 compiler 实例的引用，以方便插件通过 compiler 调用 Webpack 提供的 API。 |
+| environment | 开始应用 Node.js 风格的文件系统到 compiler 对象，以方便后续的文件寻找和读取。 |
+| entry-option | 读取配置的 Entrys，为每个 Entry 实例化一个对应的 EntryPlugin，为后面该 Entry 的递归解析工作做准备。 |
+| after-plugins | 调用完所有内置的和配置的插件的 apply 方法。 |
 | after-resolvers | 根据配置初始化完 resolver，resolver 负责在文件系统中寻找指定路径的文件。 |
 
 #### 编译阶段
 
-| 事件名        | 解释                                                         |
-| ------------- | ------------------------------------------------------------ |
-| run           | 启动一次新的编译。                                       |
-| watch-run     | 和 run 类似，区别在于它是在监听模式下启动的编译，在这个事件中可以获取到是哪些文件发生了变化导致重新启动一次新的编译。 |
-| compile       | 该事件是为了告诉插件一次新的编译将要启动，同时会给插件带上 compiler 对象。 |
-| compilation   | 当 Webpack 以开发模式运行时，每当检测到文件变化，一次新的 Compilation 将被创建。一个 Compilation 对象包含了当前的模块资源、编译生成资源、变化的文件等。Compilation 对象也提供了很多事件回调供插件做扩展。 |
-| make          | 一个新的 Compilation 创建完毕，即将从 Entry 开始读取文件，根据文件类型和配置的 Loader 对文件进行编译，编译完后再找出该文件依赖的文件，递归的编译和解析。 |
-| after-compile | 一次 Compilation 执行完成。                                  |
-| invalid       | 当遇到文件不存在、文件编译错误等异常时会触发该事件，该事件不会导致 Webpack 退出。 |
+| 事件名 | 解释 |
+| --- | --- |
+| run | 启动一次新的编译。 |
+| watch-run | 和 run 类似，区别在于它是在监听模式下启动的编译，在这个事件中可以获取到是哪些文件发生了变化导致重新启动一次新的编译。 |
+| compile | 该事件是为了告诉插件一次新的编译将要启动，同时会给插件带上 compiler 对象。 |
+| compilation | 当 Webpack 以开发模式运行时，每当检测到文件变化，一次新的 Compilation 将被创建。一个 Compilation 对象包含了当前的模块资源、编译生成资源、变化的文件等。Compilation 对象也提供了很多事件回调供插件做扩展。 |
+| make | 一个新的 Compilation 创建完毕，即将从 Entry 开始读取文件，根据文件类型和配置的 Loader 对文件进行编译，编译完后再找出该文件依赖的文件，递归的编译和解析。 |
+| after-compile | 一次 Compilation 执行完成。 |
+| invalid | 当遇到文件不存在、文件编译错误等异常时会触发该事件，该事件不会导致 Webpack 退出。 |
 
 在编译阶段中，最重要的要数 compilation 事件了，因为在 compilation 阶段调用了 Loader 完成了每个模块的转换操作，在 compilation 阶段又包括很多小的事件，它们分别是：
 
-| 事件名               | 解释                                                         |
-| -------------------- | ------------------------------------------------------------ |
-| build-module         | 使用对应的 Loader 去转换一个模块。                       |
+| 事件名 | 解释 |
+| --- | --- |
+| build-module | 使用对应的 Loader 去转换一个模块。 |
 | normal-module-loader | 在用 Loader 对一个模块转换完后，使用 acorn 解析转换后的内容，输出对应的抽象语法树（AST），以方便 Webpack 后面对代码的分析。 |
-| program              | 从配置的入口模块开始，分析其 AST，当遇到 `require` 等导入其它模块语句时，便将其加入到依赖的模块列表，同时对新找出的依赖模块递归分析，最终搞清所有模块的依赖关系。 |
-| seal                 | 所有模块及其依赖的模块都通过 Loader 转换完成后，根据依赖关系开始生成 Chunk。 |
+| program | 从配置的入口模块开始，分析其 AST，当遇到 `require` 等导入其它模块语句时，便将其加入到依赖的模块列表，同时对新找出的依赖模块递归分析，最终搞清所有模块的依赖关系。 |
+| seal | 所有模块及其依赖的模块都通过 Loader 转换完成后，根据依赖关系开始生成 Chunk。 |
 
 #### 输出阶段
 
-| 事件名      | 解释                                                         |
-| ----------- | ------------------------------------------------------------ |
+| 事件名 | 解释 |
+| --- | --- |
 | should-emit | 所有需要输出的文件已经生成好，询问插件哪些文件需要输出，哪些不需要。 |
-| emit        | 确定好要输出哪些文件后，执行文件输出，可以在这里获取和修改输出内容。 |
-| after-emit  | 文件输出完毕。                                               |
-| done        | 成功完成一次完整的编译和输出流程。                       |
-| failed      | 如果在编译和输出流程中遇到异常导致 Webpack 退出时，就会直接跳转到本步骤，插件可以在本事件中获取到具体的错误原因。 |
+| emit | 确定好要输出哪些文件后，执行文件输出，可以在这里获取和修改输出内容。 |
+| after-emit | 文件输出完毕。 |
+| done | 成功完成一次完整的编译和输出流程。 |
+| failed | 如果在编译和输出流程中遇到异常导致 Webpack 退出时，就会直接跳转到本步骤，插件可以在本事件中获取到具体的错误原因。 |
 
 在输出阶段已经得到了各个模块经过转换后的结果和其依赖关系，并且把相关模块组合在一起形成一个个 Chunk。 在输出阶段会根据 Chunk 的类型，使用对应的模版生成最终要要输出的文件内容。
 
-至于如何把 Chunk 输出为具体的文件，详情可以阅读 [5-2输出文件分析](https://webpack.wuhaolin.cn/5原理/5-2输出文件分析.html)。
+至于如何把 Chunk 输出为具体的文件，详情可以阅读 [5-2 输出文件分析](https://webpack.wuhaolin.cn/5原理/5-2输出文件分析.html)。
 
 ## 输出文件分析
 
 虽然在前面的章节中你学会了如何使用 Webpack ，也大致知道其工作原理，可是你想过 Webpack 输出的 `bundle.js` 是什么样子的吗？ 为什么原来一个个的模块文件被合并成了一个单独的文件？为什么 `bundle.js` 能直接运行在浏览器中？ 本节将解释清楚以上问题。
 
-先来看看由 [1-3安装与使用](https://webpack.wuhaolin.cn/1入门/1-3安装与使用.html) 中最简单的项目构建出的 `bundle.js` 文件内容，代码如下：
+先来看看由 [1-3 安装与使用](https://webpack.wuhaolin.cn/1入门/1-3安装与使用.html) 中最简单的项目构建出的 `bundle.js` 文件内容，代码如下：
 
 ```js
-(
-    // webpackBootstrap 启动函数
-    // modules 即为存放所有模块的数组，数组中的每一个元素都是一个函数
-    function (modules) {
-        // 安装过的模块都存放在这里面
-        // 作用是把已经加载过的模块缓存在内存中，提升性能
-        var installedModules = {};
+// webpackBootstrap 启动函数
+// modules 即为存放所有模块的数组，数组中的每一个元素都是一个函数
+;(function(modules) {
+  // 安装过的模块都存放在这里面
+  // 作用是把已经加载过的模块缓存在内存中，提升性能
+  var installedModules = {}
 
-        // 去数组中加载一个模块，moduleId 为要加载模块在数组中的 index
-        // 作用和 Node.js 中 require 语句相似
-        function __webpack_require__(moduleId) {
-            // 如果需要加载的模块已经被加载过，就直接从内存缓存中返回
-            if (installedModules[moduleId]) {
-                return installedModules[moduleId].exports;
-            }
+  // 去数组中加载一个模块，moduleId 为要加载模块在数组中的 index
+  // 作用和 Node.js 中 require 语句相似
+  function __webpack_require__(moduleId) {
+    // 如果需要加载的模块已经被加载过，就直接从内存缓存中返回
+    if (installedModules[moduleId]) {
+      return installedModules[moduleId].exports
+    }
 
-            // 如果缓存中不存在需要加载的模块，就新建一个模块，并把它存在缓存中
-            var module = installedModules[moduleId] = {
-                // 模块在数组中的 index
-                i: moduleId,
-                // 该模块是否已经加载完毕
-                l: false,
-                // 该模块的导出值
-                exports: {}
-            };
+    // 如果缓存中不存在需要加载的模块，就新建一个模块，并把它存在缓存中
+    var module = (installedModules[moduleId] = {
+      // 模块在数组中的 index
+      i: moduleId,
+      // 该模块是否已经加载完毕
+      l: false,
+      // 该模块的导出值
+      exports: {}
+    })
 
-            // 从 modules 中获取 index 为 moduleId 的模块对应的函数
-            // 再调用这个函数，同时把函数需要的参数传入
-            modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-            // 把这个模块标记为已加载
-            module.l = true;
-            // 返回这个模块的导出值
-            return module.exports;
-        }
+    // 从 modules 中获取 index 为 moduleId 的模块对应的函数
+    // 再调用这个函数，同时把函数需要的参数传入
+    modules[moduleId].call(
+      module.exports,
+      module,
+      module.exports,
+      __webpack_require__
+    )
+    // 把这个模块标记为已加载
+    module.l = true
+    // 返回这个模块的导出值
+    return module.exports
+  }
 
-        // Webpack 配置中的 publicPath，用于加载被分割出去的异步代码
-        __webpack_require__.p = "";
+  // Webpack 配置中的 publicPath，用于加载被分割出去的异步代码
+  __webpack_require__.p = ''
 
-        // 使用 __webpack_require__ 去加载 index 为 0 的模块，并且返回该模块导出的内容
-        // index 为 0 的模块就是 main.js 对应的文件，也就是执行入口模块
-        // __webpack_require__.s 的含义是启动模块对应的 index
-        return __webpack_require__(__webpack_require__.s = 0);
-
-    })(
-
-    // 所有的模块都存放在了一个数组里，根据每个模块在数组的 index 来区分和定位模块
-    [
-        /* 0 */
-        (function (module, exports, __webpack_require__) {
-            // 通过 __webpack_require__ 规范导入 show 函数，show.js 对应的模块 index 为 1
-            const show = __webpack_require__(1);
-            // 执行 show 函数
-            show('Webpack');
-        }),
-        /* 1 */
-        (function (module, exports) {
-            function show(content) {
-                window.document.getElementById('app').innerText = 'Hello,' + content;
-            }
-            // 通过 CommonJS 规范导出 show 函数
-            module.exports = show;
-        })
-    ]
-);
+  // 使用 __webpack_require__ 去加载 index 为 0 的模块，并且返回该模块导出的内容
+  // index 为 0 的模块就是 main.js 对应的文件，也就是执行入口模块
+  // __webpack_require__.s 的含义是启动模块对应的 index
+  return __webpack_require__((__webpack_require__.s = 0))
+})(
+  // 所有的模块都存放在了一个数组里，根据每个模块在数组的 index 来区分和定位模块
+  [
+    /* 0 */
+    function(module, exports, __webpack_require__) {
+      // 通过 __webpack_require__ 规范导入 show 函数，show.js 对应的模块 index 为 1
+      const show = __webpack_require__(1)
+      // 执行 show 函数
+      show('Webpack')
+    },
+    /* 1 */
+    function(module, exports) {
+      function show(content) {
+        window.document.getElementById('app').innerText = 'Hello,' + content
+      }
+      // 通过 CommonJS 规范导出 show 函数
+      module.exports = show
+    }
+  ]
+)
 ```
 
 以上看上去复杂的代码其实是一个立即执行函数，可以简写为如下：
 
 ```js
-(function(modules) {
-
+;(function(modules) {
   // 模拟 require 语句
-  function __webpack_require__() {
-  }
+  function __webpack_require__() {}
 
   // 执行存放所有模块数组中的第0个模块
-  __webpack_require__(0);
-
-})([/*存放所有模块的数组*/])
+  __webpack_require__(0)
+})([
+  /*存放所有模块的数组*/
+])
 ```
 
 `bundle.js` 能直接运行在浏览器中的原因在于输出的文件中通过 `__webpack_require__` 函数定义了一个可以在浏览器中执行的加载函数来模拟 Node.js 中的 `require` 语句。
@@ -198,8 +200,8 @@ Webpack 的构建流程可以分为以下三大阶段：
 // 异步加载 show.js
 import('./show').then((show) => {
   // 执行 show 函数
-  show('Webpack');
-});
+  show('Webpack')
+})
 ```
 
 重新构建后会输出两个文件，分别是执行入口文件 `bundle.js` 和 异步加载文件 `0.bundle.js`。
@@ -214,15 +216,15 @@ webpackJsonp(
   // 本文件所包含的模块
   [
     // show.js 所对应的模块
-    (function (module, exports) {
+    function(module, exports) {
       function show(content) {
-        window.document.getElementById('app').innerText = 'Hello,' + content;
+        window.document.getElementById('app').innerText = 'Hello,' + content
       }
 
-      module.exports = show;
-    })
+      module.exports = show
+    }
   ]
-);
+)
 ```
 
 `bundle.js` 内容如下：
@@ -239,7 +241,7 @@ webpackJsonp(
    */
   window["webpackJsonp"] = function webpackJsonpCallback(chunkIds, moreModules, executeModules) {
     // 把 moreModules 添加到 modules 对象中
-    // 把所有 chunkIds 对应的模块都标记成已经加载成功 
+    // 把所有 chunkIds 对应的模块都标记成已经加载成功
     var moduleId, chunkId, i = 0, resolves = [], result;
     for (; i < chunkIds.length; i++) {
       chunkId = chunkIds[i];
@@ -359,8 +361,6 @@ webpackJsonp(
 
 在使用了 CommonsChunkPlugin 去提取公共代码时输出的文件和使用了异步加载时输出的文件是一样的，都会有 `__webpack_require__.e` 和 `webpackJsonp`。 原因在于提取公共代码和异步加载本质上都是代码分割。
 
-
-
 ## 编写 Loader
 
 Loader 就像是一个翻译员，能把源文件经过转化后输出新的结果，并且一个文件还可以链式的经过多个翻译员翻译。
@@ -384,17 +384,18 @@ module.exports = {
         use: [
           'style-loader',
           {
-            loader:'css-loader',
+            loader: 'css-loader',
             // 给 css-loader 传入配置项
-            options:{
-              minimize:true, 
+            options: {
+              minimize: true
             }
           },
-          'sass-loader'],
-      },
+          'sass-loader'
+        ]
+      }
     ]
-  },
-};
+  }
+}
 ```
 
 ### Loader 的职责
@@ -413,17 +414,17 @@ module.exports = {
 module.exports = function(source) {
   // source 为 compiler 传递给 Loader 的一个文件的原内容
   // 该函数需要返回处理后的内容，这里简单起见，直接把原内容返回了，相当于该 Loader 没有做任何转换
-  return source;
-};
+  return source
+}
 ```
 
 由于 Loader 运行在 Node.js 中，你可以调用任何 Node.js 自带的 API，或者安装第三方模块进行调用：
 
 ```js
-const sass = require('node-sass');
+const sass = require('node-sass')
 module.exports = function(source) {
-  return sass(source);
-};
+  return sass(source)
+}
 ```
 
 ### Loader 进阶
@@ -435,12 +436,12 @@ module.exports = function(source) {
 在最上面处理 SCSS 文件的 Webpack 配置中，给 css-loader 传了 options 参数，以控制 css-loader。 如何在自己编写的 Loader 中获取到用户传入的 options 呢？需要这样做：
 
 ```js
-const loaderUtils = require('loader-utils');
+const loaderUtils = require('loader-utils')
 module.exports = function(source) {
   // 获取到用户给当前 Loader 传入的 options
-  const options = loaderUtils.getOptions(this);
-  return source;
-};
+  const options = loaderUtils.getOptions(this)
+  return source
+}
 ```
 
 #### 返回其它结果
@@ -452,11 +453,11 @@ module.exports = function(source) {
 ```js
 module.exports = function(source) {
   // 通过 this.callback 告诉 Webpack 返回的结果
-  this.callback(null, source, sourceMaps);
+  this.callback(null, source, sourceMaps)
   // 当你使用 this.callback 返回内容时，该 Loader 必须返回 undefined，
-  // 以让 Webpack 知道该 Loader 返回的结果在 this.callback 中，而不是 return 中 
-  return;
-};
+  // 以让 Webpack 知道该 Loader 返回的结果在 this.callback 中，而不是 return 中
+  return
+}
 ```
 
 其中的 `this.callback` 是 Webpack 给 Loader 注入的 API，以方便 Loader 和 Webpack 之间通信。 `this.callback` 的详细使用方法如下：
@@ -485,13 +486,13 @@ Loader 有同步和异步之分，上面介绍的 Loader 都是同步的 Loader�
 
 ```js
 module.exports = function(source) {
-    // 告诉 Webpack 本次转换是异步的，Loader 会在 callback 中回调结果
-    var callback = this.async();
-    someAsyncOperation(source, function(err, result, sourceMaps, ast) {
-        // 通过 callback 返回异步执行后的结果
-        callback(err, result, sourceMaps, ast);
-    });
-};
+  // 告诉 Webpack 本次转换是异步的，Loader 会在 callback 中回调结果
+  var callback = this.async()
+  someAsyncOperation(source, function(err, result, sourceMaps, ast) {
+    // 通过 callback 返回异步执行后的结果
+    callback(err, result, sourceMaps, ast)
+  })
+}
 ```
 
 #### 处理二进制数据
@@ -500,14 +501,14 @@ module.exports = function(source) {
 
 ```js
 module.exports = function(source) {
-    // 在 exports.raw = true 时，Webpack 传给 Loader 的 source 是 Buffer 类型的
-    source instanceof Buffer = true;
-    // Loader 返回的类型也可以是 Buffer 类型的
-    // 在 exports.raw ! true 时，Loader 也可以返回 Buffer 类型的结果
-    return source;
-};
-// 通过 exports.raw 属性告诉 Webpack 该 Loader 是否需要二进制数据 
-module.exports.raw = true;
+  // 在 exports.raw = true 时，Webpack 传给 Loader 的 source 是 Buffer 类型的
+  source instanceof Buffer = true
+  // Loader 返回的类型也可以是 Buffer 类型的
+  // 在 exports.raw ! true 时，Loader 也可以返回 Buffer 类型的结果
+  return source
+}
+// 通过 exports.raw 属性告诉 Webpack 该 Loader 是否需要二进制数据
+module.exports.raw = true
 ```
 
 以上代码中最关键的代码是最后一行 `module.exports.raw = true;`，没有该行 Loader 只能拿到字符串。
@@ -521,9 +522,9 @@ module.exports.raw = true;
 ```js
 module.exports = function(source) {
   // 关闭该 Loader 的缓存功能
-  this.cacheable(false);
-  return source;
-};
+  this.cacheable(false)
+  return source
+}
 ```
 
 ### 其它 Loader API
@@ -534,7 +535,7 @@ module.exports = function(source) {
 - `this.resource`：当前处理文件的完整请求路径，包括 querystring，例如 `/src/main.js?name=1`。
 - `this.resourcePath`：当前处理文件的路径，例如 `/src/main.js`。
 - `this.resourceQuery`：当前处理文件的 querystring。
-- `this.target`：等于 Webpack 配置中的 Target，详情见 [2-7其它配置项-Target](https://webpack.wuhaolin.cn/2配置/2-7其它配置项.html#Target)。
+- `this.target`：等于 Webpack 配置中的 Target，详情见 [2-7 其它配置项-Target](https://webpack.wuhaolin.cn/2配置/2-7其它配置项.html#Target)。
 - `this.loadModule`：当 Loader 在处理一个文件时，如果依赖其它文件的处理结果才能得出当前文件的结果时， 就可以通过 `this.loadModule(request: string, callback: function(err, source, sourceMap, module))` 去获得 `request` 对应文件的处理结果。
 - `this.resolve`：像 `require` 语句一样获得指定文件的完整路径，使用方法为 `resolve(context: string, request: string, callback: function(err, result: string))`。
 - `this.addDependency`：给当前处理文件添加其依赖的文件，以便再其依赖的文件发生变化时，会重新调用 Loader 处理该文件。使用方法为 `addDependency(file: string)`。
@@ -554,11 +555,11 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader'],
-      },
+        use: ['style-loader']
+      }
     ]
-  },
-};
+  }
+}
 ```
 
 如果还采取以上的方法去使用本地开发的 Loader 将会很麻烦，因为你需要确保编写的 Loader 的源码是在 `node_modules` 目录下。 为此你需要先把编写的 Loader 发布到 Npm 仓库后再安装到本地项目使用。
@@ -573,21 +574,21 @@ Npm link 专门用于开发和调试本地 Npm 模块，能做到在不发布模
 
 1. 确保正在开发的本地 Npm 模块（也就是正在开发的 Loader）的 `package.json` 已经正确配置好；
 2. 在本地 Npm 模块根目录下执行 `npm link`，把本地模块注册到全局；
-3. 在项目根目录下执行 `npm link loader-name`，把第2步注册到全局的本地 Npm 模块链接到项目的 `node_moduels` 下，其中的 `loader-name` 是指在第1步中的 `package.json` 文件中配置的模块名称。
+3. 在项目根目录下执行 `npm link loader-name`，把第 2 步注册到全局的本地 Npm 模块链接到项目的 `node_moduels` 下，其中的 `loader-name` 是指在第 1 步中的 `package.json` 文件中配置的模块名称。
 
 链接好 Loader 到项目后你就可以像使用一个真正的 Npm 模块一样使用本地的 Loader 了。
 
 ##### ResolveLoader
 
-在 [2-7其它配置项](https://webpack.wuhaolin.cn/2配置/2-7其它配置项.html#ResolveLoader) 中曾介绍过 ResolveLoader 用于配置 Webpack 如何寻找 Loader。 默认情况下只会去 `node_modules` 目录下寻找，为了让 Webpack 加载放在本地项目中的 Loader 需要修改 `resolveLoader.modules`。
+在 [2-7 其它配置项](https://webpack.wuhaolin.cn/2配置/2-7其它配置项.html#ResolveLoader) 中曾介绍过 ResolveLoader 用于配置 Webpack 如何寻找 Loader。 默认情况下只会去 `node_modules` 目录下寻找，为了让 Webpack 加载放在本地项目中的 Loader 需要修改 `resolveLoader.modules`。
 
 假如本地的 Loader 在项目目录中的 `./loaders/loader-name` 中，则需要如下配置：
 
 ```js
 module.exports = {
-  resolveLoader:{
+  resolveLoader: {
     // 去哪些目录下寻找 Loader，有先后顺序之分
-    modules: ['node_modules','./loaders/'],
+    modules: ['node_modules', './loaders/']
   }
 }
 ```
@@ -607,7 +608,7 @@ module.exports = {
 转换成
 
 ```js
-require('../style/index.css');
+require('../style/index.css')
 ```
 
 该 Loader 的使用场景是去正确加载针对 [Fis3](http://fis.baidu.com/fis3/docs/user-dev/require.html) 编写的 JavaScript，这些 JavaScript 中存在通过注释的方式加载依赖的 CSS 文件。
@@ -621,28 +622,26 @@ module.exports = {
       {
         test: /\.js$/,
         use: ['comment-require-loader'],
-        // 针对采用了 fis3 CSS 导入语法的 JavaScript 文件通过 comment-require-loader 去转换 
+        // 针对采用了 fis3 CSS 导入语法的 JavaScript 文件通过 comment-require-loader 去转换
         include: [path.resolve(__dirname, 'node_modules/imui')]
       }
     ]
   }
-};
+}
 ```
 
 该 Loader 的实现非常简单，完整代码如下：
 
 ```js
 function replace(source) {
-    // 使用正则把 // @require '../style/index.css' 转换成 require('../style/index.css');  
-    return source.replace(/(\/\/ *@require) +(('|").+('|")).*/, 'require($2);');
+  // 使用正则把 // @require '../style/index.css' 转换成 require('../style/index.css');
+  return source.replace(/(\/\/ *@require) +(('|").+('|")).*/, 'require($2);')
 }
 
-module.exports = function (content) {
-    return replace(content);
-};
+module.exports = function(content) {
+  return replace(content)
+}
 ```
-
-
 
 ## 编写 Plugin
 
@@ -651,30 +650,26 @@ Webpack 通过 Plugin 机制让其更加灵活，以适应各种应用场景。 
 一个最基础的 Plugin 的代码是这样的：
 
 ```js
-class BasicPlugin{
+class BasicPlugin {
   // 在构造函数中获取用户给该插件传入的配置
-  constructor(options){
-  }
+  constructor(options) {}
 
   // Webpack 会调用 BasicPlugin 实例的 apply 方法给插件实例传入 compiler 对象
-  apply(compiler){
-    compiler.plugin('compilation',function(compilation) {
-    })
+  apply(compiler) {
+    compiler.plugin('compilation', function(compilation) {})
   }
 }
 
 // 导出 Plugin
-module.exports = BasicPlugin;
+module.exports = BasicPlugin
 ```
 
 在使用这个 Plugin 时，相关配置代码如下：
 
 ```js
-const BasicPlugin = require('./BasicPlugin.js');
+const BasicPlugin = require('./BasicPlugin.js')
 module.export = {
-  plugins:[
-    new BasicPlugin(options),
-  ]
+  plugins: [new BasicPlugin(options)]
 }
 ```
 
@@ -701,19 +696,17 @@ Webpack 的事件流机制应用了观察者模式，和 Node.js 中的 EventEmi
 
 ```js
 /**
-* 广播出事件
-* event-name 为事件名称，注意不要和现有的事件重名
-* params 为附带的参数
-*/
-compiler.apply('event-name',params);
+ * 广播出事件
+ * event-name 为事件名称，注意不要和现有的事件重名
+ * params 为附带的参数
+ */
+compiler.apply('event-name', params)
 
 /**
-* 监听名称为 event-name 的事件，当 event-name 事件发生时，函数就会被执行。
-* 同时函数中的 params 参数为广播事件时附带的参数。
-*/
-compiler.plugin('event-name',function(params) {
-
-});
+ * 监听名称为 event-name 的事件，当 event-name 事件发生时，函数就会被执行。
+ * 同时函数中的 params 参数为广播事件时附带的参数。
+ */
+compiler.plugin('event-name', function(params) {})
 ```
 
 同理，compilation.apply 和 compilation.plugin 使用方法和上面一致。
@@ -729,13 +722,13 @@ compiler.plugin('event-name',function(params) {
 - 有些事件是异步的，这些异步的事件会附带两个参数，第二个参数为回调函数，在插件处理完任务时需要调用回调函数通知 Webpack，才会进入下一处理流程。例如：
 
   ```js
-    compiler.plugin('emit',function(compilation, callback) {
-      // 支持处理逻辑
-  
-      // 处理完毕后执行 callback 以通知 Webpack 
-      // 如果不执行 callback，运行流程将会一直卡在这不往下执行 
-      callback();
-    });
+  compiler.plugin('emit', function(compilation, callback) {
+    // 支持处理逻辑
+
+    // 处理完毕后执行 callback 以通知 Webpack
+    // 如果不执行 callback，运行流程将会一直卡在这不往下执行
+    callback()
+  })
   ```
 
 ### 常用 API
@@ -751,31 +744,30 @@ compiler.plugin('event-name',function(params) {
 ```js
 class Plugin {
   apply(compiler) {
-    compiler.plugin('emit', function (compilation, callback) {
+    compiler.plugin('emit', function(compilation, callback) {
       // compilation.chunks 存放所有代码块，是一个数组
-      compilation.chunks.forEach(function (chunk) {
+      compilation.chunks.forEach(function(chunk) {
         // chunk 代表一个代码块
         // 代码块由多个模块组成，通过 chunk.forEachModule 能读取组成代码块的每个模块
-        chunk.forEachModule(function (module) {
+        chunk.forEachModule(function(module) {
           // module 代表一个模块
           // module.fileDependencies 存放当前模块的所有依赖的文件路径，是一个数组
-          module.fileDependencies.forEach(function (filepath) {
-          });
-        });
+          module.fileDependencies.forEach(function(filepath) {})
+        })
 
         // Webpack 会根据 Chunk 去生成输出的文件资源，每个 Chunk 都对应一个及其以上的输出文件
         // 例如在 Chunk 中包含了 CSS 模块并且使用了 ExtractTextPlugin 时，
         // 该 Chunk 就会生成 .js 和 .css 两个文件
-        chunk.files.forEach(function (filename) {
+        chunk.files.forEach(function(filename) {
           // compilation.assets 存放当前所有即将输出的资源
           // 调用一个输出资源的 source() 方法能获取到输出资源的内容
-          let source = compilation.assets[filename].source();
-        });
-      });
+          let source = compilation.assets[filename].source()
+        })
+      })
 
       // 这是一个异步事件，要记得调用 callback 通知 Webpack 本次事件监听处理结束。
       // 如果忘记了调用 callback，Webpack 将一直卡在这里而不会往后执行。
-      callback();
+      callback()
     })
   }
 }
@@ -783,21 +775,21 @@ class Plugin {
 
 #### 监听文件变化
 
-在[4-5使用自动刷新](https://webpack.wuhaolin.cn/4优化/4-5使用自动刷新.html) 中介绍过 Webpack 会从配置的入口模块出发，依次找出所有的依赖模块，当入口模块或者其依赖的模块发生变化时， 就会触发一次新的 Compilation。
+在[4-5 使用自动刷新](https://webpack.wuhaolin.cn/4优化/4-5使用自动刷新.html) 中介绍过 Webpack 会从配置的入口模块出发，依次找出所有的依赖模块，当入口模块或者其依赖的模块发生变化时， 就会触发一次新的 Compilation。
 
 在开发插件时经常需要知道是哪个文件发生变化导致了新的 Compilation，为此可以使用如下代码：
 
 ```js
 // 当依赖的文件发生变化时会触发 watch-run 事件
 compiler.plugin('watch-run', (watching, callback) => {
-    // 获取发生变化的文件列表
-    const changedFiles = watching.compiler.watchFileSystem.watcher.mtimes;
-    // changedFiles 格式为键值对，键为发生变化的文件路径。
-    if (changedFiles[filePath] !== undefined) {
-      // filePath 对应的文件发生了变化
-    }
-    callback();
-});
+  // 获取发生变化的文件列表
+  const changedFiles = watching.compiler.watchFileSystem.watcher.mtimes
+  // changedFiles 格式为键值对，键为发生变化的文件路径。
+  if (changedFiles[filePath] !== undefined) {
+    // filePath 对应的文件发生了变化
+  }
+  callback()
+})
 ```
 
 默认情况下 Webpack 只会监视入口和其依赖的模块是否发生变化，在有些情况下项目可能需要引入新的文件，例如引入一个 HTML 文件。 由于 JavaScript 文件不会去导入 HTML 文件，Webpack 就不会监听 HTML 文件的变化，编辑 HTML 文件时就不会重新触发新的 Compilation。 为了监听 HTML 文件的变化，我们需要把 HTML 文件加入到依赖列表中，为此可以使用如下代码：
@@ -805,9 +797,9 @@ compiler.plugin('watch-run', (watching, callback) => {
 ```js
 compiler.plugin('after-compile', (compilation, callback) => {
   // 把 HTML 文件添加到文件依赖列表，好让 Webpack 去监听 HTML 模块文件，在 HTML 模版文件发生变化时重新启动一次编译
-    compilation.fileDependencies.push(filePath);
-    callback();
-});
+  compilation.fileDependencies.push(filePath)
+  callback()
+})
 ```
 
 #### 修改输出资源
@@ -825,15 +817,15 @@ compiler.plugin('emit', (compilation, callback) => {
     // 返回文件内容
     source: () => {
       // fileContent 既可以是代表文本文件的字符串，也可以是代表二进制文件的 Buffer
-      return fileContent;
-      },
+      return fileContent
+    },
     // 返回文件大小
-      size: () => {
-      return Buffer.byteLength(fileContent, 'utf8');
+    size: () => {
+      return Buffer.byteLength(fileContent, 'utf8')
     }
-  };
-  callback();
-});
+  }
+  callback()
+})
 ```
 
 读取 `compilation.assets` 的代码如下：
@@ -841,13 +833,13 @@ compiler.plugin('emit', (compilation, callback) => {
 ```js
 compiler.plugin('emit', (compilation, callback) => {
   // 读取名称为 fileName 的输出资源
-  const asset = compilation.assets[fileName];
+  const asset = compilation.assets[fileName]
   // 获取输出资源的内容
-  asset.source();
+  asset.source()
   // 获取输出资源的文件大小
-  asset.size();
-  callback();
-});
+  asset.size()
+  callback()
+})
 ```
 
 #### 判断 Webpack 使用了哪些插件
@@ -859,9 +851,13 @@ compiler.plugin('emit', (compilation, callback) => {
 // compiler 参数即为 Webpack 在 apply(compiler) 中传入的参数
 function hasExtractTextPlugin(compiler) {
   // 当前配置所有使用的插件列表
-  const plugins = compiler.options.plugins;
+  const plugins = compiler.options.plugins
   // 去 plugins 中寻找有没有 ExtractTextPlugin 的实例
-  return plugins.find(plugin=>plugin.__proto__.constructor = ExtractTextPlugin) != null;
+  return (
+    plugins.find(
+      (plugin) => (plugin.__proto__.constructor = ExtractTextPlugin)
+    ) != null
+  )
 }
 ```
 
@@ -873,14 +869,17 @@ function hasExtractTextPlugin(compiler) {
 
 ```js
 module.exports = {
-  plugins:[
+  plugins: [
     // 在初始化 EndWebpackPlugin 时传入了两个参数，分别是在成功时的回调函数和失败时的回调函数；
-    new EndWebpackPlugin(() => {
-      // Webpack 构建成功，并且文件输出了后会执行到这里，在这里可以做发布文件操作
-    }, (err) => {
-      // Webpack 构建失败，err 是导致错误的原因
-      console.error(err);        
-    })
+    new EndWebpackPlugin(
+      () => {
+        // Webpack 构建成功，并且文件输出了后会执行到这里，在这里可以做发布文件操作
+      },
+      (err) => {
+        // Webpack 构建失败，err 是导致错误的原因
+        console.error(err)
+      }
+    )
   ]
 }
 ```
@@ -894,35 +893,34 @@ module.exports = {
 
 ```js
 class EndWebpackPlugin {
-
   constructor(doneCallback, failCallback) {
     // 存下在构造函数中传入的回调函数
-    this.doneCallback = doneCallback;
-    this.failCallback = failCallback;
+    this.doneCallback = doneCallback
+    this.failCallback = failCallback
   }
 
   apply(compiler) {
     compiler.plugin('done', (stats) => {
-        // 在 done 事件中回调 doneCallback
-        this.doneCallback(stats);
-    });
+      // 在 done 事件中回调 doneCallback
+      this.doneCallback(stats)
+    })
     compiler.plugin('failed', (err) => {
-        // 在 failed 事件中回调 failCallback
-        this.failCallback(err);
-    });
+      // 在 failed 事件中回调 failCallback
+      this.failCallback(err)
+    })
   }
 }
-// 导出插件 
-module.exports = EndWebpackPlugin;
+// 导出插件
+module.exports = EndWebpackPlugin
 ```
 
-从开发这个插件可以看出，找到合适的事件点去完成功能在开发插件时显得尤为重要。 在 [5-1工作原理概括](https://webpack.wuhaolin.cn/5原理/5-1工作原理概括.html) 中详细介绍过 Webpack 在运行过程中广播出常用事件，你可以从中找到你需要的事件。
+从开发这个插件可以看出，找到合适的事件点去完成功能在开发插件时显得尤为重要。 在 [5-1 工作原理概括](https://webpack.wuhaolin.cn/5原理/5-1工作原理概括.html) 中详细介绍过 Webpack 在运行过程中广播出常用事件，你可以从中找到你需要的事件。
 
 ## 调试 Webpack
 
 在编写 Webpack 的 Plugin 和 Loader 时，可能执行结果会和你预期的不一样，就和你平时写代码遇到了奇怪的 Bug 一样。 对于无法一眼看出问题的 Bug，通常需要调试程序源码才能找出问题所在。
 
-虽然可以通过 `console.log` 的方式完成调试，但这种方法非常不方便也不优雅，本节将教你如何断点调试 [5-1工作原理概括](http://webpack.wuhaolin.cn/5-1工作原理概括.zip) 中的插件代码。 由于 Webpack 运行在 Node.js 之上，调试 Webpack 就相对于调试 Node.js 程序。
+虽然可以通过 `console.log` 的方式完成调试，但这种方法非常不方便也不优雅，本节将教你如何断点调试 [5-1 工作原理概括](http://webpack.wuhaolin.cn/5-1工作原理概括.zip) 中的插件代码。 由于 Webpack 运行在 Node.js 之上，调试 Webpack 就相对于调试 Node.js 程序。
 
 ### 在 Webstorm 中调试
 
@@ -958,10 +956,6 @@ Webstorm 集成了 Node.js 的调试工具，因此使用 Webstorm 调试 Webpac
 
 ![图5-5-4 执行到断点](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/5-5execbreakpoint.png)
 
-
-
-
-
 ## 参考
-> [webpack深入浅出](https://webpack.wuhaolin.cn/)
 
+> [webpack 深入浅出](https://webpack.wuhaolin.cn/)

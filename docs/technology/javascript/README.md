@@ -1,4 +1,4 @@
-# JavaScript发展史
+# JavaScript 发展史
 
 [[toc]]
 

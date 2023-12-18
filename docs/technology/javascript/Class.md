@@ -2,13 +2,11 @@
 title: ES6 class
 ---
 
-# 了解一下class原理？
+# 了解一下 class 原理？
 
 [[toc]]
 
-
-
-## class基本声明
+## class 基本声明
 
 在说`class`之前，想必大家肯定会想到`constructor function`. 看下面代码：
 
@@ -18,7 +16,7 @@ function Foo(name) {
 }
 
 class Bar {
-  constructor(name){
+  constructor(name) {
     this.name = name
   }
 }
@@ -41,16 +39,15 @@ b = new Bar('wzp')
 
 ```js
 class PersonClass {
+  // 等价于 构造函数 函数体内容
+  constructor(name) {
+    this.name = name
+  }
 
-    // 等价于 构造函数 函数体内容
-    constructor(name) {
-        this.name = name;
-    }
-
-    // 等价于 在构造函数的原型上(prototype)添加方法
-    sayName() {
-        console.log(this.name);
-    }
+  // 等价于 在构造函数的原型上(prototype)添加方法
+  sayName() {
+    console.log(this.name)
+  }
 }
 ```
 
@@ -59,36 +56,33 @@ class PersonClass {
 ```js
 // 与 PersonClass 等效的实现
 let PersonType2 = (function() {
+  'use strict'
 
-    "use strict";
-
-    const PersonType2 = function(name) {
-
-        // 确保构造函数通过new调用
-        if (typeof new.target === "undefined") {
-            throw new Error("Constructor must be called with new.");
-        }
-
-        this.name = name;
+  const PersonType2 = function(name) {
+    // 确保构造函数通过new调用
+    if (typeof new.target === 'undefined') {
+      throw new Error('Constructor must be called with new.')
     }
 
-    Object.defineProperty(PersonType2.prototype, "sayName", {
-        value: function() {
+    this.name = name
+  }
 
-            // 确保方法不会通过new调用
-            if (typeof new.target !== "undefined") {
-                throw new Error("Method cannot be called with new.");
-            }
+  Object.defineProperty(PersonType2.prototype, 'sayName', {
+    value: function() {
+      // 确保方法不会通过new调用
+      if (typeof new.target !== 'undefined') {
+        throw new Error('Method cannot be called with new.')
+      }
 
-            console.log(this.name);
-        },
-        enumerable: false,//不可枚举
-        writable: true,
-        configurable: true
-    });
+      console.log(this.name)
+    },
+    enumerable: false, //不可枚举
+    writable: true,
+    configurable: true
+  })
 
-    return PersonType2;
-}());
+  return PersonType2
+})()
 ```
 
 我们来分析上面这个无`class`语法的代码段。
@@ -97,7 +91,7 @@ let PersonType2 = (function() {
 
 在构造方法里有`new.target`来检测确保通过`new`调用，与之相对的是对方法的检测，排除`new`方法调用的可能，否则抛错。
 
-再下面就是`enumerable: false`，最后返回这个构造函数. 
+再下面就是`enumerable: false`，最后返回这个构造函数.
 
 虽然上面的代码可以实现`class`的效果，但是明显，`class`更加简洁方便。
 
@@ -107,30 +101,30 @@ let PersonType2 = (function() {
 
 ```js
 class Foo {
-   constructor() {
-       Foo = "bar";    // 执行的时候报错。
-   }
+  constructor() {
+    Foo = 'bar' // 执行的时候报错。
+  }
 }
 
 // 这里不会报错。
-Foo = "baz";
+Foo = 'baz'
 ```
 
-## class表达式
+## class 表达式
 
 `class`和`function`类似，也可以使用表达式。
 
 ```js
 let PersonClass = class {
-    // 等价于 构造函数 函数体内容
-    constructor(name) {
-        this.name = name;
-    }
-    // 等价于 在构造函数的原型上(prototype)添加方法
-    sayName() {
-        console.log(this.name);
-    }
-};
+  // 等价于 构造函数 函数体内容
+  constructor(name) {
+    this.name = name
+  }
+  // 等价于 在构造函数的原型上(prototype)添加方法
+  sayName() {
+    console.log(this.name)
+  }
+}
 ```
 
 可以发现，表达式语法类似，使用`class`的表达式还是声明都只是风格的不同，**不像构造函数的声明和表达式有着提升的区别。**
@@ -139,15 +133,15 @@ let PersonClass = class {
 
 ```js
 let PersonClass = class PersonClass2 {
-    constructor(name) {
-        this.name = name;
-    }
-    sayName() {
-        console.log(this.name);
-    }
-};
-console.log(typeof PersonClass);   // "function"
-console.log(typeof PersonClass2);  // undefined
+  constructor(name) {
+    this.name = name
+  }
+  sayName() {
+    console.log(this.name)
+  }
+}
+console.log(typeof PersonClass) // "function"
+console.log(typeof PersonClass2) // undefined
 ```
 
 可以发现上面输出`PersonClass2`是未定义，因为他只有**存在类定义中**, 如需了解，我们做下面的一个转变:
@@ -155,36 +149,33 @@ console.log(typeof PersonClass2);  // undefined
 ```js
 // 与 PersonClass 等效的实现
 let PersonClass = (function() {
+  'use strict'
 
-    "use strict";
-
-    const PersonClass2 = function(name) {
-
-        // 确保构造函数通过new调用
-        if (typeof new.target === "undefined") {
-            throw new Error("Constructor must be called with new.");
-        }
-
-        this.name = name;
+  const PersonClass2 = function(name) {
+    // 确保构造函数通过new调用
+    if (typeof new.target === 'undefined') {
+      throw new Error('Constructor must be called with new.')
     }
 
-    Object.defineProperty(PersonClass2.prototype, "sayName", {
-        value: function() {
+    this.name = name
+  }
 
-            // 确保方法不会通过new调用
-            if (typeof new.target !== "undefined") {
-                throw new Error("Method cannot be called with new.");
-            }
+  Object.defineProperty(PersonClass2.prototype, 'sayName', {
+    value: function() {
+      // 确保方法不会通过new调用
+      if (typeof new.target !== 'undefined') {
+        throw new Error('Method cannot be called with new.')
+      }
 
-            console.log(this.name);
-        },
-        enumerable: false,// 不可枚举
-        writable: true,
-        configurable: true
-    });
+      console.log(this.name)
+    },
+    enumerable: false, // 不可枚举
+    writable: true,
+    configurable: true
+  })
 
-    return PersonClass2;
-}());
+  return PersonClass2
+})()
 ```
 
 这个转变与上面的`class`声明略有不同，`class`声明的时候，内部与外部的名称相同，但是在`class`表达式 中，却不同。
@@ -197,28 +188,30 @@ let PersonClass = (function() {
 
 ```js
 function createObject(classDef) {
-    return new classDef();
+  return new classDef()
 }
-let obj = createObject(class {
+let obj = createObject(
+  class {
     sayHi() {
-        console.log("Hi!");
+      console.log('Hi!')
     }
-});
-obj.sayHi();        // "Hi!"
+  }
+)
+obj.sayHi() // "Hi!"
 ```
 
 `class`有一个有意思的是使用立即执行来创建单例
 
 ```js
-let person = new class {
-    constructor(name) {
-        this.name = name;
-    }
-    sayName() {
-        console.log(this.name);
-    }
-}("wzp");
-person.sayName();       // "wzp"
+let person = new (class {
+  constructor(name) {
+    this.name = name
+  }
+  sayName() {
+    console.log(this.name)
+  }
+})('wzp')
+person.sayName() // "wzp"
 ```
 
 这样就创建了一个**单例**。
@@ -247,31 +240,31 @@ console.log("set" in descriptor);   // true
 console.log(descriptor.enumerable); // false
 ```
 
-他类似下面这种无class的情况:
+他类似下面这种无 class 的情况:
 
 ```js
 // 等价于 class CustomHTMLElement 实现
 let CustomHTMLElement = (function() {
-    "use strict";
-    const CustomHTMLElement = function(element) {     
-        if (typeof new.target === "undefined") {
-            throw new Error("Constructor must be called with new.");
-        }
-        this.element = element;
+  'use strict'
+  const CustomHTMLElement = function(element) {
+    if (typeof new.target === 'undefined') {
+      throw new Error('Constructor must be called with new.')
     }
-    Object.defineProperty(CustomHTMLElement.prototype, "html", {
-        enumerable: false,
-        configurable: true,
-        get: function() {
-            return this.element.innerHTML;
-        },
-        set: function(value) {
-            this.element.innerHTML = value;
-        }
-    });
+    this.element = element
+  }
+  Object.defineProperty(CustomHTMLElement.prototype, 'html', {
+    enumerable: false,
+    configurable: true,
+    get: function() {
+      return this.element.innerHTML
+    },
+    set: function(value) {
+      this.element.innerHTML = value
+    }
+  })
 
-    return CustomHTMLElement;
-}());
+  return CustomHTMLElement
+})()
 ```
 
 可以发现，最终都是在`Object.defineProperty`中处理。
@@ -282,23 +275,22 @@ let CustomHTMLElement = (function() {
 
 ```js
 class Collection {
+  constructor() {
+    this.items = []
+  }
 
-    constructor() {
-        this.items = [];
-    }
-
-    *[Symbol.iterator]() {
-        yield *this.items.values();
-    }
+  *[Symbol.iterator]() {
+    yield* this.items.values()
+  }
 }
 
-var collection = new Collection();
-collection.items.push(1);
-collection.items.push(2);
-collection.items.push(3);
+var collection = new Collection()
+collection.items.push(1)
+collection.items.push(2)
+collection.items.push(3)
 
 for (let x of collection) {
-    console.log(x);
+  console.log(x)
 }
 ```
 
@@ -310,44 +302,43 @@ for (let x of collection) {
 
 ```js
 function PersonType(name) {
-    this.name = name;
+  this.name = name
 }
 
 // static method
 PersonType.create = function(name) {
-    return new PersonType(name);
-};
+  return new PersonType(name)
+}
 
 // instance method
 PersonType.prototype.sayName = function() {
-    console.log(this.name);
-};
+  console.log(this.name)
+}
 
-var person = PersonType.create("wzp");
+var person = PersonType.create('wzp')
 ```
 
 现在在`es6`中只需要添加关键字`static`即可:
 
 ```js
 class PersonClass {
+  // 等价于 构造函数 函数体内容
+  constructor(name) {
+    this.name = name
+  }
 
-    // 等价于 构造函数 函数体内容
-    constructor(name) {
-        this.name = name;
-    }
+  // 等价于 在构造函数的原型上(PersonClass.prototype)添加方法
+  sayName() {
+    console.log(this.name)
+  }
 
-    // 等价于 在构造函数的原型上(PersonClass.prototype)添加方法
-    sayName() {
-        console.log(this.name);
-    }
-
-    // 等价于 直接在构造函数(PersonClass)上 添加方法
-    static create(name) {
-        return new PersonClass(name);
-    }
+  // 等价于 直接在构造函数(PersonClass)上 添加方法
+  static create(name) {
+    return new PersonClass(name)
+  }
 }
 
-let person = PersonClass.create("wzp");
+let person = PersonClass.create('wzp')
 ```
 
 ## 派生继承
@@ -356,67 +347,67 @@ let person = PersonClass.create("wzp");
 
 ```js
 function Rectangle(length, width) {
-    this.length = length;
-    this.width = width;
+  this.length = length
+  this.width = width
 }
 
 Rectangle.prototype.getArea = function() {
-    return this.length * this.width;
-};
+  return this.length * this.width
+}
 
 function Square(length) {
-    Rectangle.call(this, length, length);
+  Rectangle.call(this, length, length)
 }
 
 Square.prototype = Object.create(Rectangle.prototype, {
-    constructor: {
-        value:Square,
-        enumerable: true,
-        writable: true,
-        configurable: true
-    }
-});
+  constructor: {
+    value: Square,
+    enumerable: true,
+    writable: true,
+    configurable: true
+  }
+})
 
-var square = new Square(3);
-console.log(square.getArea());              // 9
-console.log(square instanceof Square);      // true
-console.log(square instanceof Rectangle);   // true
+var square = new Square(3)
+console.log(square.getArea()) // 9
+console.log(square instanceof Square) // true
+console.log(square instanceof Rectangle) // true
 ```
 
 `Square`继承自`Rectangle`,这使得`Square.prototype`需继承自`Rectangle.prototype`,并且调用到`new Rectangle`(`Rectangle.call(this, length, length)`),这经常会迷惑一些新手。 所以出现了`es6`的继承，他使得更加容易了解.
 
 ```js
 class Rectangle {
-    constructor(length, width) {
-        this.length = length;
-        this.width = width;
-    }
+  constructor(length, width) {
+    this.length = length
+    this.width = width
+  }
 
-    getArea() {
-        return this.length * this.width;
-    }
+  getArea() {
+    return this.length * this.width
+  }
 }
 
 class Square extends Rectangle {
-    constructor(length) {
-
-        // same as Rectangle.call(this, length, length)
-        super(length, length);
-    }
+  constructor(length) {
+    // same as Rectangle.call(this, length, length)
+    super(length, length)
+  }
 }
 
-var square = new Square(3);
+var square = new Square(3)
 
-console.log(square.getArea());              // 9
-console.log(square instanceof Square);      // true
-console.log(square instanceof Rectangle);   // true
+console.log(square.getArea()) // 9
+console.log(square instanceof Square) // true
+console.log(square instanceof Rectangle) // true
 ```
 
-直接通过`extends`来继承，子类中通过`super `来调用父类的构造函数，并传递参数。 这样从其他类继承的类称为派生类，派生类在出现的`constructor`中需要指定`super()`,否则会出错。如果不出现 `constructor`,则默认会添加`constructor`.
+直接通过`extends`来继承，子类中通过`super`来调用父类的构造函数，并传递参数。 这样从其他类继承的类称为派生类，派生类在出现的`constructor`中需要指定`super()`,否则会出错。如果不出现 `constructor`,则默认会添加`constructor`.
 
-使用`super()`的时候，需要记住下面这几点 
-1. 你只可以在派生类(`extends`)中使用`super()`,否则会出错。 
-2. `constructor`中的`super()`使用必须在`this`之前使用，因为他负责一些初始化，所以在此之前使用`this`会出错。 
+使用`super()`的时候，需要记住下面这几点
+
+1. 你只可以在派生类(`extends`)中使用`super()`,否则会出错。
+2. `constructor`中的`super()`使用必须在`this`之前使用，因为他负责一些初始化，所以在此之前使用`this`会出错。
 3. 派生类中避免使用`super()`的唯一方法是在`constructor`返回一个对象(非原始类型)。
 
 ## `class`的影子方法
@@ -433,34 +424,34 @@ console.log(square instanceof Rectangle);   // true
 
 ```js
 let SerializableMixin = {
-    serialize() {
-        return JSON.stringify(this);
-    }
-};
+  serialize() {
+    return JSON.stringify(this)
+  }
+}
 
 let AreaMixin = {
-    getArea() {
-        return this.length * this.width;
-    }
-};
+  getArea() {
+    return this.length * this.width
+  }
+}
 
 function mixin(...mixins) {
-    var base = function() {};
-    Object.assign(base.prototype, ...mixins);
-    return base;
+  var base = function() {}
+  Object.assign(base.prototype, ...mixins)
+  return base
 }
 
 class Square extends mixin(AreaMixin, SerializableMixin) {
-    constructor(length) {
-        super();
-        this.length = length;
-        this.width = length;
-    }
+  constructor(length) {
+    super()
+    this.length = length
+    this.width = length
+  }
 }
 
-var x = new Square(3);
-console.log(x.getArea());               // 9
-console.log(x.serialize());             // "{"length":3,"width":3}"
+var x = new Square(3)
+console.log(x.getArea()) // 9
+console.log(x.serialize()) // "{"length":3,"width":3}"
 ```
 
 他仍然可以工作，因为`mixin`方法返回的是一个`function`.满足`[[Constructor]]`和`prototype`的要求。
@@ -478,61 +469,61 @@ console.log(x.serialize());             // "{"length":3,"width":3}"
 
 ```js
 // 内置的数组行为
-var colors = [];
-colors[0] = "red";
-console.log(colors.length);         // 1
+var colors = []
+colors[0] = 'red'
+console.log(colors.length) // 1
 
-colors.length = 0;
-console.log(colors[0]);             // undefined
+colors.length = 0
+console.log(colors[0]) // undefined
 
 // es5中尝试数组继承
 
 function MyArray() {
-    Array.apply(this, arguments);
+  Array.apply(this, arguments)
 }
 
 MyArray.prototype = Object.create(Array.prototype, {
-    constructor: {
-        value: MyArray,
-        writable: true,
-        configurable: true,
-        enumerable: true
-    }
-});
+  constructor: {
+    value: MyArray,
+    writable: true,
+    configurable: true,
+    enumerable: true
+  }
+})
 
-var colors = new MyArray();
-colors[0] = "red";
-console.log(colors.length);         // 0
+var colors = new MyArray()
+colors[0] = 'red'
+console.log(colors.length) // 0
 
-colors.length = 0;
-console.log(colors[0]);             // "red"
+colors.length = 0
+console.log(colors[0]) // "red"
 ```
 
 可以发现，这个是不能继承内部的属性。`es6`的一个目标就是继承内部的属性方法。
 
-因此`es6 class`的继承和`es5`的经典继承略有不同： 
-- **`ES5`的经典继承首先调用的是派生类中的`this`,然后基类的构造函数再被调用，这就意味着`this`是作为派生类的第一个实例开始。基类的其他属性进行修饰** 
-- `ES6`的`class` 却是恰恰相反: **`ES6`的`class`继承，`this`首先是由基类来创建，后面通过派生类的构造函数来改变。这样才会导致开始就是由基类内置的功能来接收所有的功能** 
-  
+因此`es6 class`的继承和`es5`的经典继承略有不同：
+
+- **`ES5`的经典继承首先调用的是派生类中的`this`,然后基类的构造函数再被调用，这就意味着`this`是作为派生类的第一个实例开始。基类的其他属性进行修饰**
+- `ES6`的`class` 却是恰恰相反: **`ES6`的`class`继承，`this`首先是由基类来创建，后面通过派生类的构造函数来改变。这样才会导致开始就是由基类内置的功能来接收所有的功能**
 
 再来看看下面的例子:
 
 ```js
 class MyArray extends Array {
-    // empty
+  // empty
 }
 
-var colors = new MyArray();
-colors[0] = "red";
-console.log(colors.length);         // 1
+var colors = new MyArray()
+colors[0] = 'red'
+console.log(colors.length) // 1
 
-colors.length = 0;
-console.log(colors[0]);             // undefined
+colors.length = 0
+console.log(colors[0]) // undefined
 ```
 
 这样就会完全继承`Array`的内置功能。
 
-## Symbol.species属性
+## Symbol.species 属性
 
 `extends`一个有趣的事情就是任何继承了内置的功能，最终返回。内置的实例都会**自动返回派生类的实例**。
 
@@ -540,14 +531,14 @@ console.log(colors[0]);             // undefined
 
 ```js
 class MyArray extends Array {
-    // empty
+  // empty
 }
 
 let items = new MyArray(1, 2, 3, 4),
-    subitems = items.slice(1, 3);
+  subitems = items.slice(1, 3)
 
-console.log(items instanceof MyArray);      // true
-console.log(subitems instanceof MyArray);   // true
+console.log(items instanceof MyArray) // true
+console.log(subitems instanceof MyArray) // true
 ```
 
 在上面的代码中，`MyArray`实例返回`slice()`方法.正常情况下, `slice()`方法继承自`Array`并且返回`Array`的实例。实际上是`Symbol.species`在幕后进行改变。
@@ -570,60 +561,60 @@ console.log(subitems instanceof MyArray);   // true
 
 ```js
 class MyClass {
-    static get [Symbol.species]() {
-        return this;
-    }
+  static get [Symbol.species]() {
+    return this
+  }
 
-    constructor(value) {
-        this.value = value;
-    }
+  constructor(value) {
+    this.value = value
+  }
 
-    clone() {
-        return new this.constructor[Symbol.species](this.value);
-    }
+  clone() {
+    return new this.constructor[Symbol.species](this.value)
+  }
 }
 ```
 
 可以发现上面这段代码，有个静态的访问器属性，而且也可以看到上面只有`getter`,并没有`setter`,因为要修改内置的类型，这是不可能的。
 
-**所有调用`this.constructor[Symbol.species]`的都会返回派生类** `MyClass`. 如`clone`调用了，并且返回了一个新的实例。 
+**所有调用`this.constructor[Symbol.species]`的都会返回派生类** `MyClass`. 如`clone`调用了，并且返回了一个新的实例。
 
 再看下面的例子:
 
 ```js
 class MyClass {
-    static get [Symbol.species]() {
-        return this;
-    }
+  static get [Symbol.species]() {
+    return this
+  }
 
-    constructor(value) {
-        this.value = value;
-    }
+  constructor(value) {
+    this.value = value
+  }
 
-    clone() {
-        return new this.constructor[Symbol.species](this.value);
-    }
+  clone() {
+    return new this.constructor[Symbol.species](this.value)
+  }
 }
 
 class MyDerivedClass1 extends MyClass {
-    // empty
+  // empty
 }
 
 class MyDerivedClass2 extends MyClass {
-    static get [Symbol.species]() {
-        return MyClass;
-    }
+  static get [Symbol.species]() {
+    return MyClass
+  }
 }
 
-let instance1 = new MyDerivedClass1("foo"),
-    clone1 = instance1.clone(),
-    instance2 = new MyDerivedClass2("bar"),
-    clone2 = instance2.clone();
+let instance1 = new MyDerivedClass1('foo'),
+  clone1 = instance1.clone(),
+  instance2 = new MyDerivedClass2('bar'),
+  clone2 = instance2.clone()
 
-console.log(clone1 instanceof MyClass);             // true
-console.log(clone1 instanceof MyDerivedClass1);     // true
-console.log(clone2 instanceof MyClass);             // true
-console.log(clone2 instanceof MyDerivedClass2);     // false
+console.log(clone1 instanceof MyClass) // true
+console.log(clone1 instanceof MyDerivedClass1) // true
+console.log(clone2 instanceof MyClass) // true
+console.log(clone2 instanceof MyDerivedClass2) // false
 ```
 
 在上面的代码中：
@@ -635,17 +626,17 @@ console.log(clone2 instanceof MyDerivedClass2);     // false
 
 ```js
 class MyArray extends Array {
-    static get [Symbol.species]() {
-        return Array;
-    }
+  static get [Symbol.species]() {
+    return Array
+  }
 }
 
 let items = new MyArray(1, 2, 3, 4),
-    subitems = items.slice(1, 3);
+  subitems = items.slice(1, 3)
 
-console.log(items instanceof MyArray);      // true
-console.log(subitems instanceof Array);     // true
-console.log(subitems instanceof MyArray);   // false
+console.log(items instanceof MyArray) // true
+console.log(subitems instanceof Array) // true
+console.log(subitems instanceof MyArray) // false
 ```
 
 上面的代码是重写了`Symbol.species`,他继承自`Array`.所有继承的数组的方法，这样使用的就是`Array`的实例，而不是`MyArray`的实例.
@@ -658,36 +649,36 @@ console.log(subitems instanceof MyArray);   // false
 
 ```js
 class Rectangle {
-    constructor(length, width) {
-        console.log(new.target === Rectangle);
-        this.length = length;
-        this.width = width;
-    }
+  constructor(length, width) {
+    console.log(new.target === Rectangle)
+    this.length = length
+    this.width = width
+  }
 }
 
 // new.target is Rectangle
-var obj = new Rectangle(3, 4);      // outputs true
+var obj = new Rectangle(3, 4) // outputs true
 ```
 
 因为`class`调用必须使用`new`,所以这种情况下就等于`Rectangle(constructor name)`. 但是值却不总是一样，如下：
 
 ```js
 class Rectangle {
-    constructor(length, width) {
-        console.log(new.target === Rectangle);
-        this.length = length;
-        this.width = width;
-    }
+  constructor(length, width) {
+    console.log(new.target === Rectangle)
+    this.length = length
+    this.width = width
+  }
 }
 
 class Square extends Rectangle {
-    constructor(length) {
-        super(length, length)
-    }
+  constructor(length) {
+    super(length, length)
+  }
 }
 
 // new.target is Square
-var obj = new Square(3);      // outputs false
+var obj = new Square(3) // outputs false
 ```
 
 可以发现，这里就不是`Rectangle`了，而是`Square`.这个很重要，他可以根据调用方式来判断当前的`target`. 基于上面这点，我们就可以定义一个不可以被实例化的基类。例如:
@@ -695,25 +686,25 @@ var obj = new Square(3);      // outputs false
 ```js
 // abstract base class
 class Shape {
-    constructor() {
-        if (new.target === Shape) {
-            throw new Error("This class cannot be instantiated directly.")
-        }
+  constructor() {
+    if (new.target === Shape) {
+      throw new Error('This class cannot be instantiated directly.')
     }
+  }
 }
 
 class Rectangle extends Shape {
-    constructor(length, width) {
-        super();
-        this.length = length;
-        this.width = width;
-    }
+  constructor(length, width) {
+    super()
+    this.length = length
+    this.width = width
+  }
 }
 
-var x = new Shape();                // throws error
+var x = new Shape() // throws error
 
-var y = new Rectangle(3, 4);        // no error
-console.log(y instanceof Shape);    // true
+var y = new Rectangle(3, 4) // no error
+console.log(y instanceof Shape) // true
 ```
 
 > 注意： 因为`class`必须使用`new`调用，因此`new.target`在构造函数中永远不可能是`undefined`
@@ -722,29 +713,33 @@ console.log(y instanceof Shape);    // true
 
 私有方法和私有属性，是只能在**类的内部**访问的方法和属性，**外部不能访问**。
 
-目前，有一个提案，为class加了私有属性。方法是在属性名之前，使用#表示。
+目前，有一个提案，为 class 加了私有属性。方法是在属性名之前，使用#表示。
 
 ```js
 class IncreasingCounter {
-  #count = 0;
+  #count = 0
   get value() {
-    console.log('Getting the current value!');
-    return this.#count;
+    console.log('Getting the current value!')
+    return this.#count
   }
   increment() {
-    this.#count++;
+    this.#count++
   }
 }
 ```
-上面代码中，#count就是私有属性，只能在类的内部使用（this.#count）。如果在类的外部使用，就会报错。
+
+上面代码中，#count 就是私有属性，只能在类的内部使用（this.#count）。如果在类的外部使用，就会报错。
+
 ```js
 const counter = new IncreasingCounter();
 counter.#count // 报错
 counter.#count = 42 // 报错
 ```
+
 上面代码在类的外部，读取私有属性，就会报错。
 
 ## 静态块
+
 ES2022 引入了静态块（[static block](https://github.com/tc39/proposal-class-static-block)），允许在类的内部设置一个代码块，在类生成时运行一次，主要作用是对静态属性进行初始化
 
 ```js
@@ -810,5 +805,3 @@ console.log(getX(new C())); // 1
 > [私有方法和私有属性](https://es6.ruanyifeng.com/#docs/class#%E7%A7%81%E6%9C%89%E6%96%B9%E6%B3%95%E5%92%8C%E7%A7%81%E6%9C%89%E5%B1%9E%E6%80%A7)
 >
 > [静态块](https://es6.ruanyifeng.com/#docs/class#%E9%9D%99%E6%80%81%E5%9D%97)
-
-

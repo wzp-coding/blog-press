@@ -118,4 +118,3 @@ function resolvePromise(promise2, x, resolve, reject) {
   }
 }
 ```
-

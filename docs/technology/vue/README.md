@@ -2,54 +2,59 @@
 title: VUE发展史
 ---
 
-# VUE发展史
+# VUE 发展史
 
 [[toc]]
 
 ## 基本介绍
 
-“简单却不失优雅，小巧而不乏大匠”。很多使用过vue的程序员这样评价它，“vue.js兼具angular.js和react.js的优点，并剔除了它们的缺点”。授予了这么高的评价的vue.js，也是开源世界华人的骄傲，因为它的作者是位中国人–尤雨溪（Evan You）。
+“简单却不失优雅，小巧而不乏大匠”。很多使用过 vue 的程序员这样评价它，“vue.js 兼具 angular.js 和 react.js 的优点，并剔除了它们的缺点”。授予了这么高的评价的 vue.js，也是开源世界华人的骄傲，因为它的作者是位中国人–尤雨溪（Evan You）。
 
-Vue.js 是一个JavaScript MVVM库，是一套构建用户界面的渐进式框架。它是以数据驱动和组件化的思想构建的，采用自底向上增量开发的设计。相比于Angular.js，Vue.js提供了更加简洁、更易于理解的API，使得我们能够快速地上手并使用Vue.js；同时比起 React + Redux 相对复杂的架构，Vue.js 更加轻量级也更加容易上手，是初创项目的首选前端框架。Vue 的核心库只关注视图层，它不仅易于上手，还便于与第三方库或既有项目整合。并且作者是华人的关系，Vue拥有着对华人开发者最友好的api文档和官方教程。
+Vue.js 是一个 JavaScript MVVM 库，是一套构建用户界面的渐进式框架。它是以数据驱动和组件化的思想构建的，采用自底向上增量开发的设计。相比于 Angular.js，Vue.js 提供了更加简洁、更易于理解的 API，使得我们能够快速地上手并使用 Vue.js；同时比起 React + Redux 相对复杂的架构，Vue.js 更加轻量级也更加容易上手，是初创项目的首选前端框架。Vue 的核心库只关注视图层，它不仅易于上手，还便于与第三方库或既有项目整合。并且作者是华人的关系，Vue 拥有着对华人开发者最友好的 api 文档和官方教程。
 
-时至今日，Vue已成为全世界三大前端框架之一，Github 上拥有近 17 万 Star 领先于 React 和 Angular，在国内更是首选。它的设计思想、编码技巧也被众多的框架借鉴、模仿。
+时至今日，Vue 已成为全世界三大前端框架之一，Github 上拥有近 17 万 Star 领先于 React 和 Angular，在国内更是首选。它的设计思想、编码技巧也被众多的框架借鉴、模仿。
 
 ## 重要版本发布
-- 2013年，在 Google 工作的尤雨溪，受到 Angular 的启发，开发出了一款轻量框架，最初命名为 Seed 。
+
+- 2013 年，在 Google 工作的尤雨溪，受到 Angular 的启发，开发出了一款轻量框架，最初命名为 Seed 。
 - 2013.12，更名为 Vue，图标颜色是代表勃勃生机的绿色，版本号是 0.6.0。
 - 2014.01.24，Vue 正式对外发布，版本号是 0.8.0。
 - 2014.02.25，0.9.0 发布，有了自己的代号：Animatrix，此后，重要的版本都会有自己的代号。
-- 2015.06.13，0.12.0，代号Dragon Ball，Laravel 社区（一款流行的 PHP 框架的社区）首次使用 Vue，Vue 在 JS 社区也打响了知名度。
-- 2015.10.26，1.0.0 Evangelion 是 Vue 历史上的第一个里程碑。同年，vue-router、vuex、vue-cli 相继发布，标志着 Vue从一个视图层库发展为一个渐进式框架。
-- 2016.10.01，2.0.0 是第二个重要的里程碑，它吸收了 React 的虚拟 Dom 方案，还支持服务端渲染。自从Vue 2.0 发布之后，Vue 就成了前端领域的热门话题。
+- 2015.06.13，0.12.0，代号 Dragon Ball，Laravel 社区（一款流行的 PHP 框架的社区）首次使用 Vue，Vue 在 JS 社区也打响了知名度。
+- 2015.10.26，1.0.0 Evangelion 是 Vue 历史上的第一个里程碑。同年，vue-router、vuex、vue-cli 相继发布，标志着 Vue 从一个视图层库发展为一个渐进式框架。
+- 2016.10.01，2.0.0 是第二个重要的里程碑，它吸收了 React 的虚拟 Dom 方案，还支持服务端渲染。自从 Vue 2.0 发布之后，Vue 就成了前端领域的热门话题。
 - 2019.02.05，Vue 发布了 2.6.0 ，这是一个承前启后的版本，在它之后，将推出 3.0.0。
-- 2019.12.05，在万众期待中，尤雨溪公布了 Vue 3 源代码，目前 Vue 3 的进展情况可以通过这个链接查看：[https://github.com/vuejs/vue/projects/6](https://github.com/vuejs/vue/projects/6 ) 。
+- 2019.12.05，在万众期待中，尤雨溪公布了 Vue 3 源代码，目前 Vue 3 的进展情况可以通过这个链接查看：[https://github.com/vuejs/vue/projects/6](https://github.com/vuejs/vue/projects/6) 。
 
 ## Vue 1.0
-Vue最初的目标是成为大型项目的一个良好补充。
+
+Vue 最初的目标是成为大型项目的一个良好补充。
 
 设计思想是一种“渐进式框架”，淡化框架本身的主张，降低框架作为工具的复杂度，从而降低对使用者的要求。
 
 主要改进
 
-- 提供指令的缩写。针对v-bind和v-on提供缩写形式：
+- 提供指令的缩写。针对 v-bind 和 v-on 提供缩写形式：
 - 清理精简所提供的接口
 - 提高初始化的渲染效率
-- 将v-repeat指令换成了v-for指令。同时优化了这个指令的渲染，效率提升了一倍
-- 两个官方工具的增强：vue-loader和vueify
+- 将 v-repeat 指令换成了 v-for 指令。同时优化了这个指令的渲染，效率提升了一倍
+- 两个官方工具的增强：vue-loader 和 vueify
+
 ```vue
 <!-- v-bind -->
 <div v-bind:class="box">全写</div>
 <div :class="box">缩写</div>
 ```
+
 ```vue
 <!-- v-on -->
 <button v-on:click="btn">全写</button>
 <button @click="btn">缩写</button>
 ```
+
 ## Vue 2.0
 
-2.0版本对Vue做了大幅度的重构，性能有了很大的提高，也为日后的跨端发展打下了基础。
+2.0 版本对 Vue 做了大幅度的重构，性能有了很大的提高，也为日后的跨端发展打下了基础。
 
 ### 性能提升
 
@@ -61,5 +66,4 @@ Vue 2.0 支持服务端渲染 (SSR)，并且是流式的，可以做组件级的
 
 ## Vue 3.0
 
-3.0 是非常大的重构，源码使用 TypeScript 重写，目前的代码 98% 以上使用 TypeScript 编写。目前 Vue 3 的进展情况可以通过这个链接查看：[https://github.com/vuejs/vue/projects/6](https://github.com/vuejs/vue/projects/6 ) 。
-
+3.0 是非常大的重构，源码使用 TypeScript 重写，目前的代码 98% 以上使用 TypeScript 编写。目前 Vue 3 的进展情况可以通过这个链接查看：[https://github.com/vuejs/vue/projects/6](https://github.com/vuejs/vue/projects/6) 。

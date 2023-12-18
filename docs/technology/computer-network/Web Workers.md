@@ -2,8 +2,10 @@
 title: Web Worker
 ---
 
-# 了解一下Web Worker？
+# 了解一下 Web Worker？
+
 [[toc]]
+
 ## Web Worker 是什么？
 
 Web Worker 是 HTML5 标准的一部分，这一规范定义了一套 API，它允许一段 JavaScript 程序运行在主线程之外的另外一个线程中。Web Worker 的作用，就是为 JavaScript 创造多线程环境，允许主线程创建 Worker 线程，将一些任务分配给后者运行。
@@ -12,13 +14,13 @@ Web Worker 是 HTML5 标准的一部分，这一规范定义了一套 API，它�
 
 ![image-20210902202946704](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20210902202946704.png)
 
- ## Web Workers 的限制与能力
+## Web Workers 的限制与能力
 
 通常情况下，你可以在 Worker 线程中运行任意的代码，但注意存在一些例外情况，比如：**「直接在 worker 线程中操纵 DOM 元素，或使用 window 对象中的某些方法和属性。」** 大部分 window 对象的方法和属性是可以使用的，包括 WebSockets，以及诸如 IndexedDB 和 FireFox OS 中独有的 Data Store API 这一类数据存储机制。
 
 下面我们以 Chrome 和 Opera 所使用的 Blink 渲染引擎为例，介绍该渲染引擎下 Web Worker 中所支持的常用 APIs：
 
-- [Cache](https://developer.mozilla.org/zh-CN/docs/Web/API/Cache)：Cache 接口为缓存的 Request / Response  对象对提供存储机制，例如，作为ServiceWorker 生命周期的一部分。
+- [Cache](https://developer.mozilla.org/zh-CN/docs/Web/API/Cache)：Cache 接口为缓存的 Request / Response 对象对提供存储机制，例如，作为 ServiceWorker 生命周期的一部分。
 - [CustomEvent](https://developer.mozilla.org/zh-CN/docs/Web/API/CustomEvent)：用于创建自定义事件。
 - [Fetch](https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API)：Fetch API 提供了一个获取资源的接口（包括跨域请求）。任何使用过 XMLHttpRequest 的人都能轻松上手，而且新的 API 提供了更强大和灵活的功能集。
 - [Promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)：Promise 对象代表了未来将要发生的事件，用来传递异步操作的消息。
@@ -52,7 +54,7 @@ Web Worker 是 HTML5 标准的一部分，这一规范定义了一套 API，它�
 需要注意的是，由于 Web Worker 有同源限制，所以在进行本地调试或运行以下示例的时候，需要先启动本地服务器，直接使用 `file://` 协议打开页面的时候，会抛出以下异常：
 
 ```shell
-Uncaught DOMException: Failed to construct 'Worker': 
+Uncaught DOMException: Failed to construct 'Worker':
 Script at 'file:///**/*.js' cannot be accessed from origin 'null'.
 ```
 
@@ -90,8 +92,8 @@ Script at 'file:///**/*.js' cannot be accessed from origin 'null'.
 
 ```js
 onmessage = (e) => {
-  console.log(`Worker: Received message - ${e.data}`);
-  postMessage("PONG");
+  console.log(`Worker: Received message - ${e.data}`)
+  postMessage('PONG')
 }
 ```
 
@@ -138,23 +140,24 @@ Main: Received message - PONG
 
 ```js
 onmessage = (e) => {
-  console.log(`Worker: Received message - ${e.data}`);
+  console.log(`Worker: Received message - ${e.data}`)
   setTimeout(() => {
-    let worker = new Worker("dw-sub-ping-pong.js");
-    worker.onmessage = (e) => console.log(`Worker: Received from sub worker - ${e.data}`);
-    worker.postMessage("PING");
-  }, 1000);
-  postMessage("PONG");
-};
+    let worker = new Worker('dw-sub-ping-pong.js')
+    worker.onmessage = (e) =>
+      console.log(`Worker: Received from sub worker - ${e.data}`)
+    worker.postMessage('PING')
+  }, 1000)
+  postMessage('PONG')
+}
 ```
 
 **「dw-sub-ping-pong.js」**
 
 ```js
 onmessage = (e) => {
-  console.log(`Sub Worker: Received message - ${e.data}`);
-  postMessage("PONG");
-};
+  console.log(`Sub Worker: Received message - ${e.data}`)
+  postMessage('PONG')
+}
 ```
 
 以上代码成功运行后，浏览器控制台会输出以下结果：
@@ -196,11 +199,13 @@ Received from sub worker - PONG
 **「worker.js」**
 
 ```js
-importScripts("https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.15/lodash.min.js");
+importScripts(
+  'https://cdn.bootcdn.net/ajax/libs/lodash.js/4.17.15/lodash.min.js'
+)
 
 onmessage = ({ data }) => {
-  postMessage(_.kebabCase(data));
-};
+  postMessage(_.kebabCase(data))
+}
 ```
 
 以上代码成功运行后，浏览器控制台会输出以下结果：
@@ -226,11 +231,10 @@ blob:https://example.org/40a5fb5a-d56d-4a33-b4e2-0acf6a8e5f641
 ```js
 const url = URL.createObjectURL(
   new Blob([`postMessage("Dedicated Worker created by Blob")`])
-);
+)
 
-let worker = new Worker(url);
-worker.onmessage = (e) =>
-  console.log(`Main: Received message - ${e.data}`);
+let worker = new Worker(url)
+worker.onmessage = (e) => console.log(`Main: Received message - ${e.data}`)
 ```
 
 除了在代码中使用字符串动态创建 Worker 脚本，也可以把 Worker 脚本使用类型为 `javascript/worker` 的 `script` 标签内嵌在页面中，具体如下所示：
@@ -266,11 +270,10 @@ data:[<mediatype>][;base64],<data>
 ```js
 const url = `data:application/javascript,${encodeURIComponent(
   `postMessage("Dedicated Worker created by Data URL")`
-)}`;
+)}`
 
-let worker = new Worker(url);
-worker.onmessage = (e) =>
-  console.log(`Main: Received message - ${e.data}`);
+let worker = new Worker(url)
+worker.onmessage = (e) => console.log(`Main: Received message - ${e.data}`)
 ```
 
 ### Shared Worker
@@ -320,16 +323,16 @@ worker.onmessage = (e) =>
 **「shared-worker.js」**
 
 ```js
-let a = 666;
+let a = 666
 
-console.log("shared-worker");
-onconnect = function (e) {
-  var port = e.ports[0];
+console.log('shared-worker')
+onconnect = function(e) {
+  var port = e.ports[0]
 
-  port.onmessage = function () {
-    port.postMessage(a++);
-  };
-};
+  port.onmessage = function() {
+    port.postMessage(a++)
+  }
+}
 ```
 
 在 Shared Worker 的示例页面上有一个 **「点赞」** 按钮，每次点击时点赞数会加 1。首先你新开一个窗口，然后点击几次。然后新开另一个窗口继续点击，这时你会发现当前页面显示的点赞数是基于前一个页面的点赞数继续累加。
@@ -348,8 +351,6 @@ Service workers 本质上充当 Web 应用程序与浏览器之间的代理服�
 
 ![image-20211112142940557](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112142940557.png)
 
-
-
 Service workers 的浏览器支持情况如下：
 
 ![image-20211112142945435](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/image-20211112142945435.png)
@@ -358,21 +359,21 @@ Service workers 的浏览器支持情况如下：
 
 ## Web Workers API
 
-Worker() 构造函数创建一个 Worker 对象，该对象执行指定的URL脚本。这个脚本必须遵守同源策略 。如果违反同源策略，则会抛出一个 SECURITY_ERR 类型的 DOMException。
+Worker() 构造函数创建一个 Worker 对象，该对象执行指定的 URL 脚本。这个脚本必须遵守同源策略 。如果违反同源策略，则会抛出一个 SECURITY_ERR 类型的 DOMException。
 
 ### Worker 构造函数
 
 Worker 构造函数的语法为：
 
 ```js
-const myWorker = new Worker(aURL, options);
+const myWorker = new Worker(aURL, options)
 ```
 
 相关的参数说明如下：
 
 - aURL：是一个 DOMString 表示 worker 将执行的脚本的 URL。它必须遵守同源策略。
 - options（可选）：包含可在创建对象实例时设置的选项属性的对象。可用属性如下：
-  - type：用以指定 Worker 类型的  DOMString 值. 该值可以是 classic 或 module。如果未指定，将使用默认值 classic。
+  - type：用以指定 Worker 类型的 DOMString 值. 该值可以是 classic 或 module。如果未指定，将使用默认值 classic。
   - credentials：用以指定 worker 凭证的 DOMString 值。该值可以是 omit，same-origin 或 include。如果未指定，或者 type 是 classic，将使用默认值 omit (不要求凭证)。
   - name：在 DedicatedWorkerGlobalScope 的情况下，用来表示 Worker 的 scope 的一个 DOMString 值，主要用于调试目的。
 
@@ -385,7 +386,7 @@ const myWorker = new Worker(aURL, options);
 **「示例」**
 
 ```js
-const worker = new Worker("task.js");
+const worker = new Worker('task.js')
 ```
 
 当我们调用 Worker 构造函数后会返回一个 Worker 线程对象，用来供主线程操作 Worker。Worker 线程对象的属性和方法如下：
@@ -439,12 +440,12 @@ const worker = new Worker("task.js");
 而 Dedicated Worker 所执行的代码如下所示：
 
 ```js
-onmessage = function (message) {
-  let data = message.data;
-  console.log(`Worker: Message from main thread ${JSON.stringify(data)}`);
-  data.msg = "Hi from task.js";
-  postMessage(data);
-};
+onmessage = function(message) {
+  let data = message.data
+  console.log(`Worker: Message from main thread ${JSON.stringify(data)}`)
+  data.msg = 'Hi from task.js'
+  postMessage(data)
+}
 ```
 
 以上代码成功运行后，控制台会输出以下结果：
@@ -479,5 +480,5 @@ worker-demo.html:20 Main: Message from worker {"id":666, "msg":"Hi from task.js"
 取样完成后，可以看到当前渲染进程中完整的线程信息，红框中标出的就是我们想要找的 **「Dedicated Worker」**。
 
 ## 参考
-> [你不知道的 Web Workers （上）[7.8K 字 | 多图预警]](https://juejin.cn/post/6844904198639714311#heading-10)
 
+> [你不知道的 Web Workers （上）[7.8K 字 | 多图预警]](https://juejin.cn/post/6844904198639714311#heading-10)

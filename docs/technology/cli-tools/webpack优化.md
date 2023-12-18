@@ -1,7 +1,9 @@
 ---
 title: webpack优化
 ---
-# 了解一下webpack的优化措施
+
+# 了解一下 webpack 的优化措施
+
 [[toc]]
 
 ## 如何减少打包时间
@@ -13,32 +15,32 @@ Webpack 启动后会从配置的 Entry 出发，解析出文件中的导入语�
 
 ### 缩小文件搜索范围
 
-对于loader来说，影响最大是Babel，因为Babel会将代码转为字符串生成AST，然后对AST继续进行转变最后再生成新的代码，项目越大，转换代码越多，效率也就越低，但是，我们可以优化。
+对于 loader 来说，影响最大是 Babel，因为 Babel 会将代码转为字符串生成 AST，然后对 AST 继续进行转变最后再生成新的代码，项目越大，转换代码越多，效率也就越低，但是，我们可以优化。
 
-#### 优化loader的文件搜索范围
+#### 优化 loader 的文件搜索范围
 
 为了尽可能少的让文件被 Loader 处理，可以通过 `include` 去命中只有哪些文件需要被处理。
 
 ```js
 module.exports = {
-    module:{
-        rules:[
-            {
-                // 如果项目源码中只有 js 文件就不要写成 /\.jsx?$/，提升正则表达式性能
-                test: /\.js$/,
-                // babel-loader 支持缓存转换出的结果，通过 cacheDirectory 选项开启
-                use: ['babel-loader?cacheDirectory'],
-                // 只对项目根目录下的 src 目录中的文件采用 babel-loader
-                include: path.resolve(__dirname, 'src'),
-                // 不查找node_modules目录
-                exclude: /node_modules/
-            }
-        ]
-    }
+  module: {
+    rules: [
+      {
+        // 如果项目源码中只有 js 文件就不要写成 /\.jsx?$/，提升正则表达式性能
+        test: /\.js$/,
+        // babel-loader 支持缓存转换出的结果，通过 cacheDirectory 选项开启
+        use: ['babel-loader?cacheDirectory'],
+        // 只对项目根目录下的 src 目录中的文件采用 babel-loader
+        include: path.resolve(__dirname, 'src'),
+        // 不查找node_modules目录
+        exclude: /node_modules/
+      }
+    ]
+  }
 }
 ```
 
-#### 优化resolve.modules配置
+#### 优化 resolve.modules 配置
 
 `resolve.modules` 用于配置 Webpack 去哪些目录下寻找第三方模块。
 
@@ -48,11 +50,11 @@ module.exports = {
     // 使用绝对路径指明第三方模块存放的位置，以减少搜索步骤
     // 其中 __dirname 表示当前工作目录，也就是项目根目录
     modules: [path.resolve(__dirname, 'node_modules')]
-  },
-};
+  }
+}
 ```
 
-#### 优化resolve.mainFields配置
+#### 优化 resolve.mainFields 配置
 
 `resolve.mainFields` 用于配置第三方模块使用哪个入口文件。由于大多数第三方模块都采用 `main` 字段去描述入口文件的位置，可以这样配置 Webpack：
 
@@ -60,28 +62,19 @@ module.exports = {
 module.exports = {
   resolve: {
     // 只采用 main 字段作为入口文件描述字段，以减少搜索步骤
-    mainFields: ['main'],
-  },
-};
+    mainFields: ['main']
+  }
+}
 ```
 
 > 使用本方法优化时，你需要考虑到所有运行时依赖的第三方模块的入口文件描述字段，就算有一个模块搞错了都可能会造成构建出的代码无法正常运行。
 
-#### 优化resolve.alias配置
+#### 优化 resolve.alias 配置
 
 `resolve.alias` 配置项通过别名来把原导入路径映射成一个新的导入路径。以 React 库为例，安装到 `node_modules` 目录下的 React 库的目录结构如下：
 
 ```markdown
-├── dist
-│   ├── react.js
-│   └── react.min.js
-├── lib
-│   ... 还有几十个文件被忽略
-│   ├── LinkedStateMixin.js
-│   ├── createClass.js
-│   └── React.js
-├── package.json
-└── react.js
+├── dist │ ├── react.js │ └── react.min.js ├── lib │ ... 还有几十个文件被忽略 │ ├── LinkedStateMixin.js │ ├── createClass.js │ └── React.js ├── package.json └── react.js
 ```
 
 默认情况下 Webpack 会从入口文件 `./node_modules/react/react.js` 开始递归的解析和处理依赖的几十个文件，这会时一个耗时的操作。 通过配置 `resolve.alias` 可以让 Webpack 在处理 React 库时，直接使用单独完整的 `react.min.js` 文件，从而跳过耗时的递归解析操作。
@@ -94,20 +87,20 @@ module.exports = {
     // 使用 alias 把导入 react 的语句换成直接使用单独完整的 react.min.js 文件，
     // 减少耗时的递归解析操作
     alias: {
-      'react': path.resolve(__dirname, './node_modules/react/dist/react.min.js'), // react15
+      react: path.resolve(__dirname, './node_modules/react/dist/react.min.js') // react15
       // 'react': path.resolve(__dirname, './node_modules/react/umd/react.production.min.js'), // react16
     }
-  },
-};
+  }
+}
 ```
 
 > 除了 React 库外，大多数库发布到 Npm 仓库中时都会包含打包好的完整文件，对于这些库你也可以对它们配置 alias。
 >
 > 但是对于有些库使用本优化方法后会影响到后面要讲的[使用 Tree-Shaking 去除无效代码](https://webpack.wuhaolin.cn/4优化/4-10使用TreeShaking.html)的优化，因为打包好的完整文件中有部分代码你的项目可能永远用不上。 一般对整体性比较强的库采用本方法优化，因为完整文件中的代码是一个整体，每一行都是不可或缺的。 但是对于一些工具类的库，例如 [lodash](https://github.com/lodash/lodash)，你的项目可能只用到了其中几个工具函数，你就不能使用本方法去优化，因为这会导致你的输出代码中包含很多永远不会执行的代码。
 
-#### 优化resolve.extensions配置
+#### 优化 resolve.extensions 配置
 
-在导入语句没带文件后缀时，Webpack 会自动带上后缀后去尝试询问文件是否存在。  `resolve.extensions` 用于配置在尝试过程中用到的后缀列表，默认是：
+在导入语句没带文件后缀时，Webpack 会自动带上后缀后去尝试询问文件是否存在。 `resolve.extensions` 用于配置在尝试过程中用到的后缀列表，默认是：
 
 ```js
 extensions: ['.js', '.json']
@@ -119,29 +112,29 @@ extensions: ['.js', '.json']
 module.exports = {
   resolve: {
     // 尽可能的减少后缀尝试的可能性
-    extensions: ['js'],
-  },
-};
+    extensions: ['js']
+  }
+}
 ```
 
-#### 优化module.noParse配置
+#### 优化 module.noParse 配置
 
 `module.noParse` 配置项可以让 Webpack 忽略对部分没采用模块化的文件的递归解析处理，这样做的好处是能提高构建性能。 原因是一些库，例如 jQuery 、ChartJS， 它们庞大又没有采用模块化标准，让 Webpack 去解析这些文件耗时又没有意义。
 
 ```js
-const path = require('path');
+const path = require('path')
 
 module.exports = {
   module: {
     // 独完整的 `react.min.js` 文件就没有采用模块化，忽略对 `react.min.js` 文件的递归解析处理
-    noParse: [/react\.min\.js$/],
-  },
-};
+    noParse: [/react\.min\.js$/]
+  }
+}
 ```
 
 > 注意被忽略掉的文件里不应该包含 `import` 、 `require` 、 `define` 等模块化语句，不然会导致构建出的代码中包含无法在浏览器环境下执行的模块化语句。
 
-### 多进程打包HappyPack
+### 多进程打包 HappyPack
 
 由于有大量文件需要解析和处理，构建是文件读写和计算密集型的操作，特别是当文件数量变多后，Webpack 构建慢的问题会显得严重。 运行在 Node.js 之上的 Webpack 是单线程模型的，也就是说 Webpack 需要处理的任务需要一件件挨着做，不能多个事情一起做。
 
@@ -156,9 +149,9 @@ module.exports = {
 分解任务和管理线程的事情 HappyPack 都会帮你做好，你所需要做的只是接入 HappyPack。 接入 HappyPack 的相关代码如下：
 
 ```js
-const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HappyPack = require('happypack');
+const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HappyPack = require('happypack')
 
 module.exports = {
   module: {
@@ -168,15 +161,15 @@ module.exports = {
         // 把对 .js 文件的处理转交给 id 为 babel 的 HappyPack 实例
         use: ['happypack/loader?id=babel'],
         // 排除 node_modules 目录下的文件，node_modules 目录下的文件都是采用的 ES5 语法，没必要再通过 Babel 去转换
-        exclude: path.resolve(__dirname, 'node_modules'),
+        exclude: path.resolve(__dirname, 'node_modules')
       },
       {
         // 把对 .css 文件的处理转交给 id 为 css 的 HappyPack 实例
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
-          use: ['happypack/loader?id=css'],
-        }),
-      },
+          use: ['happypack/loader?id=css']
+        })
+      }
     ]
   },
   plugins: [
@@ -184,19 +177,19 @@ module.exports = {
       // 用唯一的标识符 id 来代表当前的 HappyPack 是用来处理一类特定的文件
       id: 'babel',
       // 如何处理 .js 文件，用法和 Loader 配置中一样
-      loaders: ['babel-loader?cacheDirectory'],
+      loaders: ['babel-loader?cacheDirectory']
       // ... 其它配置项
     }),
     new HappyPack({
       id: 'css',
       // 如何处理 .css 文件，用法和 Loader 配置中一样
-      loaders: ['css-loader'],
+      loaders: ['css-loader']
     }),
     new ExtractTextPlugin({
-      filename: `[name].css`,
-    }),
-  ],
-};
+      filename: `[name].css`
+    })
+  ]
+}
 ```
 
 以上代码有两点重要的修改：
@@ -206,14 +199,14 @@ module.exports = {
 
 在实例化 HappyPack 插件的时候，除了可以传入 `id` 和 `loaders` 两个参数外，HappyPack 还支持如下参数：
 
-- `threads` 代表开启几个子进程去处理这一类型的文件，默认是3个，类型必须是整数。
+- `threads` 代表开启几个子进程去处理这一类型的文件，默认是 3 个，类型必须是整数。
 - `verbose` 是否允许 HappyPack 输出日志，默认是 `true`。
 - `threadPool` 代表共享进程池，即多个 HappyPack 实例都使用同一个共享进程池中的子进程去处理任务，以防止资源占用过多，相关代码如下：
 
 ```js
-const HappyPack = require('happypack');
+const HappyPack = require('happypack')
 // 构造出共享进程池，进程池中包含5个子进程
-const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
+const happyThreadPool = HappyPack.ThreadPool({ size: 5 })
 
 module.exports = {
   plugins: [
@@ -223,20 +216,20 @@ module.exports = {
       // 如何处理 .js 文件，用法和 Loader 配置中一样
       loaders: ['babel-loader?cacheDirectory'],
       // 使用共享进程池中的子进程去处理任务
-      threadPool: happyThreadPool,
+      threadPool: happyThreadPool
     }),
     new HappyPack({
       id: 'css',
       // 如何处理 .css 文件，用法和 Loader 配置中一样
       loaders: ['css-loader'],
       // 使用共享进程池中的子进程去处理任务
-      threadPool: happyThreadPool,
+      threadPool: happyThreadPool
     }),
     new ExtractTextPlugin({
-      filename: `[name].css`,
-    }),
-  ],
-};
+      filename: `[name].css`
+    })
+  ]
+}
 ```
 
 接入 HappyPack 后，你需要给项目安装新的依赖：
@@ -254,9 +247,7 @@ Happy[css]: Version: 4.0.0-beta.5. Threads: 3
 Happy[css]: All set; signaling webpack to proceed.
 ```
 
-说明你的 HappyPack 配置生效了，并且可以得知 HappyPack 分别启动了3个子进程去并行的处理任务。
-
-
+说明你的 HappyPack 配置生效了，并且可以得知 HappyPack 分别启动了 3 个子进程去并行的处理任务。
 
 #### HappyPack 原理
 
@@ -270,9 +261,9 @@ Happy[css]: All set; signaling webpack to proceed.
 
 核心调度器收到来自子进程处理完毕的结果后会通知 Webpack 该文件处理完毕。
 
-### 动态链接库DLLPlugin
+### 动态链接库 DLLPlugin
 
- Windows 系统中我们经常看到以 `.dll` 为后缀的文件，这些文件称为**动态链接库**，在一个动态链接库中可以包含给其他模块调用的函数和数据。
+Windows 系统中我们经常看到以 `.dll` 为后缀的文件，这些文件称为**动态链接库**，在一个动态链接库中可以包含给其他模块调用的函数和数据。
 
 要给 Web 项目构建接入动态链接库的思想，需要完成以下事情：
 
@@ -280,11 +271,11 @@ Happy[css]: All set; signaling webpack to proceed.
 - 当需要导入的模块存在于某个动态链接库中时，这个模块不能被再次被打包，而是去动态链接库中获取。
 - 页面依赖的所有动态链接库需要被加载。
 
-为什么给 Web 项目构建接入动态链接库的思想后，会大大提升构建速度呢？ 
+为什么给 Web 项目构建接入动态链接库的思想后，会大大提升构建速度呢？
 
 原因在于包含大量复用模块的动态链接库只需要编译一次，在之后的构建过程中被动态链接库包含的模块将不会再重新编译，而是直接使用动态链接库中的代码。 由于动态链接库中大多数包含的是常用的第三方模块，例如 react、react-dom，只要不升级这些模块的版本，动态链接库就不用重新编译。
 
-Webpack 已经内置了对动态链接库的支持，需要通过2个内置的插件接入，它们分别是：
+Webpack 已经内置了对动态链接库的支持，需要通过 2 个内置的插件接入，它们分别是：
 
 - DllPlugin 插件：用于打包出一个个单独的动态链接库文件。
 - DllReferencePlugin 插件：用于在主要配置文件中去引入 DllPlugin 插件打包好的动态链接库文件。
@@ -309,15 +300,15 @@ Webpack 已经内置了对动态链接库的支持，需要通过2个内置的�
 ```js
 var _dll_react = (function(modules) {
   // ... 此处省略 webpackBootstrap 函数代码
-}([
+})([
   function(module, exports, __webpack_require__) {
     // 模块 ID 为 0 的模块对应的代码
   },
   function(module, exports, __webpack_require__) {
     // 模块 ID 为 1 的模块对应的代码
-  },
-  // ... 此处省略剩下的模块对应的代码 
-]));
+  }
+  // ... 此处省略剩下的模块对应的代码
+])
 ```
 
 可见一个动态链接库文件中包含了大量模块的代码，这些模块存放在一个数组里，用数组的索引号作为 ID。 并且还通过 `_dll_react` 变量把自己暴露在了全局中，也就是可以通过 `window._dll_react` 可以访问到它里面包含的模块。
@@ -350,7 +341,7 @@ var _dll_react = (function(modules) {
     "./node_modules/react-dom/lib/SyntheticTransitionEvent.js": {
       "id": 211,
       "meta": {}
-    },
+    }
   }
 }
 ```
@@ -361,17 +352,17 @@ var _dll_react = (function(modules) {
 
 ```html
 <html>
-<head>
-  <meta charset="UTF-8">
-</head>
-<body>
-<div id="app"></div>
-<!--导入依赖的动态链接库文件-->
-<script src="./dist/polyfill.dll.js"></script>
-<script src="./dist/react.dll.js"></script>
-<!--导入执行入口文件-->
-<script src="./dist/main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <!--导入依赖的动态链接库文件-->
+    <script src="./dist/polyfill.dll.js"></script>
+    <script src="./dist/react.dll.js"></script>
+    <!--导入执行入口文件-->
+    <script src="./dist/main.js"></script>
+  </body>
 </html>
 ```
 
@@ -400,8 +391,8 @@ var _dll_react = (function(modules) {
 
 ```js
 // webpack_dll.config.js
-const path = require('path');
-const DllPlugin = require('webpack/lib/DllPlugin');
+const path = require('path')
+const DllPlugin = require('webpack/lib/DllPlugin')
 
 module.exports = {
   // JS 执行入口文件
@@ -409,7 +400,7 @@ module.exports = {
     // 把 React 相关模块的放到一个单独的动态链接库
     react: ['react', 'react-dom'],
     // 把项目需要所有的 polyfill 放到一个单独的动态链接库
-    polyfill: ['core-js/fn/object/assign', 'core-js/fn/promise', 'whatwg-fetch'],
+    polyfill: ['core-js/fn/object/assign', 'core-js/fn/promise', 'whatwg-fetch']
   },
   output: {
     // 输出的动态链接库的文件名称，[name] 代表当前动态链接库的名称，
@@ -419,7 +410,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     // 存放动态链接库的全局变量名称，例如对应 react 来说就是 _dll_react
     // 之所以在前面加上 _dll_ 是为了防止全局变量冲突
-    library: '_dll_[name]',
+    library: '_dll_[name]'
   },
   plugins: [
     // 接入 DllPlugin
@@ -429,10 +420,10 @@ module.exports = {
       // 例如 react.manifest.json 中就有 "name": "_dll_react"
       name: '_dll_[name]',
       // 描述动态链接库的 manifest.json 文件输出时的文件名称
-      path: path.join(__dirname, 'dist', '[name].manifest.json'),
-    }),
-  ],
-};
+      path: path.join(__dirname, 'dist', '[name].manifest.json')
+    })
+  ]
+}
 ```
 
 #### 使用动态链接库文件
@@ -442,8 +433,8 @@ module.exports = {
 用于输出 `main.js` 的主 Webpack 配置文件内容如下：
 
 ```js
-const path = require('path');
-const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
+const path = require('path')
+const DllReferencePlugin = require('webpack/lib/DllReferencePlugin')
 
 module.exports = {
   entry: {
@@ -454,7 +445,7 @@ module.exports = {
     // 输出文件的名称
     filename: '[name].js',
     // 输出文件都放到 dist 目录下
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist')
   },
   module: {
     rules: [
@@ -462,23 +453,23 @@ module.exports = {
         // 项目源码使用了 ES6 和 JSX 语法，需要使用 babel-loader 转换
         test: /\.js$/,
         use: ['babel-loader'],
-        exclude: path.resolve(__dirname, 'node_modules'),
-      },
+        exclude: path.resolve(__dirname, 'node_modules')
+      }
     ]
   },
   plugins: [
     // 告诉 Webpack 使用了哪些动态链接库
     new DllReferencePlugin({
       // 描述 react 动态链接库的文件内容
-      manifest: require('./dist/react.manifest.json'),
+      manifest: require('./dist/react.manifest.json')
     }),
     new DllReferencePlugin({
       // 描述 polyfill 动态链接库的文件内容
-      manifest: require('./dist/polyfill.manifest.json'),
-    }),
+      manifest: require('./dist/polyfill.manifest.json')
+    })
   ],
   devtool: 'source-map'
-};
+}
 ```
 
 > 注意：在 `webpack_dll.config.js` 文件中，DllPlugin 中的 name 参数必须和 output.library 中保持一致。 原因在于 DllPlugin 中的 name 参数会影响输出的 manifest.json 文件中 name 字段的值， 而在 `webpack.config.js` 文件中 DllReferencePlugin 会去 manifest.json 文件读取 name 字段的值， 把值的内容作为在从全局变量中获取动态链接库中内容时的全局变量名。
@@ -492,7 +483,7 @@ module.exports = {
 1. 如果动态链接库相关的文件还没有编译出来，就需要先把它们编译出来。方法是执行 `webpack --config webpack_dll.config.js` 命令。
 2. 在确保动态链接库存在时，才能正常的编译出入口执行文件。方法是执行 `webpack` 命令。这时你会发现构建速度有了非常大的提升。
 
-### 多进程代码压缩ParallelUglifyPlugin
+### 多进程代码压缩 ParallelUglifyPlugin
 
 在使用 Webpack 构建出用于发布到线上的代码时，都会有压缩代码这一流程。 最常见的 JavaScript 代码压缩工具是 [UglifyJS](https://github.com/mishoo/UglifyJS2)，并且 Webpack 也内置了它。
 
@@ -507,9 +498,9 @@ module.exports = {
 使用 ParallelUglifyPlugin 也非常简单，把原来 Webpack 配置文件中内置的 UglifyJsPlugin 去掉后，再替换成 ParallelUglifyPlugin，相关代码如下：
 
 ```js
-const path = require('path');
-const DefinePlugin = require('webpack/lib/DefinePlugin');
-const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+const path = require('path')
+const DefinePlugin = require('webpack/lib/DefinePlugin')
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 
 module.exports = {
   plugins: [
@@ -521,7 +512,7 @@ module.exports = {
           // 最紧凑的输出
           beautify: false,
           // 删除所有的注释
-          comments: false,
+          comments: false
         },
         compress: {
           // 在UglifyJs删除没有用到的代码时不输出警告
@@ -531,12 +522,12 @@ module.exports = {
           // 内嵌定义了但是只用到一次的变量
           collapse_vars: true,
           // 提取出出现多次但是没有定义成变量去引用的静态值
-          reduce_vars: true,
+          reduce_vars: true
         }
-      },
-    }),
-  ],
-};
+      }
+    })
+  ]
+}
 ```
 
 在通过 `new ParallelUglifyPlugin()` 实例化时，支持以下参数：
@@ -545,7 +536,7 @@ module.exports = {
 - `include`：使用正则去命中需要被 ParallelUglifyPlugin 压缩的文件。默认为 `[]`。
 - `exclude`：使用正则去命中不需要被 ParallelUglifyPlugin 压缩的文件。默认为 `[]`。
 - `cacheDir`：缓存压缩后的结果，下次遇到一样的输入时直接从缓存中获取压缩后的结果并返回。cacheDir 用于配置缓存存放的目录路径。默认不会缓存，想开启缓存请设置一个目录路径。
-- `workerCount`：开启几个子进程去并发的执行压缩。默认是当前运行电脑的 CPU 核数减去1。
+- `workerCount`：开启几个子进程去并发的执行压缩。默认是当前运行电脑的 CPU 核数减去 1。
 - `sourceMap`：是否输出 Source Map，这会导致压缩过程变慢。
 - `uglifyJS`：用于压缩 ES5 代码时的配置，Object 类型，直接透传给 UglifyJS 的参数。
 - `uglifyES`：用于压缩 ES6 代码时的配置，Object 类型，直接透传给 UglifyES 的参数。
@@ -566,12 +557,10 @@ npm i -D webpack-parallel-uglify-plugin
 
 安装成功后，重新执行构建你会发现速度变快了许多。如果设置 `cacheDir` 开启了缓存，在之后的构建中会变的更快。
 
-- 在Webpack3中，我们是使用UglifyJS来压缩代码，但是这个是单线程运行的，为了提高效率，使用webpack-parallel-uglify-plugin来并行运行UglifyJS，从而提高效率。
-- 在Webpack4中，我们直接将mode设置为production就可以默认开启上述功能
+- 在 Webpack3 中，我们是使用 UglifyJS 来压缩代码，但是这个是单线程运行的，为了提高效率，使用 webpack-parallel-uglify-plugin 来并行运行 UglifyJS，从而提高效率。
+- 在 Webpack4 中，我们直接将 mode 设置为 production 就可以默认开启上述功能
 
 ## 如何减少打包体积
-
-
 
 ### 开启 Scope Hoisting
 
@@ -584,38 +573,38 @@ Scope Hoisting 可以让 Webpack 打包出来的代码文件更小、运行的�
 假如现在有两个文件分别是 `util.js`:
 
 ```js
-export default 'Hello,Webpack';
+export default 'Hello,Webpack'
 ```
 
 和入口文件 `main.js`:
 
 ```js
-import str from './util.js';
-console.log(str);
+import str from './util.js'
+console.log(str)
 ```
 
 以上源码用 Webpack 打包后输出中的部分代码如下：
 
 ```js
-[
-  (function (module, __webpack_exports__, __webpack_require__) {
-    var __WEBPACK_IMPORTED_MODULE_0__util_js__ = __webpack_require__(1);
-    console.log(__WEBPACK_IMPORTED_MODULE_0__util_js__["a"]);
-  }),
-  (function (module, __webpack_exports__, __webpack_require__) {
-    __webpack_exports__["a"] = ('Hello,Webpack');
-  })
+;[
+  function(module, __webpack_exports__, __webpack_require__) {
+    var __WEBPACK_IMPORTED_MODULE_0__util_js__ = __webpack_require__(1)
+    console.log(__WEBPACK_IMPORTED_MODULE_0__util_js__['a'])
+  },
+  function(module, __webpack_exports__, __webpack_require__) {
+    __webpack_exports__['a'] = 'Hello,Webpack'
+  }
 ]
 ```
 
 在开启 Scope Hoisting 后，同样的源码输出的部分代码如下：
 
 ```js
-[
-  (function (module, __webpack_exports__, __webpack_require__) {
-    var util = ('Hello,Webpack');
-    console.log(util);
-  })
+;[
+  function(module, __webpack_exports__, __webpack_require__) {
+    var util = 'Hello,Webpack'
+    console.log(util)
+  }
 ]
 ```
 
@@ -633,14 +622,14 @@ Scope Hoisting 的实现原理其实很简单：分析出模块之间的依赖�
 要在 Webpack 中使用 Scope Hoisting 非常简单，因为这是 Webpack 内置的功能，只需要配置一个插件，相关代码如下：
 
 ```js
-const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
+const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin')
 
 module.exports = {
   plugins: [
     // 开启 Scope Hoisting
-    new ModuleConcatenationPlugin(),
-  ],
-};
+    new ModuleConcatenationPlugin()
+  ]
+}
 ```
 
 同时，考虑到 Scope Hoisting 依赖源码需采用 ES6 模块化语法，还需要配置 `mainFields`。 原因在 [4-10 使用 TreeShaking](https://webpack.wuhaolin.cn/4优化/4-10使用TreeShaking.html) 中提到过：因为大部分 Npm 中的第三方库采用了 CommonJS 语法，但部分库会同时提供 ES6 模块化的代码，为了充分发挥 Scope Hoisting 的作用，需要增加以下配置：
@@ -650,8 +639,8 @@ module.exports = {
   resolve: {
     // 针对 Npm 中的第三方模块优先采用 jsnext:main 中指向的 ES6 模块化语法的文件
     mainFields: ['jsnext:main', 'browser', 'main']
-  },
-};
+  }
+}
 ```
 
 对于采用了非 ES6 模块化语法的代码，Webpack 会降级处理不使用 Scope Hoisting 优化，为了知道 Webpack 对哪些代码做了降级处理， 你可以在启动 Webpack 时带上 `--display-optimization-bailout` 参数，这样在输出日志中就会包含类似如下的日志：
@@ -666,7 +655,7 @@ module.exports = {
 也就是说要开启 Scope Hoisting 并发挥最大作用的配置如下：
 
 ```js
-const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
+const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin')
 
 module.exports = {
   resolve: {
@@ -675,12 +664,10 @@ module.exports = {
   },
   plugins: [
     // 开启 Scope Hoisting
-    new ModuleConcatenationPlugin(),
-  ],
-};
+    new ModuleConcatenationPlugin()
+  ]
+}
 ```
-
-
 
 ### 使用 Tree Shaking
 
@@ -693,27 +680,24 @@ Tree Shaking 可以用来剔除 JavaScript 中用不上的死代码。它依赖�
 `util.js` 源码：
 
 ```js
-export function funcA() {
-}
+export function funcA() {}
 
-export function funB() {
-}
+export function funB() {}
 
-export const a = 'a';
+export const a = 'a'
 ```
 
 `main.js` 源码：
 
 ```js
-import {funcA} from './util.js';
-funcA();
+import { funcA } from './util.js'
+funcA()
 ```
 
 Tree Shaking 后的 `util.js`：
 
 ```js
-export function funcA() {
-}
+export function funcA() {}
 ```
 
 由于只用到了 `util.js` 中的 `funcA`，所以剩下的都被 Tree Shaking 当作死代码给剔除了。
@@ -722,7 +706,7 @@ export function funcA() {
 
 > 目前的 Tree Shaking 还有些的局限性，经实验发现：
 >
-> 1. 不会对entry入口文件做 Tree Shaking。
+> 1. 不会对 entry 入口文件做 Tree Shaking。
 > 2. 不会对[异步分割](https://webpack.wuhaolin.cn/4优化/4-12按需加载.html)出去的代码做 Tree Shaking。
 
 #### 接入 Tree Shaking
@@ -762,26 +746,26 @@ bundle.js  3.5 kB       0  [emitted]  main
 
 ```js
 /* harmony export (immutable) */
-__webpack_exports__["a"] = funcA;
+__webpack_exports__['a'] = funcA
 
 /* unused harmony export funB */
 
 function funcA() {
-  console.log('funcA');
+  console.log('funcA')
 }
 
 function funB() {
-  console.log('funcB');
+  console.log('funcB')
 }
 ```
 
-Webpack 只是指出了哪些函数用上了哪些没用上，要剔除用不上的代码还得经过 UglifyJS 去处理一遍。 要接入 UglifyJS 也很简单，不仅可以通过[4-8压缩代码](https://webpack.wuhaolin.cn/4优化/4-8压缩代码.html)中介绍的加入 UglifyJSPlugin 去实现， 也可以简单的通过在启动 Webpack 时带上 `--optimize-minimize` 参数，为了快速验证 Tree Shaking 我们采用较简单的后者来实验下。
+Webpack 只是指出了哪些函数用上了哪些没用上，要剔除用不上的代码还得经过 UglifyJS 去处理一遍。 要接入 UglifyJS 也很简单，不仅可以通过[4-8 压缩代码](https://webpack.wuhaolin.cn/4优化/4-8压缩代码.html)中介绍的加入 UglifyJSPlugin 去实现， 也可以简单的通过在启动 Webpack 时带上 `--optimize-minimize` 参数，为了快速验证 Tree Shaking 我们采用较简单的后者来实验下。
 
 通过 `webpack --display-used-exports --optimize-minimize` 重启 Webpack 后，打开新输出的 `bundle.js`，内容如下：
 
 ```js
 function r() {
-  console.log("funcA")
+  console.log('funcA')
 }
 
 t.a = r
@@ -794,12 +778,7 @@ t.a = r
 以 `redux` 库为例，其发布到 Npm 上的目录结构为：
 
 ```markdown
-node_modules/redux
-|-- es
-|   |-- index.js # 采用 ES6 模块化语法
-|-- lib
-|   |-- index.js # 采用 ES5 模块化语法
-|-- package.json
+node_modules/redux |-- es | |-- index.js # 采用 ES6 模块化语法 |-- lib | |-- index.js # 采用 ES5 模块化语法 |-- package.json
 ```
 
 `package.json` 文件中有两个字段：
@@ -818,15 +797,15 @@ module.exports = {
   resolve: {
     // 针对 Npm 中的第三方模块优先采用 jsnext:main 中指向的 ES6 模块化语法的文件
     mainFields: ['jsnext:main', 'browser', 'main']
-  },
-};
+  }
+}
 ```
 
 以上配置的含义是优先使用 `jsnext:main` 作为入口，如果不存在 `jsnext:main` 就采用 `browser` 或者 `main` 作为入口。 虽然并不是每个 Npm 中的第三方模块都会提供 ES6 模块化语法的代码，但对于提供了的不能放过，能优化的就优化。
 
-目前越来越多的 Npm 中的第三方模块考虑到了 Tree Shaking，并对其提供了支持。 采用 `jsnext:main` 作为 ES6 模块化代码的入口是社区的一个约定，假如将来你要发布一个库到 Npm 时，希望你能支持 Tree Shaking， 以让 Tree Shaking 发挥更大的优化效果，让更多 
+目前越来越多的 Npm 中的第三方模块考虑到了 Tree Shaking，并对其提供了支持。 采用 `jsnext:main` 作为 ES6 模块化代码的入口是社区的一个约定，假如将来你要发布一个库到 Npm 时，希望你能支持 Tree Shaking， 以让 Tree Shaking 发挥更大的优化效果，让更多
 
-- 在webpack4中将mode设置为production就自动启用这个功能。
+- 在 webpack4 中将 mode 设置为 production 就自动启用这个功能。
 
 ### 使用 Prepack
 
@@ -839,26 +818,26 @@ Prepack 由 Facebook 开源，它采用较为激进的方法：在保持运行�
 以如下源码为例：
 
 ```js
-import React, {Component} from 'react';
-import {renderToString} from 'react-dom/server';
+import React, { Component } from 'react'
+import { renderToString } from 'react-dom/server'
 
 function hello(name) {
-  return 'hello ' + name;
+  return 'hello ' + name
 }
 
 class Button extends Component {
   render() {
-    return hello(this.props.name);
+    return hello(this.props.name)
   }
 }
 
-console.log(renderToString(<Button name='webpack'/>));
+console.log(renderToString(<Button name="webpack" />))
 ```
 
 被 Prepack 转化后竟然直接输出如下：
 
 ```js
-console.log("hello webpack");
+console.log('hello webpack')
 ```
 
 可以看出 Prepack 通过在编译阶段预先执行了源码得到执行结果，再直接把运行结果输出来以提升性能。
@@ -883,13 +862,11 @@ Prepack 需要在 Webpack 输出最终的代码之前，对这些代码进行优
 接入该插件非常简单，相关配置代码如下：
 
 ```js
-const PrepackWebpackPlugin = require('prepack-webpack-plugin').default;
+const PrepackWebpackPlugin = require('prepack-webpack-plugin').default
 
 module.exports = {
-  plugins: [
-    new PrepackWebpackPlugin()
-  ]
-};
+  plugins: [new PrepackWebpackPlugin()]
+}
 ```
 
 重新执行构建你就会看到输出的被 Prepack 优化后的代码。
@@ -927,20 +904,20 @@ Webpack 内置了强大的分割代码的功能去实现按需加载，实现起
 其中 `main.js` 文件内容如下：
 
 ```js
-window.document.getElementById('btn').addEventListener('click', function () {
+window.document.getElementById('btn').addEventListener('click', function() {
   // 当按钮被点击后才去加载 show.js 文件，文件加载成功后执行文件导出的函数
   import(/* webpackChunkName: "show" */ './show').then((show) => {
-    show('Webpack');
+    show('Webpack')
   })
-});
+})
 ```
 
 `show.js` 文件内容如下：
 
 ```js
-module.exports = function (content) {
-  window.alert('Hello ' + content);
-};
+module.exports = function(content) {
+  window.alert('Hello ' + content)
+}
 ```
 
 代码中最关键的一句是 `import(/* webpackChunkName: "show" */ './show')`，Webpack 内置了对 `import(*)` 语句的支持，当 Webpack 遇到了类似的语句时会这样处理：
@@ -959,15 +936,15 @@ module.exports = function (content) {
 module.exports = {
   // JS 执行入口文件
   entry: {
-    main: './main.js',
+    main: './main.js'
   },
   output: {
     // 为从 entry 中配置生成的 Chunk 配置输出文件的名称
     filename: '[name].js',
     // 为动态加载的 Chunk 配置输出文件的名称
-    chunkFilename: '[name].js',
+    chunkFilename: '[name].js'
   }
-};
+}
 ```
 
 其中最关键的一行是 `chunkFilename: '[name].js',`，它专门指定动态生成的 Chunk 在输出时的文件名称。 如果没有这行，分割出的代码的文件名称将会是 `[id].js`。 chunkFilename 具体含义见[2-2 配置-Output](https://webpack.wuhaolin.cn/2配置/2-2Output.html#chunkFilename)。
@@ -979,10 +956,10 @@ module.exports = {
 这个单页应用的入口文件 `main.js` 如下：
 
 ```jsx
-import React, {PureComponent, createElement} from 'react';
-import {render} from 'react-dom';
-import {HashRouter, Route, Link} from 'react-router-dom';
-import PageHome from './pages/home';
+import React, { PureComponent, createElement } from 'react'
+import { render } from 'react-dom'
+import { HashRouter, Route, Link } from 'react-router-dom'
+import PageHome from './pages/home'
 
 /**
  * 异步加载组件
@@ -991,21 +968,20 @@ import PageHome from './pages/home';
  */
 function getAsyncComponent(load) {
   return class AsyncComponent extends PureComponent {
-
     componentDidMount() {
       // 在高阶组件 DidMount 时才去执行网络加载步骤
-      load().then(({default: component}) => {
+      load().then(({ default: component }) => {
         // 代码加载成功，获取到了代码导出的值，调用 setState 通知高阶组件重新渲染子组件
         this.setState({
-          component,
+          component
         })
-      });
+      })
     }
 
     render() {
-      const {component} = this.state || {};
+      const { component } = this.state || {}
       // component 是 React.Component 类型，需要通过 React.createElement 生产一个组件实例
-      return component ? createElement(component) : null;
+      return component ? createElement(component) : null
     }
   }
 }
@@ -1016,19 +992,24 @@ function App() {
     <HashRouter>
       <div>
         <nav>
-          <Link to='/'>Home</Link> | <Link to='/about'>About</Link> | <Link to='/login'>Login</Link>
+          <Link to="/">Home</Link> | <Link to="/about">About</Link> |{' '}
+          <Link to="/login">Login</Link>
         </nav>
-        <hr/>
-        <Route exact path='/' component={PageHome}/>
-        <Route path='/about' component={getAsyncComponent(
-          // 异步加载函数，异步地加载 PageAbout 组件
-          () => import(/* webpackChunkName: 'page-about' */'./pages/about')
-        )}
+        <hr />
+        <Route exact path="/" component={PageHome} />
+        <Route
+          path="/about"
+          component={getAsyncComponent(
+            // 异步加载函数，异步地加载 PageAbout 组件
+            () => import(/* webpackChunkName: 'page-about' */ './pages/about')
+          )}
         />
-        <Route path='/login' component={getAsyncComponent(
-          // 异步加载函数，异步地加载 PageAbout 组件
-          () => import(/* webpackChunkName: 'page-login' */'./pages/login')
-        )}
+        <Route
+          path="/login"
+          component={getAsyncComponent(
+            // 异步加载函数，异步地加载 PageAbout 组件
+            () => import(/* webpackChunkName: 'page-login' */ './pages/login')
+          )}
         />
       </div>
     </HashRouter>
@@ -1036,22 +1017,17 @@ function App() {
 }
 
 // 渲染根组件
-render(<App/>, window.document.getElementById('app'));
+render(<App />, window.document.getElementById('app'))
 ```
 
 以上代码中最关键的部分是 `getAsyncComponent` 函数，它的作用是配合 ReactRouter 去按需加载组件，具体含义请看代码中的注释。
 
-由于以上源码需要通过 Babel 去转换后才能在浏览器中正常运行，需要在 Webpack 中配置好对应的 babel-loader，源码先交给 babel-loader 处理后再交给 Webpack 去处理其中的 `import(*)` 语句。 但这样做后你很快会发现一个问题：Babel 报出错误说不认识 `import(*)` 语法。 导致这个问题的原因是 `import(*)` 语法还没有被加入到在 [3-1使用ES6语言](https://webpack.wuhaolin.cn/3实战/3-1使用ES6语言.html#Presets)中提到的 ECMAScript 标准中去， 为此我们需要安装一个 Babel 插件 `babel-plugin-syntax-dynamic-import`，并且将其加入到 `.babelrc` 中去：
+由于以上源码需要通过 Babel 去转换后才能在浏览器中正常运行，需要在 Webpack 中配置好对应的 babel-loader，源码先交给 babel-loader 处理后再交给 Webpack 去处理其中的 `import(*)` 语句。 但这样做后你很快会发现一个问题：Babel 报出错误说不认识 `import(*)` 语法。 导致这个问题的原因是 `import(*)` 语法还没有被加入到在 [3-1 使用 ES6 语言](https://webpack.wuhaolin.cn/3实战/3-1使用ES6语言.html#Presets)中提到的 ECMAScript 标准中去， 为此我们需要安装一个 Babel 插件 `babel-plugin-syntax-dynamic-import`，并且将其加入到 `.babelrc` 中去：
 
 ```json
 {
-  "presets": [
-    "env",
-    "react"
-  ],
-  "plugins": [
-    "syntax-dynamic-import"
-  ]
+  "presets": ["env", "react"],
+  "plugins": ["syntax-dynamic-import"]
 }
 ```
 
@@ -1062,7 +1038,6 @@ render(<App/>, window.document.getElementById('app'));
 - `page-login.js`：当用户访问 `/login` 时才会加载的代码块。
 
 同时你还会发现 `page-about.js` 和 `page-login.js` 这两个文件在首页是不会加载的，而是会当你切换到了对应的子页面后文件才会开始加载。
-
 
 ## 压缩代码
 
@@ -1079,9 +1054,9 @@ render(<App/>, window.document.getElementById('app'));
 要在 Webpack 中接入 UglifyJS 需要通过插件的形式，目前有两个成熟的插件，分别是：
 
 - UglifyJsPlugin：通过封装 UglifyJS 实现压缩。
-- ParallelUglifyPlugin：多进程并行处理压缩，[4-4使用ParallelUglifyPlugin](https://webpack.wuhaolin.cn/4优化/4-4使用ParallelUglifyPlugin.html) 中有详细介绍。
+- ParallelUglifyPlugin：多进程并行处理压缩，[4-4 使用 ParallelUglifyPlugin](https://webpack.wuhaolin.cn/4优化/4-4使用ParallelUglifyPlugin.html) 中有详细介绍。
 
-由于 ParallelUglifyPlugin 在 [4-4使用ParallelUglifyPlugin](https://webpack.wuhaolin.cn/4优化/4-4使用ParallelUglifyPlugin.html) 中介绍过就不再复述， 这里重点介绍如何配置 UglifyJS 以达到最优的压缩效果。
+由于 ParallelUglifyPlugin 在 [4-4 使用 ParallelUglifyPlugin](https://webpack.wuhaolin.cn/4优化/4-4使用ParallelUglifyPlugin.html) 中介绍过就不再复述， 这里重点介绍如何配置 UglifyJS 以达到最优的压缩效果。
 
 UglifyJS 提供了非常多的选择用于配置在压缩过程中采用哪些规则，所有的选项说明可以在 [其官方文档](https://github.com/mishoo/UglifyJS2#minify-options) 上看到。 由于选项非常多，就挑出一些常用的拿出来详细讲解其应用方式：
 
@@ -1096,7 +1071,7 @@ UglifyJS 提供了非常多的选择用于配置在压缩过程中采用哪些�
 也就是说，在不影响代码正确执行的前提下，最优化的代码压缩配置为如下：
 
 ```js
-const UglifyJSPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+const UglifyJSPlugin = require('webpack/lib/optimize/UglifyJsPlugin')
 
 module.exports = {
   plugins: [
@@ -1110,17 +1085,17 @@ module.exports = {
         // 内嵌定义了但是只用到一次的变量
         collapse_vars: true,
         // 提取出出现多次但是没有定义成变量去引用的静态值
-        reduce_vars: true,
+        reduce_vars: true
       },
       output: {
         // 最紧凑的输出
         beautify: false,
         // 删除所有的注释
-        comments: false,
+        comments: false
       }
-    }),
-  ],
-};
+    })
+  ]
+}
 ```
 
 从以上配置中可以看出 Webpack 内置了 UglifyJsPlugin，需要指出的是 UglifyJsPlugin 当前采用的是 [UglifyJS2](https://github.com/mishoo/UglifyJS2) 而不是老的 [UglifyJS1](https://github.com/mishoo/UglifyJS)， 这两个版本的 UglifyJS 在配置上有所区别，看文档时注意版本。
@@ -1164,13 +1139,13 @@ module.exports = {
           // 内嵌定义了但是只用到一次的变量
           collapse_vars: true,
           // 提取出出现多次但是没有定义成变量去引用的静态值
-          reduce_vars: true,
+          reduce_vars: true
         },
         output: {
           // 最紧凑的输出
           beautify: false,
           // 删除所有的注释
-          comments: false,
+          comments: false
         }
       }
     })
@@ -1194,21 +1169,21 @@ cssnano 能理解 CSS 代码的含义，而不仅仅是删掉空格，例如：
 把 cssnano 接入到 Webpack 中也非常简单，因为 css-loader 已经将其内置了，要开启 cssnano 去压缩代码只需要开启 css-loader 的 minimize 选项。 相关 Webpack 配置如下：
 
 ```js
-const path = require('path');
-const {WebPlugin} = require('web-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path')
+const { WebPlugin } = require('web-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,// 增加对 CSS 文件的支持
+        test: /\.css$/, // 增加对 CSS 文件的支持
         // 提取出 Chunk 中的 CSS 代码到单独的文件中
         use: ExtractTextPlugin.extract({
           // 通过 minimize 选项压缩 CSS 代码
           use: ['css-loader?minimize']
-        }),
-      },
+        })
+      }
     ]
   },
   plugins: [
@@ -1218,10 +1193,10 @@ module.exports = {
       filename: 'index.html' // 输出的 HTML 的文件名称
     }),
     new ExtractTextPlugin({
-      filename: `[name]_[contenthash:8].css`,// 给输出的 CSS 文件名称加上 Hash 值
-    }),
-  ],
-};
+      filename: `[name]_[contenthash:8].css` // 给输出的 CSS 文件名称加上 Hash 值
+    })
+  ]
+}
 ```
 
 ## CDN 加速
@@ -1254,21 +1229,26 @@ dist
 
 ```html
 <html>
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="app_a6976b6d.css">
-</head>
-<body>
-<div id="app"></div>
-<script src="app_9d89c964.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="app_a6976b6d.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="app_9d89c964.js"></script>
+  </body>
 </html>
 ```
 
 `app_a6976b6d.css`内容如下：
 
 ```css
-body{background:url(arch_ae805d49.png) repeat}h1{color:red}
+body {
+  background: url(arch_ae805d49.png) repeat;
+}
+h1 {
+  color: red;
+}
 ```
 
 可以看出到导入资源时都是通过相对路径去访问的，当把这些资源都放到同一个 CDN 服务上去时，网页是能正常使用的。 但需要注意的是由于 CDN 服务一般都会给资源开启很长时间的缓存，例如用户从 CDN 上获取到了 `index.html` 这个文件后， 即使之后的发布操作把 `index.html` 文件给重新覆盖了，但是用户在很长一段时间内还是运行的之前的版本，这会导致新的发布不能立即生效。
@@ -1282,39 +1262,44 @@ body{background:url(arch_ae805d49.png) repeat}h1{color:red}
 
 ```html
 <html>
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="//cdn.com/id/app_a6976b6d.css">
-</head>
-<body>
-<div id="app"></div>
-<script src="//cdn.com/id/app_9d89c964.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="//cdn.com/id/app_a6976b6d.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="//cdn.com/id/app_9d89c964.js"></script>
+  </body>
 </html>
 ```
 
 并且 `app_a6976b6d.css` 的内容也应该变为如下：
 
 ```css
-body{background:url(//cdn.com/id/arch_ae805d49.png) repeat}h1{color:red}
+body {
+  background: url(//cdn.com/id/arch_ae805d49.png) repeat;
+}
+h1 {
+  color: red;
+}
 ```
 
 也就是说，之前的相对路径，都变成了绝对的指向 CDN 服务的 URL 地址。
 
 > 如果你对形如 `//cdn.com/id/app_a6976b6d.css` 这样的 URL 感到陌生，你需要知道这种 URL 省掉了前面的 `http:` 或者 `https:` 前缀， 这样做的好处时在访问这些资源的时候会自动的根据当前 HTML 的 URL 是采用什么模式去决定是采用 HTTP 还是 HTTPS 模式。
 
-除此之外，如果你还知道浏览器有一个规则是同一时刻针对同一个域名的资源并行请求是有限制的话（具体数字大概4个左右，不同浏览器可能不同）， 你会发现上面的做法有个很大的问题。由于所有静态资源都放到了同一个 CDN 服务的域名下，也就是上面的 `cdn.com`。 如果网页的资源很多，例如有很多图片，就会导致资源的加载被阻塞，因为同时只能加载几个，必须等其它资源加载完才能继续加载。 要解决这个问题，可以把这些静态资源分散到不同的 CDN 服务上去， 例如把 JavaScript 文件放到 `js.cdn.com` 域名下、把 CSS 文件放到 `css.cdn.com` 域名下、图片文件放到 `img.cdn.com` 域名下， 这样做之后 `index.html` 需要变成这样：
+除此之外，如果你还知道浏览器有一个规则是同一时刻针对同一个域名的资源并行请求是有限制的话（具体数字大概 4 个左右，不同浏览器可能不同）， 你会发现上面的做法有个很大的问题。由于所有静态资源都放到了同一个 CDN 服务的域名下，也就是上面的 `cdn.com`。 如果网页的资源很多，例如有很多图片，就会导致资源的加载被阻塞，因为同时只能加载几个，必须等其它资源加载完才能继续加载。 要解决这个问题，可以把这些静态资源分散到不同的 CDN 服务上去， 例如把 JavaScript 文件放到 `js.cdn.com` 域名下、把 CSS 文件放到 `css.cdn.com` 域名下、图片文件放到 `img.cdn.com` 域名下， 这样做之后 `index.html` 需要变成这样：
 
 ```html
 <html>
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="//css.cdn.com/id/app_a6976b6d.css">
-</head>
-<body>
-<div id="app"></div>
-<script src="//js.cdn.com/id/app_9d89c964.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="//css.cdn.com/id/app_a6976b6d.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="//js.cdn.com/id/app_9d89c964.js"></script>
+  </body>
 </html>
 ```
 
@@ -1331,9 +1316,9 @@ body{background:url(//cdn.com/id/arch_ae805d49.png) repeat}h1{color:red}
 先来看下要实现以上要求的最终 Webpack 配置：
 
 ```js
-const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const {WebPlugin} = require('web-webpack-plugin');
+const path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const { WebPlugin } = require('web-webpack-plugin')
 
 module.exports = {
   // 省略 entry 配置...
@@ -1342,7 +1327,7 @@ module.exports = {
     filename: '[name]_[chunkhash:8].js',
     path: path.resolve(__dirname, './dist'),
     // 指定存放 JavaScript 文件的 CDN 目录 URL
-    publicPath: '//js.cdn.com/id/',
+    publicPath: '//js.cdn.com/id/'
   },
   module: {
     rules: [
@@ -1355,14 +1340,14 @@ module.exports = {
           use: ['css-loader?minimize'],
           // 指定存放 CSS 中导入的资源（例如图片）的 CDN 目录 URL
           publicPath: '//img.cdn.com/id/'
-        }),
+        })
       },
       {
         // 增加对 PNG 文件的支持
         test: /\.png$/,
         // 给输出的 PNG 文件名称加上 Hash 值
-        use: ['file-loader?name=[name]_[hash:8].[ext]'],
-      },
+        use: ['file-loader?name=[name]_[hash:8].[ext]']
+      }
       // 省略其它 Loader 配置...
     ]
   },
@@ -1374,15 +1359,15 @@ module.exports = {
       // 输出的 HTML 的文件名称
       filename: 'index.html',
       // 指定存放 CSS 文件的 CDN 目录 URL
-      stylePublicPath: '//css.cdn.com/id/',
+      stylePublicPath: '//css.cdn.com/id/'
     }),
     new ExtractTextPlugin({
       // 给输出的 CSS 文件名称加上 Hash 值
-      filename: `[name]_[contenthash:8].css`,
-    }),
+      filename: `[name]_[contenthash:8].css`
+    })
     // 省略代码压缩插件配置...
-  ],
-};
+  ]
+}
 ```
 
 以上代码中最核心的部分是通过 `publicPath` 参数设置存放静态资源的 CDN 目录 URL， 为了让不同类型的资源输出到不同的 CDN，需要分别在：
@@ -1423,7 +1408,7 @@ module.exports = {
 
 读到这里你可以会有疑问：既然能找出所有页面都依赖的公共代码，并提取出来放到 `common.js` 中去，为什么还需要再把网站所有页面都需要用到的基础库提取到 `base.js` 去呢？ 原因是为了长期的缓存 `base.js` 这个文件。
 
-发布到线上的文件都会采用在[4-9CDN加速](https://webpack.wuhaolin.cn/4优化/4-9CDN加速.html)中介绍过的方法，对静态文件的文件名都附加根据文件内容计算出 Hash 值，也就是最终 `base.js` 的文件名会变成 `base_3b1682ac.js`，以长期缓存文件。 网站通常会不断的更新发布，每次发布都会导致 `common.js` 和各个网页的 JavaScript 文件都会因为文件内容发生变化而导致其 Hash 值被更新，也就是缓存被更新。
+发布到线上的文件都会采用在[4-9CDN 加速](https://webpack.wuhaolin.cn/4优化/4-9CDN加速.html)中介绍过的方法，对静态文件的文件名都附加根据文件内容计算出 Hash 值，也就是最终 `base.js` 的文件名会变成 `base_3b1682ac.js`，以长期缓存文件。 网站通常会不断的更新发布，每次发布都会导致 `common.js` 和各个网页的 JavaScript 文件都会因为文件内容发生变化而导致其 Hash 值被更新，也就是缓存被更新。
 
 把所有页面都需要用到的基础库提取到 `base.js` 的好处在于只要不升级基础库的版本，`base.js` 的文件内容就不会变化，Hash 值不会被更新，缓存就不会被更新。 每次发布浏览器都会使用被缓存的 `base.js` 文件，而不用去重新下载 `base.js` 文件。 由于 `base.js` 通常会很大，这对提升网页加速速度能起到很大的效果。
 
@@ -1434,7 +1419,7 @@ module.exports = {
 Webpack 内置了专门用于提取多个 Chunk 中公共部分的插件 CommonsChunkPlugin，CommonsChunkPlugin 大致使用方法如下：
 
 ```js
-const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
+const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin')
 
 new CommonsChunkPlugin({
   // 从哪些 Chunk 中提取
@@ -1456,10 +1441,10 @@ new CommonsChunkPlugin({
 
 ```js
 // 所有页面都依赖的基础库
-import 'react';
-import 'react-dom';
+import 'react'
+import 'react-dom'
 // 所有页面都使用的样式
-import './base.css';
+import './base.css'
 ```
 
 接着再修改 Webpack 配置，在 entry 中加入 base，相关修改如下：
@@ -1468,8 +1453,8 @@ import './base.css';
 module.exports = {
   entry: {
     base: './base.js'
-  },
-};
+  }
+}
 ```
 
 以上就完成了对新 Chunk base 的配置。
@@ -1490,7 +1475,7 @@ new CommonsChunkPlugin({
 以上都配置好后重新执行构建，你将会得到四个文件，它们分别是：
 
 - `base.js`：所有网页都依赖的基础库组成的代码；
-- `common.js`：网页A、B都需要的，但又不在 `base.js` 文件中出现过的代码；
+- `common.js`：网页 A、B 都需要的，但又不在 `base.js` 文件中出现过的代码；
 - `a.js`：网页 A 单独需要的代码；
 - `b.js`：网页 B 单独需要的代码。
 
@@ -1540,14 +1525,14 @@ Webpack Analyse 不会把你选择的 `stats.json` 文件发达到服务器，�
 
 它分为了六大板块，分别是：
 
-- **Modules**：展示所有的模块，每个模块对应一个文件。并且还包含所有模块之间的依赖关系图、模块路径、模块ID、模块所属 Chunk、模块大小；
-- **Chunks**：展示所有的代码块，一个代码块中包含多个模块。并且还包含代码块的ID、名称、大小、每个代码块包含的模块数量，以及代码块之间的依赖关系图；
+- **Modules**：展示所有的模块，每个模块对应一个文件。并且还包含所有模块之间的依赖关系图、模块路径、模块 ID、模块所属 Chunk、模块大小；
+- **Chunks**：展示所有的代码块，一个代码块中包含多个模块。并且还包含代码块的 ID、名称、大小、每个代码块包含的模块数量，以及代码块之间的依赖关系图；
 - **Assets**：展示所有输出的文件资源，包括 `.js`、`.css`、图片等。并且还包括文件名称、大小、该文件来自哪个代码块；
 - **Warnings**：展示构建过程中出现的所有警告信息；
 - **Errors**：展示构建过程中出现的所有错误信息；
 - **Hints**：展示处理每个模块的过程中的耗时。
 
-下面以在 [3-10管理多个单页应用](https://webpack.wuhaolin.cn/3实战/3-10管理多个单页应用.html) 中使用的项目为例，来分析其 `stats.json` 文件。
+下面以在 [3-10 管理多个单页应用](https://webpack.wuhaolin.cn/3实战/3-10管理多个单页应用.html) 中使用的项目为例，来分析其 `stats.json` 文件。
 
 点击 **Modules**，查看模块信息，效果图如下：
 
@@ -1652,7 +1637,7 @@ module.export = {
 module.export = {
   watchOptions: {
     // 不监听的 node_modules 目录下的文件
-    ignored: /node_modules/,
+    ignored: /node_modules/
   }
 }
 ```
@@ -1680,7 +1665,7 @@ module.export = {
 2. 往要开发的网页中注入代理客户端代码，通过代理客户端去刷新整个页面。
 3. 把要开发的网页装进一个 iframe 中，通过刷新 iframe 去看到最新效果。
 
-DevServer 支持第2、3种方法，第2种是 DevServer 默认采用的刷新方法。
+DevServer 支持第 2、3 种方法，第 2 种是 DevServer 默认采用的刷新方法。
 
 通过 DevServer 启动构建后，你会看到如下日志：
 
@@ -1717,7 +1702,7 @@ bundle.js.map  1.27 MB       0  [emitted]         main
  [117] ./node_modules/url/url.js 23.3 kB {0} [built]
  [120] ./node_modules/querystring-es3/index.js 127 bytes {0} [built]
  [123] ./node_modules/strip-ansi/index.js 161 bytes {0} [built]
- [125] ./node_modules/loglevel/lib/loglevel.js 6.74 kB {0} [built] 
+ [125] ./node_modules/loglevel/lib/loglevel.js 6.74 kB {0} [built]
  [126] (webpack)-dev-server/client/socket.js 856 bytes {0} [built]
  [158] (webpack)-dev-server/client/overlay.js 3.6 kB {0} [built]
 ```
@@ -1773,7 +1758,7 @@ bundle.js.map  897 kB       0  [emitted]         main
 
 ## 开启模块热替换
 
-要做到实时预览，除了在[4-5使用自动刷新](https://webpack.wuhaolin.cn/4优化/4-5使用自动刷新.html)中介绍的刷新整个网页外，DevServer 还支持一种叫做模块热替换(Hot Module Replacement)的技术可在不刷新整个网页的情况下做到超灵敏的实时预览。 原理是当一个源码发生变化时，只重新编译发生变化的模块，再用新输出的模块替换掉浏览器中对应的老模块。
+要做到实时预览，除了在[4-5 使用自动刷新](https://webpack.wuhaolin.cn/4优化/4-5使用自动刷新.html)中介绍的刷新整个网页外，DevServer 还支持一种叫做模块热替换(Hot Module Replacement)的技术可在不刷新整个网页的情况下做到超灵敏的实时预览。 原理是当一个源码发生变化时，只重新编译发生变化的模块，再用新输出的模块替换掉浏览器中对应的老模块。
 
 模块热替换技术的优势有：
 
@@ -1791,22 +1776,26 @@ DevServer 默认不会开启模块热替换模式，要开启该模式，只需�
 > 除了通过在启动时带上 `--hot` 参数，还可以通过接入 Plugin 实现，相关代码如下：
 >
 > ```js
-> const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
-> 
+> const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin')
+>
 > module.exports = {
->   entry:{
+>   entry: {
 >     // 为每个入口都注入代理客户端
->     main:['webpack-dev-server/client?http://localhost:8080/', 'webpack/hot/dev-server','./src/main.js'],
+>     main: [
+>       'webpack-dev-server/client?http://localhost:8080/',
+>       'webpack/hot/dev-server',
+>       './src/main.js'
+>     ]
 >   },
 >   plugins: [
 >     // 该插件的作用就是实现模块热替换，实际上当启动时带上 `--hot` 参数，会注入该插件，生成 .hot-update.json 文件。
->     new HotModuleReplacementPlugin(),
+>     new HotModuleReplacementPlugin()
 >   ],
->   devServer:{
+>   devServer: {
 >     // 告诉 DevServer 要开启模块热替换模式
->     hot: true,      
->   }  
-> };
+>     hot: true
+>   }
+> }
 > ```
 >
 > 在启动 Webpack 时带上参数 `--hot` 其实就是自动为你完成以上配置。
@@ -1847,7 +1836,7 @@ bundle.js.map  1.33 MB       0  [emitted]         main
  [119] (webpack)-dev-server/client?http://localhost:8080 5.83 kB {0} [built]
  [120] ./node_modules/url/url.js 23.3 kB {0} [built]
  [126] ./node_modules/strip-ansi/index.js 161 bytes {0} [built]
- [128] ./node_modules/loglevel/lib/loglevel.js 6.74 kB {0} [built] 
+ [128] ./node_modules/loglevel/lib/loglevel.js 6.74 kB {0} [built]
  [129] (webpack)-dev-server/client/socket.js 856 bytes {0} [built]
  [161] (webpack)-dev-server/client/overlay.js 3.6 kB {0} [built]
  [166] (webpack)/hot nonrecursive ^\.\/log$ 170 bytes {0} [built]
@@ -1867,7 +1856,7 @@ Time: 551ms
                                    Asset       Size  Chunks                    Chunk Names
                                bundle.js    1.11 MB       0  [emitted]  [big]  main
     0.ea11a51f97f2b52bca7d.hot-update.js  353 bytes       0  [emitted]         main
-    ea11a51f97f2b52bca7d.hot-update.json   43 bytes          [emitted]         
+    ea11a51f97f2b52bca7d.hot-update.json   43 bytes          [emitted]
                            bundle.js.map    1.33 MB       0  [emitted]         main
 0.ea11a51f97f2b52bca7d.hot-update.js.map  577 bytes       0  [emitted]         main
   [68] ./node_modules/css-loader!./main.css 217 bytes {0} [built]
@@ -1889,12 +1878,12 @@ Webpack 为了让使用者在使用了模块热替换功能时能灵活地控制
 把的 `main.js` 文件改为如下：
 
 ```js
-import React from 'react';
-import { render } from 'react-dom';
-import { AppComponent } from './AppComponent';
-import './main.css';
+import React from 'react'
+import { render } from 'react-dom'
+import { AppComponent } from './AppComponent'
+import './main.css'
 
-render(<AppComponent/>, window.document.getElementById('app'));
+render(<AppComponent />, window.document.getElementById('app'))
 
 // 只有当开启了模块热替换时 module.hot 才存在
 if (module.hot) {
@@ -1902,8 +1891,8 @@ if (module.hot) {
   // 第2个参数用于在新的子模块加载完毕后需要执行的逻辑
   module.hot.accept(['./AppComponent'], () => {
     // 新的 AppComponent 加载成功后重新执行下组建渲染逻辑
-    render(<AppComponent/>, window.document.getElementById('app'));
-  });
+    render(<AppComponent />, window.document.getElementById('app'))
+  })
 }
 ```
 
@@ -1913,7 +1902,7 @@ if (module.hot) {
 
 当子模块发生更新时，更新事件会一层层往上传递，也就是从 `AppComponent.js` 文件传递到 `main.js` 文件， 直到有某层的文件接受了当前变化的模块，也就是 `main.js` 文件中定义的 `module.hot.accept(['./AppComponent'], callback)`， 这时就会调用 `callback` 函数去执行自定义逻辑。如果事件一直往上抛到最外层都没有文件接受它，就会直接刷新网页。
 
-那为什么没有地方接受过 `.css` 文件，但是修改所有的 `.css` 文件都会触发模块热替换呢？ 
+那为什么没有地方接受过 `.css` 文件，但是修改所有的 `.css` 文件都会触发模块热替换呢？
 
 原因在于 `style-loader` 会注入用于接受 CSS 的代码。
 
@@ -1925,17 +1914,17 @@ if (module.hot) {
 
 ![图4.5.4 模块热替换浏览器日志](https://blog-images-1302031947.cos.ap-guangzhou.myqcloud.com/images/4-6hmr-log.png)
 
-其中的 `Updated modules: 68` 是指 ID 为68的模块被替换了，这对开发者来说很不友好，因为开发者不知道 ID 和模块之间的对应关系，最好是把替换了的模块的名称输出出来。 Webpack 内置的 NamedModulesPlugin 插件可以解决该问题，修改 Webpack 配置文件接入该插件：
+其中的 `Updated modules: 68` 是指 ID 为 68 的模块被替换了，这对开发者来说很不友好，因为开发者不知道 ID 和模块之间的对应关系，最好是把替换了的模块的名称输出出来。 Webpack 内置的 NamedModulesPlugin 插件可以解决该问题，修改 Webpack 配置文件接入该插件：
 
 ```js
-const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
+const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin')
 
 module.exports = {
   plugins: [
     // 显示出被替换模块的名称
-    new NamedModulesPlugin(),
-  ],
-};
+    new NamedModulesPlugin()
+  ]
+}
 ```
 
 重启构建后你会发现浏览器中的日志更加友好了：
@@ -1966,10 +1955,10 @@ module.exports = {
 具体区分方法很简单，在源码中通过如下方式：
 
 ```js
-if (process.env.NODE_ENV = 'production') {
-  console.log('你正在线上环境');
+if ((process.env.NODE_ENV = 'production')) {
+  console.log('你正在线上环境')
 } else {
-  console.log('你正在使用开发环境');
+  console.log('你正在使用开发环境')
 }
 ```
 
@@ -1980,7 +1969,7 @@ if (process.env.NODE_ENV = 'production') {
 在构建线上环境代码时，需要给当前运行环境设置环境变量 `NODE_ENV = 'production'`，Webpack 相关配置如下：
 
 ```js
-const DefinePlugin = require('webpack/lib/DefinePlugin');
+const DefinePlugin = require('webpack/lib/DefinePlugin')
 
 module.exports = {
   plugins: [
@@ -1989,9 +1978,9 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('production')
       }
-    }),
-  ],
-};
+    })
+  ]
+}
 ```
 
 > 注意在定义环境变量的值时用 `JSON.stringify` 包裹字符串的原因是环境变量的值需要是一个由双引号包裹的字符串，而 `JSON.stringify('production')`的值正好等于`'"production"'`。
@@ -2000,9 +1989,9 @@ module.exports = {
 
 ```js
 if (true) {
-  console.log('你正在使用线上环境');
+  console.log('你正在使用线上环境')
 } else {
-  console.log('你正在使用开发环境');
+  console.log('你正在使用开发环境')
 }
 ```
 
@@ -2024,7 +2013,7 @@ new webpack.EnvironmentPlugin(['NODE_ENV'])
 
 ```js
 new webpack.DefinePlugin({
-  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
 })
 ```
 
@@ -2033,7 +2022,7 @@ new webpack.DefinePlugin({
 其实以上输出的代码还可以进一步优化，因为 `if(true)` 语句永远只会执行前一个分支中的代码，也就是说最佳的输出其实应该直接是：
 
 ```js
-  console.log('你正在线上环境');
+console.log('你正在线上环境')
 ```
 
 Webpack 没有实现去除死代码功能，但是 UglifyJS 可以做这个事情，如何使用请阅读 [4-8 压缩代码](https://webpack.wuhaolin.cn/4优化/4-8压缩代码.html) 中的压缩 JavaScript。
@@ -2066,10 +2055,10 @@ if (process.env.NODE_ENV ! 'production') {
 #### 侧重优化开发体验的配置文件 `webpack.config.js`：
 
 ```js
-const path = require('path');
-const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
-const {AutoWebPlugin} = require('web-webpack-plugin');
-const HappyPack = require('happypack');
+const path = require('path')
+const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin')
+const { AutoWebPlugin } = require('web-webpack-plugin')
+const HappyPack = require('happypack')
 
 // 自动寻找 pages 目录下的所有目录，把每一个目录看成一个单页应用
 const autoWebPlugin = new AutoWebPlugin('./src/pages', {
@@ -2078,19 +2067,19 @@ const autoWebPlugin = new AutoWebPlugin('./src/pages', {
   // 提取出所有页面公共的代码
   commonsChunk: {
     // 提取出公共代码 Chunk 的名称
-    name: 'common',
-  },
-});
+    name: 'common'
+  }
+})
 
 module.exports = {
   // AutoWebPlugin 会找为寻找到的所有单页应用，生成对应的入口配置，
   // autoWebPlugin.entry 方法可以获取到生成入口配置
   entry: autoWebPlugin.entry({
     // 这里可以加入你额外需要的 Chunk 入口
-    base: './src/base.js',
+    base: './src/base.js'
   }),
   output: {
-    filename: '[name].js',
+    filename: '[name].js'
   },
   resolve: {
     // 使用绝对路径指明第三方模块存放的位置，以减少搜索步骤
@@ -2098,7 +2087,7 @@ module.exports = {
     modules: [path.resolve(__dirname, 'node_modules')],
     // 针对 Npm 中的第三方模块优先采用 jsnext:main 中指向的 ES6 模块化语法的文件，使用 Tree Shaking 优化
     // 只采用 main 字段作为入口文件描述字段，以减少搜索步骤
-    mainFields: ['jsnext:main', 'main'],
+    mainFields: ['jsnext:main', 'main']
   },
   module: {
     rules: [
@@ -2108,18 +2097,18 @@ module.exports = {
         // 使用 HappyPack 加速构建
         use: ['happypack/loader?id=babel'],
         // 只对项目根目录下的 src 目录中的文件采用 babel-loader
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'src')
       },
       {
         test: /\.js$/,
         use: ['happypack/loader?id=ui-component'],
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'src')
       },
       {
         // 增加对 CSS 文件的支持
         test: /\.css$/,
-        use: ['happypack/loader?id=css'],
-      },
+        use: ['happypack/loader?id=css']
+      }
     ]
   },
   plugins: [
@@ -2128,24 +2117,26 @@ module.exports = {
     new HappyPack({
       id: 'babel',
       // babel-loader 支持缓存转换出的结果，通过 cacheDirectory 选项开启
-      loaders: ['babel-loader?cacheDirectory'],
+      loaders: ['babel-loader?cacheDirectory']
     }),
     new HappyPack({
       // UI 组件加载拆分
       id: 'ui-component',
-      loaders: [{
-        loader: 'ui-component-loader',
-        options: {
-          lib: 'antd',
-          style: 'style/index.css',
-          camel2: '-'
+      loaders: [
+        {
+          loader: 'ui-component-loader',
+          options: {
+            lib: 'antd',
+            style: 'style/index.css',
+            camel2: '-'
+          }
         }
-      }],
+      ]
     }),
     new HappyPack({
       id: 'css',
       // 如何处理 .css 文件，用法和 Loader 配置中一样
-      loaders: ['style-loader', 'css-loader'],
+      loaders: ['style-loader', 'css-loader']
     }),
     // 4-11提取公共代码
     new CommonsChunkPlugin({
@@ -2153,26 +2144,26 @@ module.exports = {
       chunks: ['common', 'base'],
       // 把公共的部分放到 base 中
       name: 'base'
-    }),
+    })
   ],
   watchOptions: {
     // 4-5使用自动刷新：不监听的 node_modules 目录下的文件
-    ignored: /node_modules/,
+    ignored: /node_modules/
   }
-};
+}
 ```
 
 #### 侧重优化输出质量的配置文件 `webpack-dist.config.js`：
 
 ```js
-const path = require('path');
-const DefinePlugin = require('webpack/lib/DefinePlugin');
-const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
-const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const {AutoWebPlugin} = require('web-webpack-plugin');
-const HappyPack = require('happypack');
-const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+const path = require('path')
+const DefinePlugin = require('webpack/lib/DefinePlugin')
+const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin')
+const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const { AutoWebPlugin } = require('web-webpack-plugin')
+const HappyPack = require('happypack')
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 
 // 自动寻找 pages 目录下的所有目录，把每一个目录看成一个单页应用
 const autoWebPlugin = new AutoWebPlugin('./src/pages', {
@@ -2181,32 +2172,32 @@ const autoWebPlugin = new AutoWebPlugin('./src/pages', {
   // 提取出所有页面公共的代码
   commonsChunk: {
     // 提取出公共代码 Chunk 的名称
-    name: 'common',
+    name: 'common'
   },
   // 指定存放 CSS 文件的 CDN 目录 URL
-  stylePublicPath: '//css.cdn.com/id/',
-});
+  stylePublicPath: '//css.cdn.com/id/'
+})
 
 module.exports = {
   // AutoWebPlugin 会找为寻找到的所有单页应用，生成对应的入口配置，
   // autoWebPlugin.entry 方法可以获取到生成入口配置
   entry: autoWebPlugin.entry({
     // 这里可以加入你额外需要的 Chunk 入口
-    base: './src/base.js',
+    base: './src/base.js'
   }),
   output: {
     // 给输出的文件名称加上 Hash 值
     filename: '[name]_[chunkhash:8].js',
     path: path.resolve(__dirname, './dist'),
     // 指定存放 JavaScript 文件的 CDN 目录 URL
-    publicPath: '//js.cdn.com/id/',
+    publicPath: '//js.cdn.com/id/'
   },
   resolve: {
     // 使用绝对路径指明第三方模块存放的位置，以减少搜索步骤
     // 其中 __dirname 表示当前工作目录，也就是项目根目录
     modules: [path.resolve(__dirname, 'node_modules')],
     // 只采用 main 字段作为入口文件描述字段，以减少搜索步骤
-    mainFields: ['jsnext:main', 'main'],
+    mainFields: ['jsnext:main', 'main']
   },
   module: {
     rules: [
@@ -2216,12 +2207,12 @@ module.exports = {
         // 使用 HappyPack 加速构建
         use: ['happypack/loader?id=babel'],
         // 只对项目根目录下的 src 目录中的文件采用 babel-loader
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'src')
       },
       {
         test: /\.js$/,
         use: ['happypack/loader?id=ui-component'],
-        include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'src')
       },
       {
         // 增加对 CSS 文件的支持
@@ -2231,8 +2222,8 @@ module.exports = {
           use: ['happypack/loader?id=css'],
           // 指定存放 CSS 中导入的资源（例如图片）的 CDN 目录 URL
           publicPath: '//img.cdn.com/id/'
-        }),
-      },
+        })
+      }
     ]
   },
   plugins: [
@@ -2244,29 +2235,31 @@ module.exports = {
       // 用唯一的标识符 id 来代表当前的 HappyPack 是用来处理一类特定的文件
       id: 'babel',
       // babel-loader 支持缓存转换出的结果，通过 cacheDirectory 选项开启
-      loaders: ['babel-loader?cacheDirectory'],
+      loaders: ['babel-loader?cacheDirectory']
     }),
     new HappyPack({
       // UI 组件加载拆分
       id: 'ui-component',
-      loaders: [{
-        loader: 'ui-component-loader',
-        options: {
-          lib: 'antd',
-          style: 'style/index.css',
-          camel2: '-'
+      loaders: [
+        {
+          loader: 'ui-component-loader',
+          options: {
+            lib: 'antd',
+            style: 'style/index.css',
+            camel2: '-'
+          }
         }
-      }],
+      ]
     }),
     new HappyPack({
       id: 'css',
       // 如何处理 .css 文件，用法和 Loader 配置中一样
       // 通过 minimize 选项压缩 CSS 代码
-      loaders: ['css-loader?minimize'],
+      loaders: ['css-loader?minimize']
     }),
     new ExtractTextPlugin({
       // 给输出的 CSS 文件名称加上 Hash 值
-      filename: `[name]_[contenthash:8].css`,
+      filename: `[name]_[contenthash:8].css`
     }),
     // 4-11提取公共代码
     new CommonsChunkPlugin({
@@ -2289,7 +2282,7 @@ module.exports = {
           // 最紧凑的输出
           beautify: false,
           // 删除所有的注释
-          comments: false,
+          comments: false
         },
         compress: {
           // 在UglifyJs删除没有用到的代码时不输出警告
@@ -2299,12 +2292,12 @@ module.exports = {
           // 内嵌定义了但是只用到一次的变量
           collapse_vars: true,
           // 提取出出现多次但是没有定义成变量去引用的静态值
-          reduce_vars: true,
+          reduce_vars: true
         }
-      },
-    }),
+      }
+    })
   ]
-};
+}
 ```
 
 本章介绍的优化方法虽然难以涵盖 Webpack 的方方面面，但足以解决实战中常见的场景。 对于本书没有介绍到的场景，你需要根据自己的需求按照以下思路去优化：
@@ -2317,25 +2310,23 @@ module.exports = {
 
 ## 插件总结
 
-| 配置                 | 减少打包时间 | 减少打包体积 | 减少首屏加载时间 | 加快请求 |
-| -------------------- | ------------ | ------------ | ---------------- | -------- |
-| 优化文件搜索范围     | √            |              |                  |          |
-| HappyPack            | √            |              |                  |          |
-| DLLPlugin            | √            |              |                  |          |
-| ParallelUglifyPlugin | √            | √            |                  |          |
-| Scope Hoisting       |              | √            |                  |          |
-| Tree Shaking         |              | √            |                  |          |
-| Prepack              |              | √            | √                |          |
-| 按需加载             |              |              | √                | √        |
-| 压缩代码(JS,CSS)     |              | √            | √                | √        |
-| CDN加速              |              |              | √                | √        |
-| 提取公共代码         |              | √            |                  | √        |
+| 配置 | 减少打包时间 | 减少打包体积 | 减少首屏加载时间 | 加快请求 |
+| --- | --- | --- | --- | --- |
+| 优化文件搜索范围 | √ |  |  |  |
+| HappyPack | √ |  |  |  |
+| DLLPlugin | √ |  |  |  |
+| ParallelUglifyPlugin | √ | √ |  |  |
+| Scope Hoisting |  | √ |  |  |
+| Tree Shaking |  | √ |  |  |
+| Prepack |  | √ | √ |  |
+| 按需加载 |  |  | √ | √ |
+| 压缩代码(JS,CSS) |  | √ | √ | √ |
+| CDN 加速 |  |  | √ | √ |
+| 提取公共代码 |  | √ |  | √ |
 
+关于 browserslist
 
-
-关于browserslist
-
-- 推荐用法：package.json文件中的browserslist字段(查询细节：逗号`,`相当于`or`,也就是并集，想交集的话写成`and`)
+- 推荐用法：package.json 文件中的 browserslist 字段(查询细节：逗号`,`相当于`or`,也就是并集，想交集的话写成`and`)
 
   ```json
   //package.json
@@ -2346,33 +2337,30 @@ module.exports = {
   ]
   ```
 
-- .browserslistrc文件
+- .browserslistrc 文件
 
   ```js
   //.browserslistrc
   # Browsers that we support
-  
+
   defaults
   not IE 11
   maintained node versions
   ```
 
-- autoprefixer插件(一个自动补充CSS浏览器前缀的插件，隶属postcss工具包）的overrideBrowserslist字段
+- autoprefixer 插件(一个自动补充 CSS 浏览器前缀的插件，隶属 postcss 工具包）的 overrideBrowserslist 字段
 
   ```js
   //postcss.config.js
   module.export = {
-      plugin:[
-          require('autoprefixer')({
-              overrideBrowserslist:["last 2 version",">1%"]
-          })
-      ]
+    plugin: [
+      require('autoprefixer')({
+        overrideBrowserslist: ['last 2 version', '>1%']
+      })
+    ]
   }
   ```
 
-  
-
-
 ## 参考
-> [webpack深入浅出](https://webpack.wuhaolin.cn/)
 
+> [webpack 深入浅出](https://webpack.wuhaolin.cn/)
